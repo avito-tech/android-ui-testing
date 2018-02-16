@@ -1,0 +1,5 @@
+<manifest package="com.avito.android.test.ui"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="com.avito.android.util, com.android.support.test.uiautomator.v18" />
+</manifest>

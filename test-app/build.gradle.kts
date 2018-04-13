@@ -1,6 +1,5 @@
-val minSdk = properties["minSdk"].toString()
-val kotlinVersion = properties["kotlinVersion"].toString()
-val playServicesVersion = properties["playServicesVersion"].toString()
+val kotlinVersion: String by project
+val playServicesVersion: String by project
 
 plugins {
     id("com.android.application")
@@ -8,10 +7,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(27)
-
     defaultConfig {
-        minSdkVersion(minSdk)
         testInstrumentationRunner = "com.avito.android.ui.test.UITestRunner"
     }
 
@@ -20,12 +16,11 @@ android {
     }
 }
 
-
 dependencies {
-    api(project(":ui"))
+    api(project(":ui-testing-core"))
     api("com.google.android.gms:play-services-maps:$playServicesVersion")
 
     implementation(kotlin("stdlib", kotlinVersion))
 
-    androidTestImplementation(project(":ui"))
+    androidTestImplementation(project(":ui-testing-core"))
 }

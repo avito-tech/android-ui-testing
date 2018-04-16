@@ -1,5 +1,0 @@
-rootProject.buildFileName = 'build.gradle.kts'
-
-include ':ui'
-include ':ui-maps'
-include ':ui-test'

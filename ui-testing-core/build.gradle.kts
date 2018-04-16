@@ -1,20 +1,16 @@
-val minSdk = properties["minSdk"].toString()
-val kotlinVersion = properties["kotlinVersion"].toString()
-val espressoVersion = properties["espressoVersion"].toString()
-val supportVersion = properties["supportVersion"].toString()
-val junitVersion = properties["junitVersion"].toString()
+import com.jfrog.bintray.gradle.BintrayExtension
+import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
+import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
+import org.gradle.api.publish.maven.MavenPom
+
+val kotlinVersion: String by project
+val espressoVersion: String by project
+val supportVersion: String by project
+val junitVersion: String by project
 
 plugins {
     id("com.android.library")
     kotlin("android")
-}
-
-android {
-    compileSdkVersion(27)
-
-    defaultConfig {
-        minSdkVersion(minSdk)
-    }
 }
 
 dependencies {

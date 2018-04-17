@@ -1,5 +1,7 @@
 val kotlinVersion: String by project
 val playServicesVersion: String by project
+val targetSdk: String by project
+val minSdk: String by project
 
 plugins {
     id("com.android.application")
@@ -7,7 +9,11 @@ plugins {
 }
 
 android {
+    compileSdkVersion(targetSdk.toInt())
+
     defaultConfig {
+        minSdkVersion(minSdk)
+        targetSdkVersion(targetSdk.toInt())
         testInstrumentationRunner = "com.avito.android.ui.test.UITestRunner"
     }
 

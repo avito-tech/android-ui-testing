@@ -7,10 +7,21 @@ val kotlinVersion: String by project
 val espressoVersion: String by project
 val supportVersion: String by project
 val junitVersion: String by project
+val targetSdk: String by project
+val minSdk: String by project
 
 plugins {
     id("com.android.library")
     kotlin("android")
+}
+
+android {
+    compileSdkVersion(targetSdk.toInt())
+
+    defaultConfig {
+        minSdkVersion(minSdk)
+        targetSdkVersion(targetSdk.toInt())
+    }
 }
 
 dependencies {
@@ -23,7 +34,6 @@ dependencies {
     api("com.android.support:recyclerview-v7:$supportVersion")
 
     implementation(kotlin("stdlib", kotlinVersion))
-    implementation("com.google.code.gson:gson:2.8.2")
     implementation("org.hamcrest:hamcrest-library:1.3")
     implementation("junit:junit:$junitVersion")
 }

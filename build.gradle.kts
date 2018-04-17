@@ -25,21 +25,10 @@ buildscript {
 }
 
 group = "com.avito.ui-testing"
-version = "0.1.0"
+version = "0.1.1"
 
 val minSdk: String by project
 val targetSdk: String by project
-
-fun Project.setupAndroidExtension() {
-    extensions.getByType<BaseExtension>().run {
-        compileSdkVersion(targetSdk.toInt())
-
-        defaultConfig {
-            minSdkVersion(minSdk)
-            targetSdkVersion(targetSdk.toInt())
-        }
-    }
-}
 
 subprojects.forEach { subProject: Project ->
     subProject.repositories {
@@ -50,12 +39,7 @@ subprojects.forEach { subProject: Project ->
     subProject.group = rootProject.group
     subProject.version = rootProject.version
 
-    subProject.plugins.withType(AppPlugin::class.java) {
-        subProject.setupAndroidExtension()
-    }
-
     subProject.plugins.withType(LibraryPlugin::class.java) {
-        subProject.setupAndroidExtension()
 
         subProject.apply {
             plugin("com.github.dcendents.android-maven")

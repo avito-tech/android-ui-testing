@@ -101,7 +101,7 @@ subprojects.forEach { subProject: Project ->
 }
 
 task<Wrapper>("wrapper") {
-    gradleVersion = "4.7-rc-2"
+    gradleVersion = "4.7"
     distributionType = Wrapper.DistributionType.BIN
 }
 

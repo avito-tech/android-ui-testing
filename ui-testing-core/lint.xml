@@ -6,7 +6,6 @@
         <ignore regexp="retrofit" />
     </issue>
 
-
     <!--We update libraries when thinking that they need to be updated,
     not right after their release. So, it is definitely informal level.-->
     <issue id="GradleDependency" severity="informational" />

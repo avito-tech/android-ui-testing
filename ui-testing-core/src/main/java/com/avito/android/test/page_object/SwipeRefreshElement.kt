@@ -1,7 +1,10 @@
 package com.avito.android.test.page_object
 
+import android.support.test.espresso.UiController
+import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.SwipeDirections
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -16,7 +19,8 @@ import com.avito.android.test.matcher.IsRefreshingMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.core.Is.`is`
 
-class SwipeRefreshElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+class SwipeRefreshElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -30,10 +34,10 @@ interface SwipeRefreshActions : Actions {
 }
 
 class SwipeRefreshActionsImpl(private val driver: ActionsDriver) : SwipeRefreshActions,
-        Actions by ActionsImpl(driver) {
+    Actions by ActionsImpl(driver) {
 
     override fun pullToRefresh() {
-        driver.perform(EspressoActions.swipe(SwipeDirections.TOP_TO_BOTTOM))
+        driver.perform(SwipeRefreshTolerantAction())
     }
 }
 
@@ -44,7 +48,7 @@ interface SwipeRefreshChecks : Checks {
 }
 
 class SwipeRefreshChecksImpl(private val driver: ChecksDriver) : SwipeRefreshChecks,
-        Checks by ChecksImpl(driver) {
+    Checks by ChecksImpl(driver) {
 
     override fun isRefreshing() {
         driver.check(matches(IsRefreshingMatcher(`is`(true))))
@@ -52,5 +56,24 @@ class SwipeRefreshChecksImpl(private val driver: ChecksDriver) : SwipeRefreshChe
 
     override fun isNotRefreshing() {
         driver.check(matches(IsRefreshingMatcher(`is`(false))))
+    }
+}
+
+/** WISDOM
+ * sometimes default GeneralSwipeAction constraint fails, need to override it.
+ * see https://stackoverflow.com/questions/33505953/espresso-how-to-test-swiperefreshlayout
+ * */
+class SwipeRefreshTolerantAction : ViewAction {
+    val action = EspressoActions.swipe(SwipeDirections.TOP_TO_BOTTOM)
+    private val VIEW_DISPLAY_PERCENTAGE = 85
+
+    override fun getDescription() =
+        "SwipeRefreshLayout performing ViewAction: ${action.description} " +
+                "with tolerance $VIEW_DISPLAY_PERCENTAGE"
+
+    override fun getConstraints(): Matcher<View> = isDisplayingAtLeast(VIEW_DISPLAY_PERCENTAGE)
+
+    override fun perform(uiController: UiController?, view: View?) {
+        action.perform(uiController, view)
     }
 }

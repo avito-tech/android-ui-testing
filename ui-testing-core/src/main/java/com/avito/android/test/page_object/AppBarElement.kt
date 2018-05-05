@@ -42,7 +42,7 @@ private class SetExpandedAction(private val isExpanded: Boolean) : ViewAction {
     override fun getConstraints(): Matcher<View> =
         ViewMatchers.isAssignableFrom(AppBarLayout::class.java)
 
-    override fun getDescription(): String = "Set expanded property of AppBarLayout"
+    override fun getDescription(): String = "Set expanded property of AppBarLayout to ${isExpanded}"
 
     override fun perform(uiController: UiController, view: View) {
         (view as AppBarLayout).setExpanded(isExpanded)

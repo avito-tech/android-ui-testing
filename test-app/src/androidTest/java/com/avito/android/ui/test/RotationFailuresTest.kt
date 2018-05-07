@@ -8,7 +8,6 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
-
 class RotationFailuresTest {
 
     @Rule @JvmField
@@ -29,7 +28,9 @@ class RotationFailuresTest {
 
         Screen.startForResultScreen.view.click()
 
-        Assert.assertThat(rule.activityResult, ActivityResultMatchers.hasResultCode(Activity.RESULT_OK))
+        Assert.assertThat(
+            rule.activityResult,
+            ActivityResultMatchers.hasResultCode(Activity.RESULT_OK)
+        )
     }
-
 }

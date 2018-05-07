@@ -1,0 +1,149 @@
+version: 2
+
+references:
+
+  # Cache
+  cache_key: &cache_key
+    key: cache-{{ checksum "build.gradle.kts" }}-{{ checksum "test-app/build.gradle.kts" }}-{{ checksum "ui-testing-core/build.gradle.kts" }}-{{ checksum "ui-testing-maps/build.gradle.kts" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "gradle.properties" }}
+  restore_cache: &restore_cache
+    restore_cache:
+      <<: *cache_key
+  save_cache: &save_cache
+    save_cache:
+      <<: *cache_key
+      paths:
+        - ~/.gradle
+        - ~/.m2
+
+  ## Workspace
+  workspace: &workspace
+    ~/workspace
+  attach_debug_workspace: &attach_debug_workspace
+    attach_workspace:
+      at: *workspace
+  persist_debug_workspace: &persist_debug_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+        - test-app/build/intermediates
+        - test-app/build/outputs/androidTest-results
+        - test-app/build/outputs/apk
+        - test-app/build/outputs/code-coverage
+        - test-app/build/test-results
+  attach_firebase_workspace: &attach_firebase_workspace
+    attach_workspace:
+      at: *workspace
+  persist_firebase_workspace: &persist_firebase_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+        - firebase
+
+  # Docker images
+  android_config: &android_config
+    working_directory: *workspace
+    docker:
+      - image: circleci/android:api-27-alpha
+    environment:
+      TERM: dumb
+      # https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
+      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+  gcloud_config: &gcloud_config
+    working_directory: *workspace
+    docker:
+      - image: google/cloud-sdk:latest
+    environment:
+      TERM: dumb
+
+  # Google Cloud Service
+  export_gcloud_key: &export_gcloud_key
+    run:
+      name: Export Google Cloud Service key environment variable
+      command: echo 'export GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
+  decode_gcloud_key: &decode_gcloud_key
+    run:
+      name: Decode Google Cloud credentials
+      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
+
+jobs:
+
+  build_debug:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache
+      - run:
+          name: Gradle build (debug)
+          command: ./gradlew assembleDebug :test-app:assembleAndroidTest
+      - *save_cache
+      - *persist_debug_workspace
+      - store_artifacts:
+          path: test-app/build/outputs/apk/
+          destination: /apk/
+
+  check_quality:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache
+      - run:
+          name: Run Android Lint
+          command: ./gradlew lint
+      - *save_cache
+      - store_artifacts:
+          path: test-app/build/reports/
+          destination: /test-app/
+      - store_artifacts:
+          path: ui-testing-core/build/reports/
+          destination: /ui-testing-core/
+      - store_artifacts:
+          path: ui-testing-maps/build/reports/
+          destination: /ui-testing-maps/
+
+  test_instrumented:
+    <<: *gcloud_config
+    steps:
+      - *attach_debug_workspace
+      - *export_gcloud_key
+      - *decode_gcloud_key
+      - run:
+          name: Authenticate with Google Cloud
+          command: gcloud auth activate-service-account firebase-adminsdk-fmjy6@android-ui-testing.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
+      - run:
+          name: Set Google Cloud target project
+          command: gcloud config set project android-ui-testing
+      - run:
+          name: Run instrumented test on Firebase Test Lab
+          command: >
+              gcloud firebase test android run
+              --type instrumentation
+              --app test-app/build/outputs/apk/debug/test-app-debug.apk
+              --test test-app/build/outputs/apk/androidTest/debug/test-app-debug-androidTest.apk
+              --device model=Nexus5,version=22,locale=en_US,orientation=portrait
+              --directories-to-pull=/sdcard/tmp
+              --use-orchestrator
+              --no-record-video
+              --timeout 20m
+      - run:
+          name: Create directory to store test results
+          command: mkdir firebase
+      - run:
+          name: Download instrumented test results from Firebase Test Lab
+          command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-jaj2sjjxxd1rs-kznjs5irhfqas | tail -1`*" /root/workspace/firebase/
+      - *persist_firebase_workspace
+      - store_artifacts:
+          path: firebase/
+          destination: /firebase/
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build_debug
+      - check_quality:
+          requires:
+            - build_debug
+      - test_instrumented:
+          requires:
+            - build_debug

@@ -12,11 +12,32 @@ class SwipeRefreshTest {
     val rule = screenRule<SwipeRefreshActivity>()
 
     @Test
-    fun recyclerView_refresh_onPullToRefresh() {
+    fun refresh_onPullToRefresh_listAction() {
         rule.launchActivity(null)
 
         Screen.swipeRefresh.list.actions.pullToRefresh()
 
+        Screen.swipeRefresh.swipeRefreshElement.checks.isRefreshing()
         assertThat(rule.activity.refreshedTimes, equalTo(1))
+    }
+
+    @Test
+    fun refresh_onPullToRefresh_swipeRefreshAction() {
+        rule.launchActivity(null)
+
+        Screen.swipeRefresh.swipeRefreshElement.actions.pullToRefresh()
+
+        assertThat(rule.activity.refreshedTimes, equalTo(1))
+    }
+
+    @Test
+    fun stop_refreshing_by_intention() {
+        rule.launchActivity(null)
+
+        Screen.swipeRefresh.swipeRefreshElement.actions.pullToRefresh()
+
+        rule.activity.postAndStopRefreshing()
+
+        Screen.swipeRefresh.swipeRefreshElement.checks.isNotRefreshing()
     }
 }

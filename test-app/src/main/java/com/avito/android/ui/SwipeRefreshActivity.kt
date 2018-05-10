@@ -1,7 +1,6 @@
 package com.avito.android.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 
@@ -20,6 +19,9 @@ class SwipeRefreshActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
 
     override fun onRefresh() {
         refreshedTimes += 1
-        Handler().postDelayed({ recycler.isRefreshing = false }, 50)
+    }
+
+    fun postAndStopRefreshing() {
+        recycler.handler.postDelayed({ recycler.isRefreshing = false }, 50)
     }
 }

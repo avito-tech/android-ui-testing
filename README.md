@@ -4,10 +4,26 @@
 
 Not now. Work in progress.
 
-######Roadmap: TBD
+#####Roadmap:
 
-One does not simply say WIP. 
-We should announce what the DoD is. 
+- full test coverage of current features
+- docs about all features
+- more at [the issue](https://github.com/avito-tech/android-ui-testing/issues/11)
+
+## Configure
+
+```groovy
+def uiTestingVersion = '0.1.1'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    androidTestImplementation 'com.avito.ui-testing:ui-testing-core:$uiTestingVersion'
+    androidTestImplementation 'com.avito.ui-testing:ui-testing-maps:$uiTestingVersion'
+}
+```
 
 ## Features
 
@@ -24,19 +40,3 @@ list.cellAt(position = 1).title.checks.displayedWithText("2")
 ```
 
 More examples at `test-app/androidTest`
-
-
-## Configure
-
-```groovy
-def uiTestingVersion = '0.1.1'
-
-repositories {
-    jcenter()
-}
-
-dependencies {
-    androidTestImplementation 'com.avito.ui-testing:ui-testing-core:$uiTestingVersion'
-    androidTestImplementation 'com.avito.ui-testing:ui-testing-maps:$uiTestingVersion'
-}
-```

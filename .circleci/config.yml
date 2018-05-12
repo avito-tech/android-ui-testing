@@ -128,9 +128,11 @@ jobs:
       - run:
           name: Create directory to store test results
           command: mkdir firebase
+          when: always
       - run:
           name: Download instrumented test results from Firebase Test Lab
           command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-jaj2sjjxxd1rs-kznjs5irhfqas | tail -1`*" /root/workspace/firebase/
+          when: always
       - *persist_firebase_workspace
       - store_artifacts:
           path: firebase/

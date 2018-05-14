@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver
+import com.avito.android.test.interceptor.ActionInterceptor
+import com.avito.android.test.interceptor.AssertionInterceptor
 import com.forkingcode.espresso.contrib.DescendantViewActions.checkDescendantViewAction
 import com.forkingcode.espresso.contrib.DescendantViewActions.performDescendantAction
 import org.hamcrest.Matcher
@@ -27,16 +29,25 @@ class SimpleInteractionContext(private val matcher: Matcher<View>) : Interaction
         get() = Espresso.onView(matcher)
 
     override fun perform(vararg actions: ViewAction) {
-        interaction.waitToPerform(*actions)
+        interaction.waitToPerform(actions.map {
+            ActionInterceptor.Proxy(
+                it,
+                UITestConfig.actionInterceptors
+            )
+        })
     }
 
     override fun check(assertion: ViewAssertion) {
-        interaction.waitForCheck(assertion)
+        interaction.waitForCheck(assertion.let {
+            AssertionInterceptor.Proxy(
+                it,
+                UITestConfig.assertionInterceptors
+            )
+        })
     }
 
-    override fun provideChildContext(matcher: Matcher<View>): InteractionContext {
-        return SimpleInteractionContext(allOf(isDescendantOfA(this.matcher), matcher))
-    }
+    override fun provideChildContext(matcher: Matcher<View>): InteractionContext =
+        SimpleInteractionContext(allOf(isDescendantOfA(this.matcher), matcher))
 }
 
 class RecyclerViewInteractionContext(
@@ -47,23 +58,32 @@ class RecyclerViewInteractionContext(
 ) : InteractionContext {
 
     override fun perform(vararg actions: ViewAction) {
-        actions.forEach {
-            interactionContext.perform(
+        actions
+            .map { action ->
                 actionOnItem<RecyclerView.ViewHolder>(
                     cellMatcher,
-                    performDescendantAction(childMatcher, it)
+                    performDescendantAction(childMatcher, action)
+                ).atPosition(position)
+            }
+            .map { actionOnItem ->
+                ActionInterceptor.Proxy(
+                    actionOnItem,
+                    UITestConfig.actionInterceptors
                 )
-                    .atPosition(position)
-            )
-        }
+            }
+            .forEach { interceptedActionOnItem ->
+                interactionContext.perform(interceptedActionOnItem)
+            }
     }
 
     override fun check(assertion: ViewAssertion) {
+        val intercepted = AssertionInterceptor.Proxy(assertion, UITestConfig.assertionInterceptors)
+
         if (assertion.isDoesntExistAssertion()) {
             interactionContext.perform(
                 com.avito.android.test.espresso.action.actionOnItem<RecyclerView.ViewHolder>(
                     cellMatcher,
-                    checkDescendantViewAction(childMatcher, assertion)
+                    checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)
             )
@@ -71,7 +91,7 @@ class RecyclerViewInteractionContext(
             interactionContext.perform(
                 actionOnItem<RecyclerView.ViewHolder>(
                     cellMatcher,
-                    checkDescendantViewAction(childMatcher, assertion)
+                    checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)
             )

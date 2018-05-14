@@ -4,11 +4,11 @@
 
 Not now. Work in progress.
 
-#####Roadmap:
+## Roadmap
 
 - full test coverage of current features
 - docs about all features
-- more at [the issue](https://github.com/avito-tech/android-ui-testing/issues/11)
+- [the issue](https://github.com/avito-tech/android-ui-testing/issues/11)
 
 ## Configure
 
@@ -25,18 +25,28 @@ dependencies {
 }
 ```
 
-## Features
+### UITestConfig
 
-Handy checks and actions for common Android UI elements! 
+Use UITestConfig to tune library's parameters for your project
 
-`TBD: Simple samples? ` 
+Custom instrumentation test runner is the best place for it
 
-```
-view.click()
+## Core features
 
-swipeRefreshElement.checks.isRefreshing()
+### Interceptors
 
-list.cellAt(position = 1).title.checks.displayedWithText("2")
-```
+Functions that invokes before every action and assertion with all information about target and intention.
 
-More examples at `test-app/androidTest`
+#### Use cases
+
+ - Log human readable walk-through of your tests (greatly increases report clarity)
+ 
+#### Setup 
+
+`UITestConfig.actionInterceptors += <your interceptor>`
+ 
+`UITestConfig.assertionInterceptors += <your interceptor>`
+
+## Examples
+
+See `test-app/androidTest`

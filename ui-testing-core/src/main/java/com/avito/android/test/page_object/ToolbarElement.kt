@@ -15,9 +15,11 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageButton
+import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.Device
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
+import com.avito.android.test.UITestConfig
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
@@ -29,6 +31,7 @@ import com.avito.android.test.matcher.ToolbarSubTitleResMatcher
 import com.avito.android.test.matcher.ToolbarSubtitleMatcher
 import com.avito.android.test.matcher.ToolbarTitleMatcher
 import com.avito.android.test.matcher.ToolbarTitleResMatcher
+import com.avito.android.test.waitToPerform
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
@@ -156,15 +159,22 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         private val toolbarInteraction = Espresso.onView(toolbarMatcher)
 
         override fun perform(vararg actions: ViewAction) {
+            val interceptedActions = actions.map {
+                ActionInterceptor.Proxy(
+                    it,
+                    UITestConfig.actionInterceptors
+                )
+            }
+
             if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(
                     titleMatcher
                 )
             ) {
                 // do not click if disableOverflowMenuAutoOpen() was specified
                 overflowMenuButton?.click()
-                overflowInteraction.perform(*actions)
+                overflowInteraction.waitToPerform(interceptedActions)
             } else {
-                actionInteraction.perform(*actions)
+                actionInteraction.waitToPerform(interceptedActions)
             }
         }
 

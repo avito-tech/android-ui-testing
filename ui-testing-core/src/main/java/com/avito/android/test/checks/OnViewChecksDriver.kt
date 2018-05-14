@@ -4,6 +4,8 @@ import android.support.test.espresso.Espresso
 import android.support.test.espresso.ViewAssertion
 import android.support.test.espresso.ViewInteraction
 import android.view.View
+import com.avito.android.test.interceptor.AssertionInterceptor
+import com.avito.android.test.UITestConfig
 import com.avito.android.test.waitForCheck
 import org.hamcrest.Matcher
 
@@ -14,6 +16,9 @@ class OnViewChecksDriver(private val matcher: Matcher<View>) : ChecksDriver {
         get() = Espresso.onView(matcher)
 
     override fun check(assertion: ViewAssertion) {
-        interaction.waitForCheck(assertion)
+        val interceptedAssertion =
+            AssertionInterceptor.Proxy(assertion, UITestConfig.assertionInterceptors)
+
+        interaction.waitForCheck(interceptedAssertion)
     }
 }

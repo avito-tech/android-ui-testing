@@ -19,5 +19,4 @@ class StringPatternMatcher(private val pattern: Pattern) : TypeSafeMatcher<Strin
         description.appendText("matching pattern ")
             .appendText(pattern.toString())
     }
-
 }

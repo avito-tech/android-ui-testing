@@ -47,7 +47,8 @@ fun waitFor(
             action.invoke()
             return
         } catch (e: Throwable) {
-            val isExceptionAllowed = allowedExceptions.find { it.isAssignableFrom(e.javaClass) } != null
+            val isExceptionAllowed =
+                allowedExceptions.find { it.isAssignableFrom(e.javaClass) } != null
             when {
                 isExceptionAllowed -> {
                     Thread.sleep(frequencyMs)

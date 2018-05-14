@@ -6,7 +6,8 @@ import android.view.View
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-class IsRefreshingMatcher(val matcher: Matcher<Boolean>) : BoundedMatcher<View, SwipeRefreshLayout>(SwipeRefreshLayout::class.java) {
+class IsRefreshingMatcher(val matcher: Matcher<Boolean>) :
+    BoundedMatcher<View, SwipeRefreshLayout>(SwipeRefreshLayout::class.java) {
 
     override fun describeTo(description: Description) {
         description.appendText(" SwipeRefreshLayout refreshing state ").appendDescriptionOf(matcher)
@@ -15,5 +16,4 @@ class IsRefreshingMatcher(val matcher: Matcher<Boolean>) : BoundedMatcher<View, 
     override fun matchesSafely(layout: SwipeRefreshLayout): Boolean {
         return matcher.matches(layout.isRefreshing)
     }
-
 }

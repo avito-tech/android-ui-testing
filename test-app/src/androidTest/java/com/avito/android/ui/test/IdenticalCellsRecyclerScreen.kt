@@ -19,7 +19,8 @@ class IdenticalCellsRecyclerScreen {
 
     class List : ListElement(withId(R.id.recycler)) {
 
-        fun cellWithTitle(title: String) = typedItemByMatcher(hasDescendant(withText(title)), ::Cell)
+        fun cellWithTitle(title: String) =
+            typedItemByMatcher(hasDescendant(withText(title)), ::Cell)
 
         fun cellAt(position: Int) = typedItemAtPosition(
             isAssignableFrom(FrameLayout::class.java),

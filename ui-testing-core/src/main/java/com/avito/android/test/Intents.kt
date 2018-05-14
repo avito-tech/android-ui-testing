@@ -12,7 +12,8 @@ import org.hamcrest.Matchers
 
 object Intents {
 
-    fun resultOK(resultData: Intent? = null) = Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
+    fun resultOK(resultData: Intent? = null) =
+        Instrumentation.ActivityResult(Activity.RESULT_OK, resultData)
 
     fun resultCanceled(resultData: Intent? = null) =
         Instrumentation.ActivityResult(Activity.RESULT_CANCELED, resultData)
@@ -20,7 +21,8 @@ object Intents {
     inline fun <reified T : Activity> whenIntended(): OngoingStubbing =
         Intents.intending(IntentMatchers.hasComponent(T::class.qualifiedName))
 
-    fun stubEverything() = Intents.intending(IntentMatchers.anyIntent()).respondWith(resultCanceled())
+    fun stubEverything() =
+        Intents.intending(IntentMatchers.anyIntent()).respondWith(resultCanceled())
 
     val checks = Checks()
 
@@ -35,26 +37,40 @@ object Intents {
         }
 
         fun actionIntendedWithUriParam(action: String, param: String, value: String) {
-            actionIntended(action, IntentMatchers.hasData(UriMatchers.hasParamWithValue(param, value)))
+            actionIntended(
+                action,
+                IntentMatchers.hasData(UriMatchers.hasParamWithValue(param, value))
+            )
         }
 
         fun activityIntended(className: String) {
             Intents.intended(IntentMatchers.hasComponent(className))
         }
 
-        inline fun <reified T : Activity> activityIntendedWithUriParam(param: String, value: String) {
+        inline fun <reified T : Activity> activityIntendedWithUriParam(
+            param: String,
+            value: String
+        ) {
             activityIntended<T>(IntentMatchers.hasData(UriMatchers.hasParamWithValue(param, value)))
         }
 
         inline fun <reified T : Activity> activityIntended(vararg additionalMatchers: Matcher<Intent>) {
-            Intents.intended(Matchers.allOf(IntentMatchers.hasComponent(T::class.java.name), *additionalMatchers))
+            Intents.intended(
+                Matchers.allOf(
+                    IntentMatchers.hasComponent(T::class.java.name),
+                    *additionalMatchers
+                )
+            )
         }
 
         inline fun <reified T : Activity> activityIntendedWithoutExtraParam(param: String) {
             activityIntended<T>(Matchers.not(IntentMatchers.hasExtraWithKey(param)))
         }
 
-        inline fun <reified T : Activity> activityIntendedWithExtraParam(param: String, value: String) {
+        inline fun <reified T : Activity> activityIntendedWithExtraParam(
+            param: String,
+            value: String
+        ) {
             activityIntended<T>(IntentMatchers.hasExtra(param, value))
         }
     }

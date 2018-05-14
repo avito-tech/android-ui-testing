@@ -2,7 +2,7 @@ package com.avito.android.test.util
 
 import android.content.Context
 import android.support.test.InstrumentationRegistry
-import java.util.Locale
+import java.util.*
 
 fun getContextWithLocaleByLanguage(language: String): Context {
     val baseContext = InstrumentationRegistry.getTargetContext()

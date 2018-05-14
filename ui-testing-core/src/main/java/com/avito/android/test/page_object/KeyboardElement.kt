@@ -51,8 +51,8 @@ class KeyboardElement : PageObject() {
         }
 
         private fun checkDisplayed(activity: Activity, isOpen: Boolean) {
-            var threshold: Int = 0
-            var activityEffectiveHeight: Int = 0
+            var threshold = 0
+            var activityEffectiveHeight = 0
 
             InstrumentationRegistry.getInstrumentation().runOnMainSync {
                 val content = activity.findViewById<View>(android.R.id.content)
@@ -67,45 +67,47 @@ class KeyboardElement : PageObject() {
 
                     if (get(content) == null) {
                         throw RuntimeException(
-                                "Can't check keyboard position. Because View::mAttachInfo is null." +
-                                        " Did you rotate screen in test before this check?"
+                            "Can't check keyboard position. Because View::mAttachInfo is null." +
+                                    " Did you rotate screen in test before this check?"
                         )
                     }
                 }
 
                 activityEffectiveHeight = Rect()
-                        .apply { content.getWindowVisibleDisplayFrame(this) }
-                        .height()
+                    .apply { content.getWindowVisibleDisplayFrame(this) }
+                    .height()
 
                 threshold = (activityHeight - minimalKeyboardHeight).toInt()
             }
 
             Assert.assertThat(
-                    generateErrorMessage(
-                            displayed = isOpen,
-                            activityEffectiveHeight = activityEffectiveHeight,
-                            threshold = threshold
-                    ),
-                    activityEffectiveHeight <= threshold,
-                    `is`(isOpen)
+                generateErrorMessage(
+                    displayed = isOpen,
+                    activityEffectiveHeight = activityEffectiveHeight,
+                    threshold = threshold
+                ),
+                activityEffectiveHeight <= threshold,
+                `is`(isOpen)
             )
         }
 
         private fun generateErrorMessage(
-                displayed: Boolean,
-                activityEffectiveHeight: Int,
-                threshold: Int
+            displayed: Boolean,
+            activityEffectiveHeight: Int,
+            threshold: Int
         ): String {
-            val getStatusMessage: (isDisplayed: Boolean, withSizes: Boolean) -> String = { isDisplayed, withSizes ->
-                val status = if (isDisplayed) {
-                    "is displayed"
-                } else {
-                    "is not displayed"
-                }
-                val sizes = " actualEffectiveHeight: $activityEffectiveHeight thresholdEffectiveHeight: $threshold"
+            val getStatusMessage: (isDisplayed: Boolean, withSizes: Boolean) -> String =
+                { isDisplayed, withSizes ->
+                    val status = if (isDisplayed) {
+                        "is displayed"
+                    } else {
+                        "is not displayed"
+                    }
+                    val sizes =
+                        " actualEffectiveHeight: $activityEffectiveHeight thresholdEffectiveHeight: $threshold"
 
-                "(keyboard $status on the screen.${if (withSizes) sizes else ""})"
-            }
+                    "(keyboard $status on the screen.${if (withSizes) sizes else ""})"
+                }
 
             val doesNotMatch = "doesn't match the selected view."
             val expected = "Expected:"

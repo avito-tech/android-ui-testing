@@ -5,17 +5,17 @@ import org.hamcrest.Matchers
 import org.junit.Rule
 import org.junit.Test
 
-
 class DisplayedWithTextTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<IdenticalCellsRecyclerActivity>()
 
     @Test
     fun canAssertText_onFoundItem() {
         rule.launchActivity(IdenticalCellsRecyclerActivity.intent(arrayListOf("test string")))
 
-        Screen.identicalCellsRecycler.list.cellAt(position = 0).title.checks.displayedWithText("test string")
+        Screen.identicalCellsRecycler.list.cellAt(position = 0)
+            .title.checks.displayedWithText("test string")
     }
 
     @Test

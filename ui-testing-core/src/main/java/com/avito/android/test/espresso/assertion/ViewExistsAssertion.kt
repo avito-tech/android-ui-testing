@@ -10,8 +10,11 @@ class ViewExistsAssertion : ViewAssertion {
 
     override fun check(view: View?, noView: NoMatchingViewException?) {
         if (view == null) {
-            assertThat("View is not present in the hierarchy: ${noView?.viewMatcherDescription}", false, `is`(true))
+            assertThat(
+                "View is not present in the hierarchy: ${noView?.viewMatcherDescription}",
+                false,
+                `is`(true)
+            )
         }
     }
-
 }

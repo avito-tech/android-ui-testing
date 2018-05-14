@@ -10,7 +10,7 @@ import org.hamcrest.Matchers
 import java.lang.Character.UnicodeBlock
 
 /**
- * Don't use directly, only via [EspressoActions]
+ * Don't use directly, only via EspressoActions
  */
 class SafeTypeTextAction(
     private val stringToBeTyped: String,
@@ -59,7 +59,8 @@ class SafeTypeTextAction(
         , cause
     )
 
-    private fun String.isCyrillic() = (0 until this.length).any { UnicodeBlock.of(this[it]) == UnicodeBlock.CYRILLIC }
+    private fun String.isCyrillic() =
+        (0 until this.length).any { UnicodeBlock.of(this[it]) == UnicodeBlock.CYRILLIC }
 
     private fun String.isPhoneNumber() = this.matches(Regex("^\\+?[0-9. ()-]{1,25}$"))
 }

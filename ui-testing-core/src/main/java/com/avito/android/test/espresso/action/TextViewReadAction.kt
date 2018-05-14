@@ -12,7 +12,8 @@ class TextViewReadAction : ViewAction {
     lateinit var result: String
         private set
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(TextView::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(TextView::class.java)
 
     override fun getDescription(): String = "getting text from a TextView"
 

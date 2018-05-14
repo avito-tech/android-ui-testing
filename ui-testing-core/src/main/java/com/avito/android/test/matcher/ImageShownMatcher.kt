@@ -1,4 +1,4 @@
-package ru.avito.services.component.connection_state_layout
+package com.avito.android.test.matcher
 
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.view.View
@@ -16,8 +16,8 @@ class ImageShownMatcher :
         layout.isDrawingCacheEnabled = true
 
         layout.drawingCache.apply {
-            for (i in 0..height - 1) {
-                for (j in 0..width - 1) {
+            for (i in 0 until height) {
+                for (j in 0 until width) {
                     if (getPixel(i, j) != 0) {
                         return true
                     }

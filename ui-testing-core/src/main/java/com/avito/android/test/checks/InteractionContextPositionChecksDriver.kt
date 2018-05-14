@@ -8,7 +8,6 @@ import com.avito.android.test.InteractionContext
 import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher
 
-
 class InteractionContextPositionChecksDriver(
     private val interactionContext: InteractionContext,
     private val position: Int,

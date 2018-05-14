@@ -8,4 +8,9 @@ class DrawableMatcherCheckableImageView(
     @DrawableRes private val src: Int? = null,
     @ColorRes private val tint: Int? = null
 ) :
-    DrawableMatcher<CheckableImageButton>({ it.drawable }, src, tint, CheckableImageButton::class.java)
+    DrawableMatcher<CheckableImageButton>(
+        { it.drawable },
+        src,
+        tint,
+        CheckableImageButton::class.java
+    )

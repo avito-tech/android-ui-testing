@@ -10,10 +10,10 @@ import org.junit.rules.ExpectedException
 
 class VisibilityTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<VisibilityActivity>()
 
-    @Rule @JvmField
+    @get:Rule
     val exception: ExpectedException = ExpectedException.none()
 
     @Test

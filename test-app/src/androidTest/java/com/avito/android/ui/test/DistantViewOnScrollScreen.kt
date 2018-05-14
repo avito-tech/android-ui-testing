@@ -10,5 +10,4 @@ class DistantViewOnScrollScreen : PageObject() {
     val scroll = PageObjectElement(ViewMatchers.withId(R.id.scroll))
 
     val view = PageObjectElement(ViewMatchers.withId(R.id.view))
-
 }

@@ -14,5 +14,4 @@ class AlphaMatcher(val matcher: Matcher<Float>) : TypeSafeMatcher<View>() {
     override fun matchesSafely(item: View): Boolean {
         return matcher.matches(item.alpha)
     }
-
 }

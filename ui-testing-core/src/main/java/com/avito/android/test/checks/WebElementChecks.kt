@@ -7,5 +7,4 @@ class WebElementChecks(private val interaction: Web.WebInteraction<Void>) {
     fun isDisplayed() {
         interaction
     }
-
 }

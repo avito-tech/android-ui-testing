@@ -7,7 +7,7 @@ import org.junit.Test
 
 class ScrollViewScrollToEndTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<DistantViewOnScrollActivity>(launchActivity = true)
 
     @Test
@@ -21,5 +21,4 @@ class ScrollViewScrollToEndTest {
     fun isVisible_viewIsNotDisplayed() {
         Screen.distantViewOnScroll.view.checks.isNotDisplayed()
     }
-
 }

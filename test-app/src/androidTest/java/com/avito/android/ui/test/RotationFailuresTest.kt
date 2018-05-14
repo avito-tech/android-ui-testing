@@ -10,7 +10,7 @@ import org.junit.Test
 
 class RotationFailuresTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<StartForResultActivity>(launchActivity = true)
 
     @Test

@@ -13,7 +13,8 @@ class ViewPagersFlipAction(private val direction: Direction) : ViewAction {
 
     override fun getDescription() = "Pager to $direction"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(ViewPager::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(ViewPager::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         val pager = view as ViewPager

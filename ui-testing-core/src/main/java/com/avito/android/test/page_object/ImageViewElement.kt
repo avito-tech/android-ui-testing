@@ -2,7 +2,7 @@ package com.avito.android.test.page_object
 
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
-import android.support.test.espresso.assertion.ViewAssertions.*
+import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -10,10 +10,11 @@ import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.matcher.DrawableMatcherImageButton
+import com.avito.android.test.matcher.ImageShownMatcher
 import org.hamcrest.Matcher
-import ru.avito.services.component.connection_state_layout.ImageShownMatcher
 
-open class ImageViewElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+open class ImageViewElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -27,7 +28,8 @@ interface ImageViewChecks : Checks {
     fun withShownImage()
 }
 
-class ImageViewChecksImpl(private val driver: ChecksDriver) : ImageViewChecks, Checks by ChecksImpl(driver) {
+class ImageViewChecksImpl(private val driver: ChecksDriver) : ImageViewChecks,
+    Checks by ChecksImpl(driver) {
 
     override fun withSourceDrawable(@DrawableRes src: Int?, @ColorRes tint: Int?) {
         driver.check(matches(DrawableMatcherImageButton(src, tint)))

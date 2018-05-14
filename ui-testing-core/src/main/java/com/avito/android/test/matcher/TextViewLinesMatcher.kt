@@ -6,7 +6,8 @@ import android.widget.TextView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-class TextViewLinesMatcher(val matcher: Matcher<Int>) : BoundedMatcher<View, TextView>(TextView::class.java) {
+class TextViewLinesMatcher(val matcher: Matcher<Int>) :
+    BoundedMatcher<View, TextView>(TextView::class.java) {
 
     override fun describeTo(description: Description) {
         description.appendText(" has lines count ").appendDescriptionOf(matcher)
@@ -15,5 +16,4 @@ class TextViewLinesMatcher(val matcher: Matcher<Int>) : BoundedMatcher<View, Tex
     override fun matchesSafely(item: TextView): Boolean {
         return matcher.matches(item.lineCount)
     }
-
 }

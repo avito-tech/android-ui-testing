@@ -9,10 +9,10 @@ import org.junit.rules.ExpectedException
 
 class OverflowMenuTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<OverflowMenuActivity>()
 
-    @Rule @JvmField
+    @get:Rule
     val exception: ExpectedException = ExpectedException.none()
 
     @Test
@@ -35,7 +35,12 @@ class OverflowMenuTest {
 
     @Test
     fun menuItem_notFound_inOverflowMenuWithNoAutoClick() {
-        rule.launchActivity(OverflowMenuActivity.intent(MenuItem.SHOW_AS_ACTION_NEVER, "doesn't matter"))
+        rule.launchActivity(
+            OverflowMenuActivity.intent(
+                MenuItem.SHOW_AS_ACTION_NEVER,
+                "doesn't matter"
+            )
+        )
 
         exception.expect(NoMatchingViewException::class.java)
         exception.expectMessage("No views in hierarchy found matching: with text")

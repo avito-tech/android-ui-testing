@@ -6,7 +6,6 @@ import android.view.View
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-
 internal class CollapsingToolbarTitleMatcher(private val textMatcher: Matcher<CharSequence>) :
     BoundedMatcher<View, CollapsingToolbarLayout>(CollapsingToolbarLayout::class.java) {
 

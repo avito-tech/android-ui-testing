@@ -9,7 +9,10 @@ import com.avito.android.test.checks.WebElementChecks
 import org.hamcrest.Matcher
 import java.util.concurrent.TimeUnit
 
-class WebViewElement(private val webViewMatcher: Matcher<View>, private val elementMatcher: Atom<ElementReference>) :
+class WebViewElement(
+    private val webViewMatcher: Matcher<View>,
+    private val elementMatcher: Atom<ElementReference>
+) :
     PageObject() {
 
     val actions: WebElementActions

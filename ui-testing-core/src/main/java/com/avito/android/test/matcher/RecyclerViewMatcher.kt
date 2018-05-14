@@ -52,7 +52,7 @@ class RecyclerViewMatcher {
 
         private var actualView: View? = null
 
-        override final fun matchesSafely(view: View?): Boolean {
+        final override fun matchesSafely(view: View?): Boolean {
             if (view !is RecyclerView) {
                 actualView = view
                 return false
@@ -67,8 +67,5 @@ class RecyclerViewMatcher {
                 description.appendText("you trying to match RecyclerView on $actualView")
             }
         }
-
     }
-
-
 }

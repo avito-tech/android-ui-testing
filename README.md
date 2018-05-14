@@ -13,7 +13,7 @@ Not now. Work in progress.
 ## Configure
 
 ```groovy
-def uiTestingVersion = '0.1.1'
+def uiTestingVersion = '0.2.0'
 
 repositories {
     jcenter()
@@ -50,3 +50,17 @@ Functions that invokes before every action and assertion with all information ab
 ## Examples
 
 See `test-app/androidTest`
+
+## Contribution
+
+### Release
+
+To upload to bintray (mirrored to jcenter): `./gradlew bintrayUpload --info`
+
+Use `--info` to debug `bintrayUpload` task, because if completes silently in case of error
+
+Required environment variables:
+
+ - BINTRAY_USER
+ - BINTRAY_API_KEY
+ - BINTRAY_GPG_PASSPHRASE

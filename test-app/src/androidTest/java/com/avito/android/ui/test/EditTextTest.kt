@@ -6,9 +6,9 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-
 class EditTextTest {
-    @Rule @JvmField
+
+    @get:Rule
     val rule = screenRule<EditTextActivity>()
 
     @Ignore("Not working in firebase")

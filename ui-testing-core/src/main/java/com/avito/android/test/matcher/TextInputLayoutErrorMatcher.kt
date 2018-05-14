@@ -14,5 +14,6 @@ class TextInputLayoutErrorMatcher(private val stringMatcher: Matcher<String>) :
         stringMatcher.describeTo(description)
     }
 
-    override fun matchesSafely(layout: TextInputLayout): Boolean = stringMatcher.matches(layout.error.toString())
+    override fun matchesSafely(layout: TextInputLayout): Boolean =
+        stringMatcher.matches(layout.error.toString())
 }

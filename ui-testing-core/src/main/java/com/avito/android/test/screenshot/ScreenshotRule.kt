@@ -21,7 +21,6 @@ class ScreenshotRule(
         val screenShot = provider.getScreenshot()
         consumer.onScreenshotIsReady(screenShot, description)
     }
-
 }
 
 private fun <T : Annotation> Description.hasAnnotation(clazz: Class<T>): Boolean {

@@ -14,7 +14,8 @@ import com.avito.android.test.matcher.ViewPagersSelectMatcher
 import com.avito.android.test.matcher.ViewPagersTabsCountMatcher
 import org.hamcrest.Matcher
 
-class ViewPagerElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext),
+class ViewPagerElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext),
     ViewPagerActions by ViewPagerActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
@@ -53,7 +54,8 @@ interface ViewPagerChecks : Checks {
     fun withTabsCount(count: Int)
 }
 
-class ViewPagerChecksImpl(private val driver: ChecksDriver) : ViewPagerChecks, Checks by ChecksImpl(driver) {
+class ViewPagerChecksImpl(private val driver: ChecksDriver) : ViewPagerChecks,
+    Checks by ChecksImpl(driver) {
 
     override fun withSelectedPosition(position: Int) {
         driver.check(ViewAssertions.matches(ViewPagersSelectMatcher(position)))

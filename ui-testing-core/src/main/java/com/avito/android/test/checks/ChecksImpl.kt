@@ -14,7 +14,8 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.not
 
-class ChecksImpl(private val driver: ChecksDriver) : Checks, LabelChecks by LabelChecksImpl(driver) {
+class ChecksImpl(private val driver: ChecksDriver) : Checks,
+    LabelChecks by LabelChecksImpl(driver) {
 
     override fun isDisplayingAtLeast(areaPercentage: Int) {
         driver.check(matches(ViewMatchers.isDisplayingAtLeast(areaPercentage)))

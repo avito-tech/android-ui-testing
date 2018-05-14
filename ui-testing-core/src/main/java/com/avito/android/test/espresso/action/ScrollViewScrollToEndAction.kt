@@ -11,12 +11,12 @@ class ScrollViewScrollToEndAction : ViewAction {
 
     override fun getDescription() = "scroll to end of ScrollView"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(ScrollView::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(ScrollView::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         val scrollView = view as ScrollView
         scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         uiController.loopMainThreadUntilIdle()
     }
-
 }

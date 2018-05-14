@@ -14,7 +14,6 @@ import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 
-
 internal fun Drawable.isSame(context: Context, @DrawableRes resId: Int, @ColorInt tint: Int? = null): Boolean {
     return if (tint != null) {
         isSame(ContextCompat.getDrawable(context, resId)?.wrapForTinting(tint))
@@ -47,7 +46,10 @@ internal fun Int?.getResourceName(resources: Resources): String {
     return resources.getResourceName(this)
 }
 
-internal fun Int?.matchDrawable(context: Context, drawable: Drawable?, @ColorInt tint: Int? = null): Boolean {
+internal fun Int?.matchDrawable(
+    context: Context,
+    drawable: Drawable?, @ColorInt tint: Int? = null
+): Boolean {
     if (this == null) return true
     if (this == 0 && drawable == null) return true
     return drawable?.isSame(context, this, tint) ?: false
@@ -59,8 +61,8 @@ fun Drawable.toBitmap(): Bitmap {
     } else this
 
     val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth,
-            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        drawable.intrinsicWidth,
+        drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
     )
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, canvas.width, canvas.height)

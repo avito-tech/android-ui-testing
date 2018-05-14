@@ -12,12 +12,10 @@ import com.avito.android.test.page_object.PageObjectElement
 import com.avito.android.ui.R
 import org.hamcrest.Matcher
 
-
 class RecyclerInRecyclerLayoutScreen : ListElement(ViewMatchers.withId(R.id.recycler)) {
 
     val horizontalList: InnerList
         get() = typedItemByMatcher((withId(R.id.inner_recycler)))
-
 
     class InnerList(interactionContext: InteractionContext) : ListElement(interactionContext) {
 
@@ -40,6 +38,5 @@ class RecyclerInRecyclerLayoutScreen : ListElement(ViewMatchers.withId(R.id.recy
 
             val title = childFactory(withId(R.id.title))
         }
-
     }
 }

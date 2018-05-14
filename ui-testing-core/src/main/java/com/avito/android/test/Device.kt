@@ -132,7 +132,8 @@ object Device {
                     " --es uri ${notification.uri}" +
                     (notification.phash?.let { " --es phash $it" } ?: "") +
                     " --es notification {\"body\":\"${notification.messageBody}\"}"
-            UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).executeShellCommand(command)
+            UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+                .executeShellCommand(command)
         }
 
         class Notification {

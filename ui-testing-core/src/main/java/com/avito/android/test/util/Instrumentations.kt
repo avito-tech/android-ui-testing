@@ -13,7 +13,8 @@ import org.junit.Assert
 fun getCurrentActivity(): Activity {
     var currentActivity: Activity? = null
     val findResumedActivity = {
-        val resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
+        val resumedActivities =
+            ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
         if (resumedActivities.iterator().hasNext()) {
             currentActivity = resumedActivities.iterator().next()
         }

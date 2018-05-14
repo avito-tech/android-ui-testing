@@ -1,8 +1,21 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.action.*
-import android.support.test.espresso.action.GeneralLocation.*
-import android.support.test.espresso.action.SwipeDirections.*
+import android.support.test.espresso.action.CoordinatesProvider
+import android.support.test.espresso.action.GeneralLocation.BOTTOM_CENTER
+import android.support.test.espresso.action.GeneralLocation.CENTER
+import android.support.test.espresso.action.GeneralLocation.CENTER_LEFT
+import android.support.test.espresso.action.GeneralLocation.CENTER_RIGHT
+import android.support.test.espresso.action.GeneralLocation.TOP_CENTER
+import android.support.test.espresso.action.PrecisionDescriber
+import android.support.test.espresso.action.Press
+import android.support.test.espresso.action.Swipe
+import android.support.test.espresso.action.SwipeDirection
+import android.support.test.espresso.action.SwipeDirections.BOTTOM_TO_TOP
+import android.support.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
+import android.support.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
+import android.support.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
+import android.support.test.espresso.action.Swiper
+import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -11,16 +24,31 @@ import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.RecyclerViewInteractionContext
 import com.avito.android.test.SimpleInteractionContext
-import com.avito.android.test.action.*
-import com.avito.android.test.checks.*
-import com.avito.android.test.espresso.action.*
+import com.avito.android.test.action.Actions
+import com.avito.android.test.action.ActionsDriver
+import com.avito.android.test.action.ActionsImpl
+import com.avito.android.test.action.InteractionContextMatcherActions
+import com.avito.android.test.action.InteractionContextPositionActions
+import com.avito.android.test.checks.Checks
+import com.avito.android.test.checks.ChecksDriver
+import com.avito.android.test.checks.ChecksImpl
+import com.avito.android.test.checks.InteractionContextMatcherChecksDriver
+import com.avito.android.test.checks.InteractionContextPositionChecksDriver
+import com.avito.android.test.espresso.action.RecyclerSpanCountAction
+import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
+import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
+import com.avito.android.test.espresso.action.RecyclerViewVerticalOffsetAction
+import com.avito.android.test.espresso.action.ViewGetTranslationYAction
 import com.avito.android.test.matcher.RecyclerViewMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.core.AnyOf.anyOf
 
-open class ListElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+open class ListElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -34,80 +62,103 @@ open class ListElement(interactionContext: InteractionContext) : PageObjectEleme
      * Will scroll to element automatically
      */
     protected inline fun <T> typedItemByMatcher(
-            itemMatcher: Matcher<View>,
-            factory: (
-                    matcher: Matcher<View>,
-                    actions: Actions,
-                    checks: Checks,
-                    childFactory: (Matcher<View>) -> PageObjectElement
-            ) -> T
+        itemMatcher: Matcher<View>,
+        factory: (
+            matcher: Matcher<View>,
+            actions: Actions,
+            checks: Checks,
+            childFactory: (Matcher<View>) -> PageObjectElement
+        ) -> T
     ): T {
         return factory(
-                itemMatcher,
-                InteractionContextMatcherActions(interactionContext, itemMatcher, itemMatcher),
-                ChecksImpl(InteractionContextMatcherChecksDriver(interactionContext, itemMatcher, itemMatcher)),
-                { childMatcher ->
-                    PageObjectElement(
-                            childMatcher,
-                            actions = InteractionContextMatcherActions(interactionContext, itemMatcher, childMatcher),
-                            checks = ChecksImpl(
-                                    InteractionContextMatcherChecksDriver(
-                                            interactionContext,
-                                            itemMatcher,
-                                            childMatcher
-                                    )
-                            )
+            itemMatcher,
+            InteractionContextMatcherActions(interactionContext, itemMatcher, itemMatcher),
+            ChecksImpl(
+                InteractionContextMatcherChecksDriver(
+                    interactionContext,
+                    itemMatcher,
+                    itemMatcher
+                )
+            ),
+            { childMatcher ->
+                PageObjectElement(
+                    childMatcher,
+                    actions = InteractionContextMatcherActions(
+                        interactionContext,
+                        itemMatcher,
+                        childMatcher
+                    ),
+                    checks = ChecksImpl(
+                        InteractionContextMatcherChecksDriver(
+                            interactionContext,
+                            itemMatcher,
+                            childMatcher
+                        )
                     )
-                })
+                )
+            })
     }
 
     //todo make me lazy
     protected inline fun <reified T : PageObjectElement> typedItemByMatcher(
-            matcher: Matcher<View>,
-            position: Int = 0
+        matcher: Matcher<View>,
+        position: Int = 0
     ): T =
-            T::class.java.getConstructor(InteractionContext::class.java)
-                    .newInstance(
-                            RecyclerViewInteractionContext(
-                                    interactionContext = interactionContext,
-                                    cellMatcher = anyOf(hasDescendant(matcher), matcher),
-                                    childMatcher = matcher,
-                                    position = position
-                            )
-                    )
+        T::class.java.getConstructor(InteractionContext::class.java)
+            .newInstance(
+                RecyclerViewInteractionContext(
+                    interactionContext = interactionContext,
+                    cellMatcher = anyOf(hasDescendant(matcher), matcher),
+                    childMatcher = matcher,
+                    position = position
+                )
+            )
 
     protected inline fun <T> typedItemAtPosition(
-            itemMatcher: Matcher<View>,
-            position: Int,
-            factory: (
-                    matcher: Matcher<View>,
-                    actions: Actions,
-                    checks: Checks,
-                    childFactory: (Matcher<View>) -> PageObjectElement
-            ) -> T
+        itemMatcher: Matcher<View>,
+        position: Int,
+        factory: (
+            matcher: Matcher<View>,
+            actions: Actions,
+            checks: Checks,
+            childFactory: (Matcher<View>) -> PageObjectElement
+        ) -> T
     ): T {
 
         return factory(
-                itemMatcher,
-                InteractionContextPositionActions(interactionContext, position, itemMatcher),
-                ChecksImpl(InteractionContextPositionChecksDriver(interactionContext, position, itemMatcher)),
-                { childMatcher ->
-                    PageObjectElement(
-                            childMatcher,
-                            actions = InteractionContextPositionActions(interactionContext, position, childMatcher),
-                            checks = ChecksImpl(
-                                    InteractionContextPositionChecksDriver(
-                                            interactionContext,
-                                            position,
-                                            childMatcher
-                                    )
-                            )
+            itemMatcher,
+            InteractionContextPositionActions(interactionContext, position, itemMatcher),
+            ChecksImpl(
+                InteractionContextPositionChecksDriver(
+                    interactionContext,
+                    position,
+                    itemMatcher
+                )
+            ),
+            { childMatcher ->
+                PageObjectElement(
+                    childMatcher,
+                    actions = InteractionContextPositionActions(
+                        interactionContext,
+                        position,
+                        childMatcher
+                    ),
+                    checks = ChecksImpl(
+                        InteractionContextPositionChecksDriver(
+                            interactionContext,
+                            position,
+                            childMatcher
+                        )
                     )
-                })
+                )
+            })
     }
 
-    class ListActions private constructor(private val driver: ActionsDriver, private val actions: Actions) :
-            Actions by actions {
+    class ListActions private constructor(
+        private val driver: ActionsDriver,
+        private val actions: Actions
+    ) :
+        Actions by actions {
 
         constructor(driver: ActionsDriver) : this(driver, ActionsImpl(driver))
 
@@ -122,7 +173,12 @@ open class ListElement(interactionContext: InteractionContext) : PageObjectEleme
         }
 
         fun clickOnHolder(holder: Matcher<RecyclerView.ViewHolder>, position: Int = 0) {
-            driver.perform(RecyclerViewActions.actionOnHolderItem(holder, ViewActions.click()).atPosition(position))
+            driver.perform(
+                RecyclerViewActions.actionOnHolderItem(
+                    holder,
+                    ViewActions.click()
+                ).atPosition(position)
+            )
         }
 
         val translationY
@@ -150,7 +206,11 @@ open class ListElement(interactionContext: InteractionContext) : PageObjectEleme
             }
         }, Swipe.SLOW, Press.FINGER)
 
-        override fun swipe(direction: SwipeDirection, speed: Swiper, precision: PrecisionDescriber) {
+        override fun swipe(
+            direction: SwipeDirection,
+            speed: Swiper,
+            precision: PrecisionDescriber
+        ) {
             actions.swipe(object : SwipeDirection {
                 override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
                     return when (direction) {
@@ -187,10 +247,15 @@ open class ListElement(interactionContext: InteractionContext) : PageObjectEleme
         }
 
         fun firstVisiblePosition(positionMatcher: Matcher<Int>) {
-            driver.check(ViewAssertions.matches(RecyclerViewMatcher().firstVisibleItemPosition(positionMatcher)))
+            driver.check(
+                ViewAssertions.matches(
+                    RecyclerViewMatcher().firstVisibleItemPosition(
+                        positionMatcher
+                    )
+                )
+            )
         }
 
         fun isNotEmpty() = withItemsCount(greaterThan(0))
-
     }
 }

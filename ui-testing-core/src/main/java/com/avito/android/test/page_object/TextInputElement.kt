@@ -2,21 +2,27 @@ package com.avito.android.test.page_object
 
 import android.support.test.espresso.assertion.ViewAssertions
 import com.avito.android.test.InteractionContext
-import com.avito.android.test.checks.*
+import com.avito.android.test.checks.Checks
+import com.avito.android.test.checks.ChecksImpl
+import com.avito.android.test.checks.PasswordFieldChecks
+import com.avito.android.test.checks.TextFieldErrorChecks
+import com.avito.android.test.checks.TextFieldHintChecks
 import com.avito.android.test.matcher.TextInputLayoutErrorMatcher
 import com.avito.android.test.matcher.TextInputLayoutHintMatcher
 import com.avito.android.test.matcher.TextInputPasswordVisibilityMatcher
 import org.hamcrest.Matchers.`is`
 
-class TextInputElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+class TextInputElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     override val checks: TextInputChecks = TextInputChecks(interactionContext)
 }
 
-class TextInputChecks(private val interactionContext: InteractionContext) : Checks by ChecksImpl(interactionContext),
-        PasswordFieldChecks,
-        TextFieldErrorChecks,
-        TextFieldHintChecks {
+class TextInputChecks(private val interactionContext: InteractionContext) :
+    Checks by ChecksImpl(interactionContext),
+    PasswordFieldChecks,
+    TextFieldErrorChecks,
+    TextFieldHintChecks {
 
     override fun withErrorText(text: String) {
         interactionContext.check(ViewAssertions.matches(TextInputLayoutErrorMatcher(`is`(text))))
@@ -31,6 +37,14 @@ class TextInputChecks(private val interactionContext: InteractionContext) : Chec
     }
 
     override fun isPasswordHidden() {
-        interactionContext.check(ViewAssertions.matches(TextInputPasswordVisibilityMatcher(`is`(false))))
+        interactionContext.check(
+            ViewAssertions.matches(
+                TextInputPasswordVisibilityMatcher(
+                    `is`(
+                        false
+                    )
+                )
+            )
+        )
     }
 }

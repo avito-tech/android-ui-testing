@@ -34,5 +34,4 @@ class WebElementActions(private val interaction: Web.WebInteraction<Void>) : Act
     fun write(text: String) {
         interaction.perform(DriverAtoms.webKeys(text))
     }
-
 }

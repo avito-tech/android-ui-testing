@@ -6,7 +6,6 @@ import android.view.View
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.any
 
-
 class WaitForIdleAction : ViewAction {
 
     override fun getDescription() = "Loops the main thread until the application goes idle."

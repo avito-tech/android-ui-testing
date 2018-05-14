@@ -8,7 +8,7 @@ import org.junit.Test
 
 class SwipeRefreshTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<SwipeRefreshActivity>()
 
     @Test

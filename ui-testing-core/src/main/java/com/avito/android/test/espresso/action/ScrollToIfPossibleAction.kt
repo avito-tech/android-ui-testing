@@ -20,11 +20,9 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anyOf
 
 /**
- * Don't use directly, only via [[EspressoActions]]
+ * Don't use directly, only via EspressoActions
  */
 class ScrollToIfPossibleAction : ViewAction {
-
-    private val VIEW_DISPLAY_THRESHOLD_PERCENT = 90
 
     private val scrollableContainerMatcher = anyOf(
         isAssignableFrom(ScrollView::class.java),
@@ -33,7 +31,8 @@ class ScrollToIfPossibleAction : ViewAction {
         isAssignableFrom(NestedScrollView::class.java)
     )
 
-    override fun getConstraints(): Matcher<View> = allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+    override fun getConstraints(): Matcher<View> =
+        allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
 
     override fun getDescription(): String = "scroll to"
 
@@ -62,5 +61,8 @@ class ScrollToIfPossibleAction : ViewAction {
         }
     }
 
-    private fun View.isDisplayed(): Boolean = isDisplayingAtLeast(VIEW_DISPLAY_THRESHOLD_PERCENT).matches(this)
+    private fun View.isDisplayed(): Boolean =
+        isDisplayingAtLeast(VIEW_DISPLAY_THRESHOLD_PERCENT).matches(this)
 }
+
+private const val VIEW_DISPLAY_THRESHOLD_PERCENT = 90

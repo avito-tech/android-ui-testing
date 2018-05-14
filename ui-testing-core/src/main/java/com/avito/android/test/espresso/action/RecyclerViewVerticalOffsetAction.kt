@@ -20,10 +20,10 @@ class RecyclerViewVerticalOffsetAction : ViewAction {
 
     override fun getDescription() = "getting vertical offset"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(RecyclerView::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(RecyclerView::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         result = ((view as RecyclerView).computeVerticalScrollOffset())
     }
-
 }

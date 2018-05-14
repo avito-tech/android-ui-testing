@@ -2,7 +2,6 @@ package com.avito.android.test.checks
 
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
-import android.support.test.espresso.ViewAssertion
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.matcher.LayoutMatchers
 import android.support.test.espresso.matcher.ViewMatchers
@@ -105,7 +104,17 @@ class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
         @DrawableRes bottom: Int?,
         @ColorInt tint: Int?
     ) {
-        driver.check(ViewAssertions.matches(CompoundDrawableMatcher(left, top, right, bottom, tint)))
+        driver.check(
+            ViewAssertions.matches(
+                CompoundDrawableMatcher(
+                    left,
+                    top,
+                    right,
+                    bottom,
+                    tint
+                )
+            )
+        )
     }
 
     private fun displayedAndMatchedWith(matcher: Matcher<View>) {

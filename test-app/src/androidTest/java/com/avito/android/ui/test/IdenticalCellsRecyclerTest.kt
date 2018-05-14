@@ -6,7 +6,7 @@ import org.junit.Test
 
 class IdenticalCellsRecyclerTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<IdenticalCellsRecyclerActivity>()
 
     @Test

@@ -20,10 +20,10 @@ class RecyclerViewItemsCountAction : ViewAction {
 
     override fun getDescription() = "getting items count from recycler view adapter"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(RecyclerView::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(RecyclerView::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         result = ((view as RecyclerView).adapter.itemCount)
     }
-
 }

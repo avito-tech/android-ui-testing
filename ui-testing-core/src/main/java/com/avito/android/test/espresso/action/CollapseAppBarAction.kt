@@ -11,12 +11,12 @@ class CollapseAppBarAction : ViewAction {
 
     override fun getDescription() = "collapsing AppBar"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(AppBarLayout::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(AppBarLayout::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         val appBarLayout = view as AppBarLayout
         appBarLayout.setExpanded(false)
         uiController.loopMainThreadUntilIdle()
     }
-
 }

@@ -14,7 +14,6 @@ class SwitchElement(interactionContext: InteractionContext) : PageObjectElement(
     SwitchElementActions by SwitchElementActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
-
 }
 
 interface SwitchElementActions {
@@ -31,7 +30,8 @@ class SwitchElementActionsImpl(private val driver: ActionsDriver) : SwitchElemen
 
 class SetSwitchIsCheckedAction(private val isChecked: Boolean) : ViewAction {
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(SwitchCompat::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(SwitchCompat::class.java)
 
     override fun getDescription(): String = "Switch state to $isChecked"
 

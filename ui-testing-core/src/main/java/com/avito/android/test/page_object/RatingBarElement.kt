@@ -15,7 +15,8 @@ import com.avito.android.test.checks.ChecksImpl
 import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
-class RatingBarElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext),
+class RatingBarElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext),
     RatingBarActions by RatingBarActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
@@ -59,7 +60,8 @@ class RatingBarChecksImpl(private val driver: ChecksDriver) : RatingBarChecks,
 
 class SetRatingAction(private val rating: Float) : ViewAction {
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(RatingBar::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(RatingBar::class.java)
 
     override fun getDescription(): String = "Set rating for RatingBar"
 

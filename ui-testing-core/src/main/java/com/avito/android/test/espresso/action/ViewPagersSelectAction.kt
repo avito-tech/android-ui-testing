@@ -11,12 +11,12 @@ class ViewPagersSelectAction(private val tabPosition: Int) : ViewAction {
 
     override fun getDescription() = "selecting ViewPager"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(ViewPager::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(ViewPager::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         val viewPager = view as ViewPager
         viewPager.currentItem = tabPosition
         uiController.loopMainThreadUntilIdle()
     }
-
 }

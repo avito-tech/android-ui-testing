@@ -10,7 +10,7 @@ import org.hamcrest.TypeSafeMatcher
 class HintMatcher(val hint: String) : TypeSafeMatcher<View>() {
 
     override fun describeTo(description: Description) {
-        description.appendText("with hint: " + hint)
+        description.appendText("with hint: $hint")
     }
 
     public override fun matchesSafely(view: View) =

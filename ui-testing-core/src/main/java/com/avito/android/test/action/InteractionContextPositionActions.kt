@@ -13,7 +13,6 @@ import com.avito.android.test.espresso.action.TextViewReadAction
 import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher
 
-
 class InteractionContextPositionActions(
     private val interactionContext: InteractionContext,
     private val position: Int,
@@ -21,7 +20,11 @@ class InteractionContextPositionActions(
 ) : Actions {
 
     override fun scrollTo() {
-        interactionContext.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
+        interactionContext.perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                position
+            )
+        )
     }
 
     override fun click() {

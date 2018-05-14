@@ -41,5 +41,4 @@ open class DrawableMatcher<T : View>(
     private fun getDescription(resources: Resources): String {
         return "drawable=${src.getResourceName(resources)}"
     }
-
 }

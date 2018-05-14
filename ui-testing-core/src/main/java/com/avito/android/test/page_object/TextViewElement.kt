@@ -6,7 +6,8 @@ import com.avito.android.test.SimpleInteractionContext
 import org.hamcrest.Matcher
 
 @Deprecated("Use PageObjectElement")
-class TextViewElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+class TextViewElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 }

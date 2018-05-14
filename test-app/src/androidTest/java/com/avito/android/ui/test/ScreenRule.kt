@@ -36,7 +36,8 @@ class GodRuleChain<out T : Activity>(private val chain: RuleChain) : TestRule {
 
     fun launchActivity(intent: Intent?): T = activityTestRule.launchActivity(intent)
 
-    fun launchActivity(func: (Intent) -> Intent): T = activityTestRule.launchActivity(func(Intent(Intent.ACTION_MAIN)))
+    fun launchActivity(func: (Intent) -> Intent): T =
+        activityTestRule.launchActivity(func(Intent(Intent.ACTION_MAIN)))
 
     override fun apply(base: Statement?, description: Description?): Statement {
         return chain.apply(base, description)

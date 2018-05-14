@@ -5,7 +5,13 @@ import android.support.test.espresso.Espresso
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.ViewAssertion
 import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withClassName
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageButton
@@ -26,12 +32,19 @@ import com.avito.android.test.matcher.ToolbarTitleResMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.anyOf
+import org.hamcrest.Matchers.endsWith
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.TypeSafeMatcher
 
-open class ToolbarElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+open class ToolbarElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
-    constructor(matcher: Matcher<View> = isAssignableFrom(Toolbar::class.java)) : this(SimpleInteractionContext(matcher))
+    constructor(matcher: Matcher<View> = isAssignableFrom(Toolbar::class.java)) : this(
+        SimpleInteractionContext(matcher)
+    )
 
     override val checks: ToolbarElementChecks = ToolbarElementChecksImpl(interactionContext)
 
@@ -43,44 +56,50 @@ open class ToolbarElement(interactionContext: InteractionContext) : PageObjectEl
      * we add the class name matcher as another option to find the view.
      */
     private val OVERFLOW_BUTTON_MATCHER = anyOf<View>(
-            allOf<View>(isDisplayed(), withContentDescription("More options")),
-            allOf<View>(isDisplayed(), withClassName(endsWith("OverflowMenuButton")))
+        allOf<View>(isDisplayed(), withContentDescription("More options")),
+        allOf<View>(isDisplayed(), withClassName(endsWith("OverflowMenuButton")))
     )
 
     val upButton = ImageViewElement(
-            interactionContext.provideChildContext(
-                    allOf(
-                            isAssignableFrom(ImageButton::class.java),
-                            withId(View.NO_ID)
-                    )
+        interactionContext.provideChildContext(
+            allOf(
+                isAssignableFrom(ImageButton::class.java),
+                withId(View.NO_ID)
             )
+        )
     )
 
     val overflowMenuButton = PageObjectElement(OVERFLOW_BUTTON_MATCHER)
 
     protected fun overflowMenuItem(titleMatcher: Matcher<String>) =
-            MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
+        MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
 
     protected fun overflowMenuItem(title: String) = overflowMenuItem(equalTo(title))
 
     protected fun actionMenuItem(titleMatcher: Matcher<String>) =
-            MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
+        MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
 
     protected fun actionMenuItem(title: String) = actionMenuItem(equalTo(title))
 
     class MenuItem(
-            private val toolbarMatcher: Matcher<View>,
-            private val titleMatcher: Matcher<String>,
-            private var overflowMenuButton: PageObjectElement?
+        private val toolbarMatcher: Matcher<View>,
+        private val titleMatcher: Matcher<String>,
+        private var overflowMenuButton: PageObjectElement?
     ) : PageObjectElement(RestrictedDirectAccessMatcher()) {
 
         override val actions: Actions
-            get() = ActionsImpl(OverflowMenuDriver(toolbarMatcher, titleMatcher, overflowMenuButton))
+            get() = ActionsImpl(
+                OverflowMenuDriver(
+                    toolbarMatcher,
+                    titleMatcher,
+                    overflowMenuButton
+                )
+            )
 
         override val checks
             get() = OverflowMenuChecksImpl(
-                    toolbarMatcher, titleMatcher,
-                    ChecksImpl(OverflowMenuDriver(toolbarMatcher, titleMatcher, overflowMenuButton))
+                toolbarMatcher, titleMatcher,
+                ChecksImpl(OverflowMenuDriver(toolbarMatcher, titleMatcher, overflowMenuButton))
             )
 
         fun disableOverflowMenuAutoOpen(): MenuItem {
@@ -91,12 +110,12 @@ open class ToolbarElement(interactionContext: InteractionContext) : PageObjectEl
 
     /** In some cases, there is no need to expand overflow menu, if element could be found with reflection. */
     class OverflowMenuChecksImpl(
-            private val toolbarMatcher: Matcher<View>,
-            private val titleMatcher: Matcher<String>,
-            private val checks: Checks
+        private val toolbarMatcher: Matcher<View>,
+        private val titleMatcher: Matcher<String>,
+        private val checks: Checks
     ) : Checks by checks {
         private val foundHidden
-            private get() = ToolbarReadMenuItemsAction().apply {
+            get() = ToolbarReadMenuItemsAction().apply {
                 Espresso.onView(toolbarMatcher).perform(this)
             }.hasHiddenItem(titleMatcher)
 
@@ -122,22 +141,25 @@ open class ToolbarElement(interactionContext: InteractionContext) : PageObjectEl
     }
 
     private class OverflowMenuDriver(
-            private val toolbarMatcher: Matcher<View>,
-            private val titleMatcher: Matcher<String>,
-            private val overflowMenuButton: PageObjectElement?
+        toolbarMatcher: Matcher<View>,
+        private val titleMatcher: Matcher<String>,
+        private val overflowMenuButton: PageObjectElement?
     ) : ActionsDriver, ChecksDriver {
 
         private val actionInteraction = Espresso.onView(
-                allOf(
-                        isDescendantOfA(isAssignableFrom(Toolbar::class.java)),
-                        anyOf(withText(titleMatcher), withContentDescription(titleMatcher))
-                )
+            allOf(
+                isDescendantOfA(isAssignableFrom(Toolbar::class.java)),
+                anyOf(withText(titleMatcher), withContentDescription(titleMatcher))
+            )
         )
         private val overflowInteraction = Espresso.onView(withText(titleMatcher))
         private val toolbarInteraction = Espresso.onView(toolbarMatcher)
 
         override fun perform(vararg actions: ViewAction) {
-            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(titleMatcher)) {
+            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(
+                    titleMatcher
+                )
+            ) {
                 // do not click if disableOverflowMenuAutoOpen() was specified
                 overflowMenuButton?.click()
                 overflowInteraction.perform(*actions)
@@ -147,7 +169,10 @@ open class ToolbarElement(interactionContext: InteractionContext) : PageObjectEl
         }
 
         override fun check(assertion: ViewAssertion) {
-            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(titleMatcher)) {
+            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(
+                    titleMatcher
+                )
+            ) {
                 overflowMenuButton?.click()
                 overflowInteraction.check(assertion)
                 Device.pressBack()
@@ -169,7 +194,8 @@ interface ToolbarElementChecks : Checks {
     fun withSubtitle(@StringRes resId: Int)
 }
 
-class ToolbarElementChecksImpl(private val driver: ChecksDriver) : ToolbarElementChecks, Checks by ChecksImpl(driver) {
+class ToolbarElementChecksImpl(private val driver: ChecksDriver) : ToolbarElementChecks,
+    Checks by ChecksImpl(driver) {
 
     override fun withTitle(text: String) {
         driver.check(ViewAssertions.matches(ToolbarTitleMatcher(`is`(text))))

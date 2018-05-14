@@ -21,10 +21,10 @@ class RecyclerSpanCountAction : ViewAction {
 
     override fun getDescription() = "getting grid layout manager span count"
 
-    override fun getConstraints(): Matcher<View> = ViewMatchers.isAssignableFrom(RecyclerView::class.java)
+    override fun getConstraints(): Matcher<View> =
+        ViewMatchers.isAssignableFrom(RecyclerView::class.java)
 
     override fun perform(uiController: UiController, view: View) {
         result = ((view as RecyclerView).layoutManager as GridLayoutManager).spanCount
     }
-
 }

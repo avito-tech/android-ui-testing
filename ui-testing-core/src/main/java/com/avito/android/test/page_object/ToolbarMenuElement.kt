@@ -14,7 +14,8 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 
-class ToolbarMenuElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+class ToolbarMenuElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -24,7 +25,7 @@ class ToolbarMenuElement(interactionContext: InteractionContext) : PageObjectEle
 interface ToolbarMenuElementChecks : Checks
 
 class ToolbarMenuElementChecksImpl(private val driver: ChecksDriver) : ToolbarMenuElementChecks,
-        Checks by ChecksImpl(driver) {
+    Checks by ChecksImpl(driver) {
 
     override fun isChecked() {
         driver.check(matches(ToolbarMenuElementCheckedMatcher(`is`(true))))
@@ -36,7 +37,7 @@ class ToolbarMenuElementChecksImpl(private val driver: ChecksDriver) : ToolbarMe
 }
 
 class ToolbarMenuElementCheckedMatcher(private val checkedMatcher: Matcher<Boolean>) :
-        BoundedMatcher<View, View>(View::class.java, MenuView.ItemView::class.java) {
+    BoundedMatcher<View, View>(View::class.java, MenuView.ItemView::class.java) {
 
     @SuppressLint("RestrictedApi")
     override fun matchesSafely(item: View): Boolean {

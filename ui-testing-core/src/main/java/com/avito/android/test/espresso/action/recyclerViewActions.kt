@@ -21,16 +21,16 @@ import org.hamcrest.TypeSafeMatcher
 import java.util.*
 
 class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
-        viewHolderMatcher: Matcher<VH>,
-        viewAction: ViewAction,
-        private val atPosition: Int = NO_POSITION
+    viewHolderMatcher: Matcher<VH>,
+    viewAction: ViewAction,
+    private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
 
     private val viewHolderMatcher: Matcher<VH> = checkNotNull(viewHolderMatcher)
     private val viewAction: ViewAction = checkNotNull(viewAction)
 
     override fun getConstraints(): Matcher<View> =
-            allOf<View>(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+        allOf<View>(isAssignableFrom(RecyclerView::class.java), isDisplayed())
 
     override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
         checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
@@ -38,13 +38,17 @@ class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> construc
     }
 
     override fun getDescription(): String = if (atPosition == NO_POSITION) {
-        String.format("performing ViewAction: %s on item matching: %s", viewAction.description, viewHolderMatcher)
+        String.format(
+            "performing ViewAction: %s on item matching: %s",
+            viewAction.description,
+            viewHolderMatcher
+        )
     } else {
         String.format(
-                "performing ViewAction: %s on %d-th item matching: %s",
-                viewAction.description,
-                atPosition,
-                viewHolderMatcher
+            "performing ViewAction: %s on %d-th item matching: %s",
+            viewAction.description,
+            atPosition,
+            viewHolderMatcher
         )
     }
 
@@ -58,18 +62,19 @@ class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> construc
             if (matchedItems.isNotEmpty()) {
                 val position = matchedItems[selectIndex].position
                 @Suppress("UNCHECKED_CAST")
-                val viewHolderForPosition = recyclerView.findViewHolderForAdapterPosition(position) as VH?
+                val viewHolderForPosition =
+                    recyclerView.findViewHolderForAdapterPosition(position) as VH?
                 val viewAtPosition = viewHolderForPosition?.itemView
 
                 assertThat<Boolean>(
-                        "View is present in the hierarchy: " +
-                                HumanReadables.describe(viewAtPosition), true, `is`(false)
+                    "View is present in the hierarchy: " +
+                            HumanReadables.describe(viewAtPosition), true, `is`(false)
                 )
             }
             uiController.loopMainThreadUntilIdle()
         } catch (e: RuntimeException) {
             throw PerformException.Builder().withActionDescription(this.description)
-                    .withViewDescription(HumanReadables.describe(root)).withCause(e).build()
+                .withViewDescription(HumanReadables.describe(root)).withCause(e).build()
         }
     }
 }
@@ -81,8 +86,8 @@ class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> construc
  * See [RecyclerViewActions.scrollTo] for more details.
  */
 class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
-        private val viewHolderMatcher: Matcher<VH>,
-        private val atPosition: Int = NO_POSITION
+    private val viewHolderMatcher: Matcher<VH>,
+    private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
 
     override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
@@ -99,8 +104,8 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
             "scroll RecyclerView to: " + viewHolderMatcher
         } else {
             String.format(
-                    "scroll RecyclerView to the: %dth matching %s.", atPosition,
-                    viewHolderMatcher
+                "scroll RecyclerView to the: %dth matching %s.", atPosition,
+                viewHolderMatcher
             )
         }
     }
@@ -114,16 +119,18 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
 
             if (selectIndex >= matchedItems.size) {
                 throw RuntimeException(
-                        String.format(
-                                "Found %d items matching %s, but position %d was requested.", matchedItems.size,
-                                viewHolderMatcher.toString(), atPosition
-                        )
+                    String.format(
+                        "Found %d items matching %s, but position %d was requested.",
+                        matchedItems.size,
+                        viewHolderMatcher.toString(),
+                        atPosition
+                    )
                 )
             }
             if (atPosition == NO_POSITION && matchedItems.size == 2) {
                 val ambiguousViewError = StringBuilder()
                 ambiguousViewError.append(
-                        String.format("Found more than one sub-view matching %s", viewHolderMatcher)
+                    String.format("Found more than one sub-view matching %s", viewHolderMatcher)
                 )
                 for (item in matchedItems) {
                     ambiguousViewError.append(item.toString() + "\n")
@@ -134,7 +141,7 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
             uiController.loopMainThreadUntilIdle()
         } catch (e: RuntimeException) {
             throw PerformException.Builder().withActionDescription(this.description)
-                    .withViewDescription(HumanReadables.describe(view)).withCause(e).build()
+                .withViewDescription(HumanReadables.describe(view)).withCause(e).build()
         }
     }
 }
@@ -152,7 +159,7 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
  * @throws RuntimeException if more than one item or item could not be found. </VH>
  */
 private fun <T : VH, VH : RecyclerView.ViewHolder> itemsMatching(
-        recyclerView: RecyclerView, viewHolderMatcher: Matcher<VH>, max: Int
+    recyclerView: RecyclerView, viewHolderMatcher: Matcher<VH>, max: Int
 ): List<MatchedItem> {
     val adapter = recyclerView.adapter
     val viewHolderCache = SparseArray<VH>()
@@ -171,13 +178,13 @@ private fun <T : VH, VH : RecyclerView.ViewHolder> itemsMatching(
         adapter.bindViewHolder(cachedViewHolder as T, position)
         if (viewHolderMatcher.matches(cachedViewHolder)) {
             matchedItems.add(
-                    MatchedItem(
-                            position,
-                            HumanReadables.getViewHierarchyErrorMessage(
-                                    cachedViewHolder.itemView, null,
-                                    "\n\n*** Matched ViewHolder item at position: $position ***", null
-                            )
+                MatchedItem(
+                    position,
+                    HumanReadables.getViewHierarchyErrorMessage(
+                        cachedViewHolder.itemView, null,
+                        "\n\n*** Matched ViewHolder item at position: $position ***", null
                     )
+                )
             )
             if (matchedItems.size == max) {
                 break
@@ -203,16 +210,16 @@ private class MatchedItem(val position: Int, val description: String) {
  * @return a matcher which matches a view holder containing item matching itemViewMatcher.
  */
 private fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(itemViewMatcher: Matcher<View>) =
-        object : TypeSafeMatcher<VH>() {
-            override fun matchesSafely(viewHolder: VH): Boolean {
-                return itemViewMatcher.matches(viewHolder.itemView)
-            }
-
-            override fun describeTo(description: Description) {
-                description.appendText("holder with view: ")
-                itemViewMatcher.describeTo(description)
-            }
+    object : TypeSafeMatcher<VH>() {
+        override fun matchesSafely(viewHolder: VH): Boolean {
+            return itemViewMatcher.matches(viewHolder.itemView)
         }
+
+        override fun describeTo(description: Description) {
+            description.appendText("holder with view: ")
+            itemViewMatcher.describeTo(description)
+        }
+    }
 
 /**
  * Performs a [ViewAction] on a view matched by viewHolderMatcher.
@@ -229,8 +236,8 @@ private fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(itemViewMatcher: Ma
  * @throws PerformException if there are more than one items matching given viewHolderMatcher.
  */
 fun <VH : RecyclerView.ViewHolder> actionOnItem(
-        itemViewMatcher: Matcher<View>,
-        viewAction: ViewAction
+    itemViewMatcher: Matcher<View>,
+    viewAction: ViewAction
 ): RecyclerViewActions.PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
     return ViewDoesntExistsInRecyclerCheckHack(viewHolderMatcher, viewAction)
@@ -248,21 +255,23 @@ fun <VH : RecyclerView.ViewHolder> actionOnItem(
  * @param viewAction the action that is performed on the view matched by itemViewMatcher
  */
 fun <VH : RecyclerView.ViewHolder> actionOnItemAtPosition(
-        position: Int,
-        viewAction: ViewAction
+    position: Int,
+    viewAction: ViewAction
 ): ViewAction {
     return ActionOnItemAtPositionViewAction<VH>(position, viewAction)
 }
 
 private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
-        private val position: Int,
-        private val viewAction: ViewAction
+    private val position: Int,
+    private val viewAction: ViewAction
 ) : ViewAction {
 
-    override fun getConstraints(): Matcher<View> = allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+    override fun getConstraints(): Matcher<View> =
+        allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
 
-    override fun getDescription(): String = ("actionOnItemAtPosition performing ViewAction: " + viewAction.description
-            + " on item at position: " + position)
+    override fun getDescription(): String =
+        ("actionOnItemAtPosition performing ViewAction: " + viewAction.description
+                + " on item at position: " + position)
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
@@ -273,14 +282,14 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
         @Suppress("UNCHECKED_CAST")
         val viewHolderForPosition = recyclerView.findViewHolderForAdapterPosition(position) as VH?
                 ?: throw PerformException.Builder().withActionDescription(this.toString())
-                        .withViewDescription(HumanReadables.describe(view))
-                        .withCause(IllegalStateException("No view holder at position: " + position))
-                        .build()
+                    .withViewDescription(HumanReadables.describe(view))
+                    .withCause(IllegalStateException("No view holder at position: $position"))
+                    .build()
 
         val viewAtPosition =
-                viewHolderForPosition.itemView
-                        ?: throw PerformException.Builder().withActionDescription(this.toString())
-                                .withCause(IllegalStateException("No view at position: " + position)).build()
+            viewHolderForPosition.itemView
+                    ?: throw PerformException.Builder().withActionDescription(this.toString())
+                        .withCause(IllegalStateException("No view at position: $position")).build()
 
         viewAction.perform(uiController, viewAtPosition)
     }
@@ -296,9 +305,7 @@ private class ScrollToPositionViewAction(private val position: Int) : ViewAction
         return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
     }
 
-    override fun getDescription(): String {
-        return "scroll RecyclerView to position: " + position
-    }
+    override fun getDescription(): String = "scroll RecyclerView to position: $position"
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView

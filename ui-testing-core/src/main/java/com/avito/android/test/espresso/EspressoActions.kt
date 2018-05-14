@@ -52,6 +52,13 @@ object EspressoActions {
         precision: PrecisionDescriber = Press.FINGER
     ): ViewAction {
         val providers = direction.toCoordinateProvider()
-        return actionWithAssertions(GeneralSwipeAction(speed, providers.first, providers.second, precision))
+        return actionWithAssertions(
+            GeneralSwipeAction(
+                speed,
+                providers.first,
+                providers.second,
+                precision
+            )
+        )
     }
 }

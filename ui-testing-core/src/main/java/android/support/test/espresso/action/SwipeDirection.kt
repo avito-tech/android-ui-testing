@@ -6,13 +6,6 @@ import android.support.test.espresso.action.GeneralLocation.CENTER_RIGHT
 import android.support.test.espresso.action.GeneralLocation.TOP_CENTER
 import android.support.test.espresso.action.GeneralLocation.translate
 
-/**
- * The distance of a swipe's start position from the view's edge, in terms of the view's length.
- * We do not start the swipe exactly on the view's edge, but somewhat more inward, since swiping
- * from the exact edge may behave in an unexpected way (e.g. may open a navigation drawer).
- */
-private val EDGE_FUZZ_FACTOR = 0.083f
-
 interface SwipeDirection {
     fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider>
 }
@@ -39,3 +32,10 @@ enum class SwipeDirections : SwipeDirection {
         }
     }
 }
+
+/**
+ * The distance of a swipe's start position from the view's edge, in terms of the view's length.
+ * We do not start the swipe exactly on the view's edge, but somewhat more inward, since swiping
+ * from the exact edge may behave in an unexpected way (e.g. may open a navigation drawer).
+ */
+private const val EDGE_FUZZ_FACTOR = 0.083f

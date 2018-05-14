@@ -14,7 +14,11 @@ interface Actions {
 
     fun scrollTo()
 
-    fun swipe(direction: SwipeDirection, speed: Swiper = Swipe.FAST, precision: PrecisionDescriber = Press.FINGER)
+    fun swipe(
+        direction: SwipeDirection,
+        speed: Swiper = Swipe.FAST,
+        precision: PrecisionDescriber = Press.FINGER
+    )
 
     fun read(): String
 }

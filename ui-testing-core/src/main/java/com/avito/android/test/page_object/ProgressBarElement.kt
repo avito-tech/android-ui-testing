@@ -11,7 +11,8 @@ import com.avito.android.test.checks.ChecksImpl
 import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
-class ProgressBarElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext) {
+class ProgressBarElement(interactionContext: InteractionContext) :
+    PageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

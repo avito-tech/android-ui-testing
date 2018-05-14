@@ -59,13 +59,14 @@ class SwipeRefreshChecksImpl(private val driver: ChecksDriver) : SwipeRefreshChe
     }
 }
 
-/** WISDOM
+/**
+ * WISDOM
  * sometimes default GeneralSwipeAction constraint fails, need to override it.
  * see https://stackoverflow.com/questions/33505953/espresso-how-to-test-swiperefreshlayout
  * */
 class SwipeRefreshTolerantAction : ViewAction {
+
     val action = EspressoActions.swipe(SwipeDirections.TOP_TO_BOTTOM)
-    private val VIEW_DISPLAY_PERCENTAGE = 85
 
     override fun getDescription() =
         "SwipeRefreshLayout performing ViewAction: ${action.description} " +
@@ -77,3 +78,5 @@ class SwipeRefreshTolerantAction : ViewAction {
         action.perform(uiController, view)
     }
 }
+
+private const val VIEW_DISPLAY_PERCENTAGE = 85

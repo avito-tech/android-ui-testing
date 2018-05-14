@@ -26,7 +26,11 @@ class OnDescendantPositionListItemActions(
         get() = Espresso.onView(listMatcher)
 
     override fun scrollTo() {
-        interaction.waitToPerform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
+        interaction.waitToPerform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                position
+            )
+        )
     }
 
     override fun click() {

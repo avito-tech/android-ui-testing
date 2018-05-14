@@ -9,7 +9,7 @@ import org.junit.Test
 
 class ButtonsOverRecyclerTest {
 
-    @Rule @JvmField
+    @get:Rule
     val rule = screenRule<ButtonsOverRecyclerActivity>(launchActivity = true)
 
     @Test

@@ -19,7 +19,7 @@ class OrientationChangeAction(private val orientation: Int? = null) : ViewAction
 
     override fun getDescription(): String = when (orientation) {
         null -> "toggle orientation"
-        else -> "change orientation to " + orientation
+        else -> "change orientation to $orientation"
     }
 
     override fun perform(uiController: UiController, view: View) {
@@ -44,9 +44,11 @@ class OrientationChangeAction(private val orientation: Int? = null) : ViewAction
 
     companion object {
 
-        fun orientationLandscape(): ViewAction = OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        fun orientationLandscape(): ViewAction =
+            OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 
-        fun orientationPortrait(): ViewAction = OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        fun orientationPortrait(): ViewAction =
+            OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         fun toggle(): ViewAction = OrientationChangeAction()
     }

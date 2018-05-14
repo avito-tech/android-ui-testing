@@ -16,21 +16,23 @@ import org.hamcrest.StringDescription
 
 object AvitoPositionAssertions {
 
-    fun isCenteredVerticallyWith(viewMatcher: Matcher<View>) = ViewAssertion { view, noViewFoundException ->
-        noViewFoundCheck(noViewFoundException)
+    fun isCenteredVerticallyWith(viewMatcher: Matcher<View>) =
+        ViewAssertion { view, noViewFoundException ->
+            noViewFoundCheck(noViewFoundException)
 
-        val viewLocation = VerticalCenter(view)
-        val otherViewLocation = VerticalCenter(viewMatcher, getTopViewGroup(view))
-        assertLocationEqualWithTolerance(viewLocation, otherViewLocation)
-    }
+            val viewLocation = VerticalCenter(view)
+            val otherViewLocation = VerticalCenter(viewMatcher, getTopViewGroup(view))
+            assertLocationEqualWithTolerance(viewLocation, otherViewLocation)
+        }
 
-    fun isCenteredVerticallyWithBottomOf(viewMatcher: Matcher<View>) = ViewAssertion { view, noViewFoundException ->
-        noViewFoundCheck(noViewFoundException)
+    fun isCenteredVerticallyWithBottomOf(viewMatcher: Matcher<View>) =
+        ViewAssertion { view, noViewFoundException ->
+            noViewFoundCheck(noViewFoundException)
 
-        val viewLocation = VerticalCenter(view)
-        val otherViewLocation = Bottom(viewMatcher, getTopViewGroup(view))
-        assertLocationEqualWithTolerance(viewLocation, otherViewLocation)
-    }
+            val viewLocation = VerticalCenter(view)
+            val otherViewLocation = Bottom(viewMatcher, getTopViewGroup(view))
+            assertLocationEqualWithTolerance(viewLocation, otherViewLocation)
+        }
 
     private fun noViewFoundCheck(noViewFoundException: NoMatchingViewException?) {
         val description = StringDescription()
@@ -45,7 +47,10 @@ object AvitoPositionAssertions {
         }
     }
 
-    private fun assertLocationEqualWithTolerance(location1: ScreenLocation, location2: ScreenLocation) {
+    private fun assertLocationEqualWithTolerance(
+        location1: ScreenLocation,
+        location2: ScreenLocation
+    ) {
         val failDescription = StringDescription()
         failDescription.appendText(location1.description)
             .appendText(String.format(" (%d)", location1.absoluteLocation))
@@ -114,7 +119,8 @@ object AvitoPositionAssertions {
 
     private fun findView(toView: Matcher<View>, root: View): View {
         val viewPredicate = Predicate<View> { input -> toView.matches(input) }
-        val matchedViewIterator = Iterables.filter(breadthFirstViewTraversal(root), viewPredicate).iterator()
+        val matchedViewIterator =
+            Iterables.filter(breadthFirstViewTraversal(root), viewPredicate).iterator()
         var matchedView: View? = null
         while (matchedViewIterator.hasNext()) {
             if (matchedView != null) {

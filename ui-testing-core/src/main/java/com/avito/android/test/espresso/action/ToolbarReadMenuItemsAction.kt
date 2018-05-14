@@ -6,7 +6,7 @@ import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.v7.widget.Toolbar
 import android.view.View
 import org.hamcrest.Matcher
-import java.util.ArrayList
+import java.util.*
 
 class ToolbarReadMenuItemsAction : ViewAction {
 
@@ -19,8 +19,10 @@ class ToolbarReadMenuItemsAction : ViewAction {
     override fun perform(uiController: UiController, view: View) {
         val toolbar = view as Toolbar
         val mExpandedMenuPresenter =
-            Toolbar::class.java.getDeclaredField("mExpandedMenuPresenter").also { it.isAccessible = true }.get(toolbar)
-        val mMenu = mExpandedMenuPresenter.javaClass.getDeclaredField("mMenu").also { it.isAccessible = true }
+            Toolbar::class.java.getDeclaredField("mExpandedMenuPresenter")
+                .also { it.isAccessible = true }.get(toolbar)
+        val mMenu = mExpandedMenuPresenter.javaClass.getDeclaredField("mMenu")
+            .also { it.isAccessible = true }
             .get(mExpandedMenuPresenter)
         val mNonActionItems = mMenu!!.javaClass.getDeclaredField("mNonActionItems").also {
             it.isAccessible = true
@@ -41,5 +43,4 @@ class ToolbarReadMenuItemsAction : ViewAction {
         First of all, you should perform action, like
         "ToolbarReadMenuItemsAction().apply { onView(isAssignableFrom(Toolbar::class.java)).perform(this) }"""".trimIndent()
     )
-
 }

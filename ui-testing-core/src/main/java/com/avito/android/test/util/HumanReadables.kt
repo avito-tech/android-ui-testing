@@ -1,5 +1,6 @@
 package com.avito.android.test.util
 
+import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 
@@ -9,22 +10,28 @@ import android.widget.TextView
 fun View?.describe(): String {
     if (this == null) return "null"
 
-    val result = StringBuilder()
-    result.append(this::class.java.simpleName)
-    result.append('(')
-    result.append("id=${resources?.getResourceEntryName(id)}")
-    if (contentDescription != null) {
-        result.append(";desc=$contentDescription")
-    }
-    if (this is TextView) {
-        if (!text.isNullOrBlank()) {
-            result.append(";text=$text")
-        }
-        if (!hint.isNullOrBlank()) {
-            result.append(";hint=$hint")
-        }
-    }
-    result.append(')')
+    val result = mutableListOf<String>()
 
-    return result.toString()
+    try {
+        result += "id=${resources?.getResourceEntryName(id)}"
+    } catch (e: Resources.NotFoundException) {
+        //do nothing
+    }
+
+    if (!contentDescription.isNullOrBlank()) {
+        result += "desc=$contentDescription"
+    }
+
+    if (this is TextView) {
+
+        if (!text.isNullOrBlank()) {
+            result += "text=$text"
+        }
+
+        if (!hint.isNullOrBlank()) {
+            result += "hint=$hint"
+        }
+    }
+
+    return "${this::class.java.simpleName}(${result.joinToString(separator = ";")})"
 }

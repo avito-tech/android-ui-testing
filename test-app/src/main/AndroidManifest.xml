@@ -20,6 +20,6 @@
         <activity
             android:name=".EditTextActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".StartForResultActivity"/>
+        <activity android:name=".StartForResultActivity" />
     </application>
 </manifest>

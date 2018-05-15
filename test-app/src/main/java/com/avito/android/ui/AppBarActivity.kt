@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar
 
 class AppBarActivity : AppCompatActivity() {
 
-    lateinit var appBarLayout: AppBarLayout
+    private lateinit var appBarLayout: AppBarLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

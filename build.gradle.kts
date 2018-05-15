@@ -25,7 +25,7 @@ buildscript {
 }
 
 group = "com.avito.ui-testing"
-version = "0.2.0"
+version = "0.2.1"
 
 val minSdk: String by project
 val targetSdk: String by project

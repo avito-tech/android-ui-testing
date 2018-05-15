@@ -6,8 +6,7 @@ import org.junit.Test
 
 class AppBarTest {
 
-    @Rule
-    @JvmField
+    @get:Rule
     val rule = screenRule<AppBarActivity>()
 
     @Test
@@ -17,7 +16,6 @@ class AppBarTest {
         rule.activity.setExpanded(true)
 
         Screen.appBarScreen.appBar.actions.collapse()
-
         Screen.appBarScreen.testView.checks.isNotCompletelyDisplayed()
     }
 

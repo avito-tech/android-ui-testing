@@ -13,7 +13,7 @@ Not now. Work in progress.
 ## Configure
 
 ```groovy
-def uiTestingVersion = '0.2.0'
+def uiTestingVersion = '0.2.1'
 
 repositories {
     jcenter()

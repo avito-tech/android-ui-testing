@@ -43,9 +43,12 @@ Functions that invokes before every action and assertion with all information ab
  
 #### Setup 
 
-`UITestConfig.actionInterceptors += <your interceptor>`
- 
-`UITestConfig.assertionInterceptors += <your interceptor>`
+```
+with(UITestConfig) {
+    actionInterceptors += <your interceptor>
+    assertionInterceptors += <your interceptor>
+}
+```
 
 ## Examples
 

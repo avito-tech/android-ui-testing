@@ -20,5 +20,5 @@ interface Actions {
         precision: PrecisionDescriber = Press.FINGER
     )
 
-    fun read(): String
+    fun read(allowBlank: Boolean = false): String
 }

@@ -6,5 +6,5 @@ import com.avito.android.ui.R
 
 class EditTextScreen {
 
-    val editText = TextField(ViewMatchers.withId(R.id.text))
+    val editText = TextField(ViewMatchers.withId(R.id.edit_text))
 }

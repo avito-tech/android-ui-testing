@@ -17,8 +17,8 @@ class ButtonsOverRecyclerTest {
         with(Screen.buttonsOverRecycler.list) {
             actions.swipe(SwipeDirections.BOTTOM_TO_TOP)
             checks.firstVisiblePosition(greaterThan(0))
-            // on some devices swipe to top may end on half way, so do it twice for certainty
-            repeat(2) { actions.swipe(SwipeDirections.TOP_TO_BOTTOM) }
+            // on some devices swipe to top may end on half way
+            repeat(3) { actions.swipe(SwipeDirections.TOP_TO_BOTTOM) }
             checks.firstVisiblePosition(equalTo(0))
         }
     }

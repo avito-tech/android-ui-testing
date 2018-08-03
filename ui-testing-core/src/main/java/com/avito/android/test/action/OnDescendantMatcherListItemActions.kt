@@ -69,8 +69,8 @@ class OnDescendantMatcherListItemActions(
         Thread.sleep(1000)
     }
 
-    override fun read(): String =
-        TextViewReadAction()
+    override fun read(allowBlank: Boolean): String =
+        TextViewReadAction(allowBlank)
             .also {
                 interaction.waitToPerform(
                     RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(

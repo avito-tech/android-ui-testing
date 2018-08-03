@@ -35,9 +35,9 @@ class TextFieldActionImpl(private val interactionContext: InteractionContext) :
     Actions by ActionsImpl(interactionContext) {
 
     override fun write(text: String) {
-        clear()
         interactionContext.perform(
             actionWithAssertions(ScrollToIfPossibleAction()),
+            clearText(),
             actionWithAssertions(SafeTypeTextAction(text, true))
         )
         Espresso.closeSoftKeyboard()

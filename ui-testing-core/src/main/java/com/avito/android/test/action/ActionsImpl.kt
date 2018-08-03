@@ -34,8 +34,8 @@ class ActionsImpl(private val driver: ActionsDriver) : Actions {
         Thread.sleep(1000)
     }
 
-    override fun read(): String =
-        TextViewReadAction()
+    override fun read(allowBlank: Boolean): String =
+        TextViewReadAction(allowBlank)
             .also { driver.perform(it) }
             .result
 }

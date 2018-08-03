@@ -5,9 +5,11 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
 import android.widget.TextView
+import com.avito.android.test.waitFor
+import junit.framework.Assert
 import org.hamcrest.Matcher
 
-class TextViewReadAction : ViewAction {
+class TextViewReadAction(private val allowBlank: Boolean) : ViewAction {
 
     lateinit var result: String
         private set
@@ -18,6 +20,18 @@ class TextViewReadAction : ViewAction {
     override fun getDescription(): String = "getting text from a TextView"
 
     override fun perform(uiController: UiController, view: View) {
-        result = (view as TextView).text.toString()
+        if (allowBlank) {
+            result = view.readText()
+        } else {
+            waitFor {
+                result = view.readText()
+                Assert.assertTrue(
+                    "read() waited, but view.text still has empty string value; use read(allowBlank=true) if you really need it",
+                    result.isNotBlank()
+                )
+            }
+        }
     }
+
+    private fun View.readText(): String = (this as TextView).text.toString()
 }

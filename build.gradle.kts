@@ -63,7 +63,7 @@ subprojects {
                         project {
                             packaging = "aar"
                             groupId = rootProject.group.toString()
-                            artifactId = name
+                            artifactId = this@subprojects.name
                             version = rootProject.version.toString()
                         }
                     }

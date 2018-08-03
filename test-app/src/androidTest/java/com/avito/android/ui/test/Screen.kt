@@ -31,4 +31,7 @@ object Screen {
 
     val startForResultScreen: StartForResultScreen
         get() = StartForResultScreen()
+
+    val editTextScreen: EditTextScreen
+        get() = EditTextScreen()
 }

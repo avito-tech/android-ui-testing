@@ -1,12 +1,7 @@
 package com.avito.android.test.espresso
 
 import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.GeneralSwipeAction
-import android.support.test.espresso.action.PrecisionDescriber
-import android.support.test.espresso.action.Press
-import android.support.test.espresso.action.Swipe
-import android.support.test.espresso.action.SwipeDirection
-import android.support.test.espresso.action.Swiper
+import android.support.test.espresso.action.*
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import com.avito.android.test.espresso.action.SafeTypeTextAction
 import com.avito.android.test.espresso.action.ScrollToIfPossibleAction

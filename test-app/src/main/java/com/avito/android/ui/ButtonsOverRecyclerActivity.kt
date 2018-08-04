@@ -39,5 +39,4 @@ class ButtonsOverRecyclerActivity : AppCompatActivity() {
 
         val title: TextView = itemView.findViewById(R.id.title)
     }
-
 }

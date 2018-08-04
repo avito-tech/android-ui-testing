@@ -15,7 +15,6 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageButton
-import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.Device
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -27,6 +26,7 @@ import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.espresso.action.ToolbarReadMenuItemsAction
+import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.matcher.ToolbarSubTitleResMatcher
 import com.avito.android.test.matcher.ToolbarSubtitleMatcher
 import com.avito.android.test.matcher.ToolbarTitleMatcher
@@ -58,7 +58,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
      * But the ActionBarActivity compat lib is missing a content description for this element, so
      * we add the class name matcher as another option to find the view.
      */
-    private val OVERFLOW_BUTTON_MATCHER = anyOf<View>(
+    private val overflowButtonMatcher = anyOf<View>(
         allOf<View>(isDisplayed(), withContentDescription("More options")),
         allOf<View>(isDisplayed(), withClassName(endsWith("OverflowMenuButton")))
     )
@@ -72,7 +72,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         )
     )
 
-    val overflowMenuButton = PageObjectElement(OVERFLOW_BUTTON_MATCHER)
+    val overflowMenuButton = PageObjectElement(overflowButtonMatcher)
 
     protected fun overflowMenuItem(titleMatcher: Matcher<String>) =
         MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
@@ -111,7 +111,10 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         }
     }
 
-    /** In some cases, there is no need to expand overflow menu, if element could be found with reflection. */
+    /**
+     * In some cases, there is no need to expand overflow menu,
+     * if element could be found with reflection.
+     * */
     class OverflowMenuChecksImpl(
         private val toolbarMatcher: Matcher<View>,
         private val titleMatcher: Matcher<String>,
@@ -137,7 +140,10 @@ open class ToolbarElement(interactionContext: InteractionContext) :
 
     private class RestrictedDirectAccessMatcher : TypeSafeMatcher<View>() {
         override fun describeTo(description: Description) {
-            description.appendText("Use element.actions.<action> syntax. Direct access restricted for MenuItems")
+            description.appendText(
+                "Use element.actions.<action> syntax. " +
+                        "Direct access restricted for MenuItems"
+            )
         }
 
         override fun matchesSafely(item: View): Boolean = false
@@ -159,16 +165,16 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         private val toolbarInteraction = Espresso.onView(toolbarMatcher)
 
         override fun perform(vararg actions: ViewAction) {
-            val interceptedActions = actions.map {
+            val interceptedActions = actions.map { action ->
                 ActionInterceptor.Proxy(
-                    it,
+                    action,
                     UITestConfig.actionInterceptors
                 )
             }
 
-            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(
-                    titleMatcher
-                )
+            if (ToolbarReadMenuItemsAction()
+                    .apply { toolbarInteraction.perform(this) }
+                    .hasHiddenItem(titleMatcher)
             ) {
                 // do not click if disableOverflowMenuAutoOpen() was specified
                 overflowMenuButton?.click()
@@ -179,9 +185,9 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         }
 
         override fun check(assertion: ViewAssertion) {
-            if (ToolbarReadMenuItemsAction().apply { toolbarInteraction.perform(this) }.hasHiddenItem(
-                    titleMatcher
-                )
+            if (ToolbarReadMenuItemsAction()
+                    .apply { toolbarInteraction.perform(this) }
+                    .hasHiddenItem(titleMatcher)
             ) {
                 overflowMenuButton?.click()
                 overflowInteraction.check(assertion)

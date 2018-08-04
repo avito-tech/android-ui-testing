@@ -27,7 +27,7 @@ class WebElementActions(private val interaction: Web.WebInteraction<Void>) : Act
         throw UnsupportedOperationException("Swipe is not supported on the Web View")
     }
 
-    //todo is there an async problem?
+    // todo is there an async problem?
     override fun read(allowBlank: Boolean): String {
         return interaction.perform(DriverAtoms.getText()).get()
     }

@@ -17,17 +17,17 @@ class FragmentGoogleMapProvider(
 
     override fun provide(): GoogleMap {
         val activity = getCurrentActivity() as? AppCompatActivity
-                ?: throw RuntimeException(
-                    "You should have app compat activity in foreground for communicating with map"
-                )
+            ?: throw RuntimeException(
+                "You should have app compat activity in foreground for communicating with map"
+            )
 
         val mapFragment: MapFragment? =
             activity.supportFragmentManager.findFragmentById(id) as? MapFragment?
-                    ?: activity.fragmentManager.findFragmentById(id) as? MapFragment?
+                ?: activity.fragmentManager.findFragmentById(id) as? MapFragment?
 
         val mapSupportFragment: SupportMapFragment? =
             activity.supportFragmentManager.findFragmentById(id) as? SupportMapFragment?
-                    ?: activity.fragmentManager.findFragmentById(id) as? SupportMapFragment?
+                ?: activity.fragmentManager.findFragmentById(id) as? SupportMapFragment?
 
         if (mapFragment == null && mapSupportFragment == null) {
             throw RuntimeException(

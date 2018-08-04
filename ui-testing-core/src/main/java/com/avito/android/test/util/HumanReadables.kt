@@ -15,7 +15,7 @@ fun View?.describe(): String {
     try {
         result += "id=${resources?.getResourceEntryName(id)}"
     } catch (e: Resources.NotFoundException) {
-        //do nothing
+        // do nothing
     }
 
     if (!contentDescription.isNullOrBlank()) {

@@ -5,8 +5,8 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.v7.widget.Toolbar
 import android.view.View
+import java.util.ArrayList
 import org.hamcrest.Matcher
-import java.util.*
 
 class ToolbarReadMenuItemsAction : ViewAction {
 
@@ -24,7 +24,7 @@ class ToolbarReadMenuItemsAction : ViewAction {
         val mMenu = mExpandedMenuPresenter.javaClass.getDeclaredField("mMenu")
             .also { it.isAccessible = true }
             .get(mExpandedMenuPresenter)
-        val mNonActionItems = mMenu!!.javaClass.getDeclaredField("mNonActionItems").also {
+        val mNonActionItems = mMenu.javaClass.getDeclaredField("mNonActionItems").also {
             it.isAccessible = true
         }.get(mMenu) as ArrayList<*>
         hiddenItems = mNonActionItems.map { it.toString() }
@@ -41,6 +41,8 @@ class ToolbarReadMenuItemsAction : ViewAction {
     class ToolbarReadActionUsageException : RuntimeException(
         """
         First of all, you should perform action, like
-        "ToolbarReadMenuItemsAction().apply { onView(isAssignableFrom(Toolbar::class.java)).perform(this) }"""".trimIndent()
+        "ToolbarReadMenuItemsAction()
+            .apply { onView(isAssignableFrom(Toolbar::class.java)).perform(this) }"
+        """.trimIndent()
     )
 }

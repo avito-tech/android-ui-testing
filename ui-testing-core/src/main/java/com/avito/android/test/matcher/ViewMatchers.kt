@@ -28,5 +28,4 @@ object ViewMatchers {
      * Matches if view is focusable in touch mode
      */
     fun isFocusableInTouchMode() = FocusableInTouchModeMatcher()
-
 }

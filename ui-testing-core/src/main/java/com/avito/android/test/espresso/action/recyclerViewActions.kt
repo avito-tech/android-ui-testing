@@ -12,13 +12,13 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.util.SparseArray
 import android.view.View
+import java.util.ArrayList
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import java.util.*
 
 class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
     viewHolderMatcher: Matcher<VH>,
@@ -79,7 +79,7 @@ class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> construc
     }
 }
 
-//TODO REWRITE
+// TODO REWRITE
 
 /**
  * [ViewAction] which scrolls [RecyclerView] to the view matched by itemViewMatcher.
@@ -101,7 +101,7 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
 
     override fun getDescription(): String {
         return if (atPosition == NO_POSITION) {
-            "scroll RecyclerView to: " + viewHolderMatcher
+            "scroll RecyclerView to: $viewHolderMatcher"
         } else {
             String.format(
                 "scroll RecyclerView to the: %dth matching %s.", atPosition,
@@ -153,13 +153,15 @@ class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
  *
  * @param recyclerView recycler view which is hosting items.
  * @param viewHolderMatcher a
- * [
- * `Matcher`](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matcher.html) that matches an item view in [RecyclerView]
+ * [`Matcher`](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matcher.html) that matches
+ * an item view in [RecyclerView]
  * @return list of MatchedItem which contains position and description of items in recyclerView.
  * @throws RuntimeException if more than one item or item could not be found. </VH>
  */
 private fun <T : VH, VH : RecyclerView.ViewHolder> itemsMatching(
-    recyclerView: RecyclerView, viewHolderMatcher: Matcher<VH>, max: Int
+    recyclerView: RecyclerView,
+    viewHolderMatcher: Matcher<VH>,
+    max: Int
 ): List<MatchedItem> {
     val adapter = recyclerView.adapter
     val viewHolderCache = SparseArray<VH>()
@@ -230,8 +232,8 @@ private fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(itemViewMatcher: Ma
  *
  *
  * @param itemViewMatcher a
- * [
- * `Matcher`](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matcher.html) that matches an item view in [RecyclerView]
+ * [`Matcher`](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matcher.html)
+ * that matches an item view in [RecyclerView]
  * @param viewAction the action that is performed on the view matched by itemViewMatcher
  * @throws PerformException if there are more than one items matching given viewHolderMatcher.
  */
@@ -270,8 +272,8 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
         allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
 
     override fun getDescription(): String =
-        ("actionOnItemAtPosition performing ViewAction: " + viewAction.description
-                + " on item at position: " + position)
+        ("actionOnItemAtPosition performing ViewAction: " + viewAction.description +
+                " on item at position: " + position)
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
@@ -281,15 +283,15 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 
         @Suppress("UNCHECKED_CAST")
         val viewHolderForPosition = recyclerView.findViewHolderForAdapterPosition(position) as VH?
-                ?: throw PerformException.Builder().withActionDescription(this.toString())
-                    .withViewDescription(HumanReadables.describe(view))
-                    .withCause(IllegalStateException("No view holder at position: $position"))
-                    .build()
+            ?: throw PerformException.Builder().withActionDescription(this.toString())
+                .withViewDescription(HumanReadables.describe(view))
+                .withCause(IllegalStateException("No view holder at position: $position"))
+                .build()
 
         val viewAtPosition =
             viewHolderForPosition.itemView
-                    ?: throw PerformException.Builder().withActionDescription(this.toString())
-                        .withCause(IllegalStateException("No view at position: $position")).build()
+                ?: throw PerformException.Builder().withActionDescription(this.toString())
+                    .withCause(IllegalStateException("No view at position: $position")).build()
 
         viewAction.perform(uiController, viewAtPosition)
     }

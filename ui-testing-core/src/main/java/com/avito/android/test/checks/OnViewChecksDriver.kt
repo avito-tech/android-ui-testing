@@ -4,8 +4,8 @@ import android.support.test.espresso.Espresso
 import android.support.test.espresso.ViewAssertion
 import android.support.test.espresso.ViewInteraction
 import android.view.View
-import com.avito.android.test.interceptor.AssertionInterceptor
 import com.avito.android.test.UITestConfig
+import com.avito.android.test.interceptor.AssertionInterceptor
 import com.avito.android.test.waitForCheck
 import org.hamcrest.Matcher
 

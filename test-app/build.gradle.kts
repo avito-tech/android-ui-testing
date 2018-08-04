@@ -18,6 +18,18 @@ android {
         testInstrumentationRunner = "com.avito.android.ui.test.UITestRunner"
     }
 
+    buildTypes {
+        getByName("debug") {
+            matchingFallbacks = listOf("release")
+        }
+    }
+
+    variantFilter {
+        if (name == "release") {
+            setIgnore(true)
+        }
+    }
+
     packagingOptions {
         pickFirst("protobuf.meta")
     }
@@ -32,3 +44,5 @@ dependencies {
 
     androidTestImplementation(project(":ui-testing-core"))
 }
+
+tasks.getByName("build").dependsOn("$path:assembleAndroidTest")

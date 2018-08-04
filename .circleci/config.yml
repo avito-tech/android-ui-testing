@@ -68,29 +68,19 @@ references:
 
 jobs:
 
-  build_debug:
+  build:
     <<: *android_config
     steps:
       - checkout
       - *restore_cache
       - run:
-          name: Gradle build (debug)
-          command: ./gradlew assembleDebug :test-app:assembleAndroidTest
+          name: Gradle build
+          command: ./gradlew build
       - *save_cache
       - *persist_debug_workspace
       - store_artifacts:
           path: test-app/build/outputs/apk/
           destination: /apk/
-
-  check_quality:
-    <<: *android_config
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Run Android Lint
-          command: ./gradlew lint
-      - *save_cache
       - store_artifacts:
           path: test-app/build/reports/
           destination: /test-app/
@@ -144,10 +134,7 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - build_debug
-      - check_quality:
-          requires:
-            - build_debug
+      - build
       - test_instrumented:
           requires:
-            - build_debug
+            - build

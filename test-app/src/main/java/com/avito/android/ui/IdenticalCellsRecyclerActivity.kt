@@ -25,7 +25,8 @@ class IdenticalCellsRecyclerActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_LIST = "RECYCLER_LIST"
 
-        fun intent(list: ArrayList<String>): (Intent) -> Intent = { it.putStringArrayListExtra(EXTRA_LIST, list) }
+        fun intent(list: ArrayList<String>): (Intent) -> Intent =
+            { it.putStringArrayListExtra(EXTRA_LIST, list) }
     }
 
     private class Adapter(private val items: List<String>) : RecyclerView.Adapter<ViewHolder>() {
@@ -35,7 +36,10 @@ class IdenticalCellsRecyclerActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cell, parent, false))
+            ViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.cell, parent, false)
+            )
 
         override fun getItemCount() = items.size
     }

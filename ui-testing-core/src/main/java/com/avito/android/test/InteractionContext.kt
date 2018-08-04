@@ -29,21 +29,18 @@ class SimpleInteractionContext(private val matcher: Matcher<View>) : Interaction
         get() = Espresso.onView(matcher)
 
     override fun perform(vararg actions: ViewAction) {
-        interaction.waitToPerform(actions.map {
+        interaction.waitToPerform(actions.map { action ->
             ActionInterceptor.Proxy(
-                it,
+                action,
                 UITestConfig.actionInterceptors
             )
         })
     }
 
     override fun check(assertion: ViewAssertion) {
-        interaction.waitForCheck(assertion.let {
-            AssertionInterceptor.Proxy(
-                it,
-                UITestConfig.assertionInterceptors
-            )
-        })
+        interaction.waitForCheck(
+            AssertionInterceptor.Proxy(assertion, UITestConfig.assertionInterceptors)
+        )
     }
 
     override fun provideChildContext(matcher: Matcher<View>): InteractionContext =

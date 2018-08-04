@@ -5,9 +5,9 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ReplaceTextAction
 import android.support.test.espresso.action.TypeTextAction
 import android.view.View
+import java.lang.Character.UnicodeBlock
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
-import java.lang.Character.UnicodeBlock
 
 /**
  * Don't use directly, only via EspressoActions
@@ -31,11 +31,11 @@ class SafeTypeTextAction(
      * [TypeTextAction].
      */
     override fun perform(uiController: UiController?, view: View?) {
-        doNotUseReplace = doNotUseReplace
+        doNotUseReplace = doNotUseReplace ||
                 // phone numbers will not work properly with replace in most cases
-                || stringToBeTyped.isPhoneNumber()
+                stringToBeTyped.isPhoneNumber() ||
                 // AP-221: cyrillic input will not work correctly with replace in most cases
-                || stringToBeTyped.isCyrillic()
+                stringToBeTyped.isCyrillic()
         try {
             if (doNotUseReplace) {
                 typeAction.perform(uiController, view)
@@ -55,8 +55,7 @@ class SafeTypeTextAction(
         """
         |It seems, that text input with text replace action is not working correctly here.
         |Please, disable it in your page object explicitly, appending to the element something like
-        |".apply { editText.doNotUseReplace = true }"""".trimMargin()
-        , cause
+        |".apply { editText.doNotUseReplace = true }"""".trimMargin(), cause
     )
 
     private fun String.isCyrillic() =

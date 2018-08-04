@@ -2,47 +2,53 @@ package com.avito.android.test.checks
 
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
-import android.support.test.espresso.assertion.ViewAssertions
+import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.LayoutMatchers
 import android.support.test.espresso.matcher.ViewMatchers
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withTagValue
 import android.view.View
 import com.avito.android.test.matcher.CompoundDrawableMatcher
 import com.avito.android.test.matcher.TextViewLinesMatcher
 import com.avito.android.test.matcher.WithHintEndingMatcher
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.equalToIgnoringCase
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.startsWith
 import org.hamcrest.core.AllOf
 
 class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
 
     override fun withText(text: String) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(text)))
+        driver.check(matches(ViewMatchers.withText(text)))
     }
 
     override fun withText(textResId: Int) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(textResId)))
+        driver.check(matches(ViewMatchers.withText(textResId)))
     }
 
     override fun withText(matcher: Matcher<String>) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(matcher)))
+        driver.check(matches(ViewMatchers.withText(matcher)))
     }
 
     override fun withTextStartingWith(text: String) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(Matchers.startsWith(text))))
+        driver.check(matches(ViewMatchers.withText(startsWith(text))))
     }
 
     override fun withTextIgnoringCase(text: String) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(Matchers.equalToIgnoringCase(text))))
+        driver.check(matches(ViewMatchers.withText(equalToIgnoringCase(text))))
     }
 
     override fun withEmptyText() {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText("")))
+        driver.check(matches(ViewMatchers.withText("")))
     }
 
     override fun containsText(text: String) {
-        driver.check(ViewAssertions.matches(ViewMatchers.withText(Matchers.containsString(text))))
+        driver.check(matches(ViewMatchers.withText(containsString(text))))
     }
 
     override fun displayedWithText(text: String) {
@@ -58,15 +64,15 @@ class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
     }
 
     override fun displayedWithTextStartingWith(text: String) {
-        displayedAndMatchedWith(ViewMatchers.withText(Matchers.startsWith(text)))
+        displayedAndMatchedWith(ViewMatchers.withText(startsWith(text)))
     }
 
     override fun displayedWithTextEndingWith(text: String) {
-        displayedAndMatchedWith(ViewMatchers.withText(Matchers.endsWith(text)))
+        displayedAndMatchedWith(ViewMatchers.withText(endsWith(text)))
     }
 
     override fun displayedWithTextIgnoringCase(text: String) {
-        displayedAndMatchedWith(ViewMatchers.withText(Matchers.equalToIgnoringCase(text)))
+        displayedAndMatchedWith(ViewMatchers.withText(equalToIgnoringCase(text)))
     }
 
     override fun displayedWithEmptyText() {
@@ -74,23 +80,23 @@ class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
     }
 
     override fun withLinesCount(count: Int) {
-        driver.check(ViewAssertions.matches(TextViewLinesMatcher(Matchers.`is`(count))))
+        driver.check(matches(TextViewLinesMatcher(`is`(count))))
     }
 
     override fun withLinesCount(matcher: Matcher<Int>) {
-        driver.check(ViewAssertions.matches(TextViewLinesMatcher(matcher)))
+        driver.check(matches(TextViewLinesMatcher(matcher)))
     }
 
     override fun endsWithHint(hint: String) {
-        driver.check(ViewAssertions.matches(WithHintEndingMatcher(hint)))
+        driver.check(matches(WithHintEndingMatcher(hint)))
     }
 
     override fun hasEllipsizedText() {
-        driver.check(ViewAssertions.matches(LayoutMatchers.hasEllipsizedText()))
+        driver.check(matches(LayoutMatchers.hasEllipsizedText()))
     }
 
     override fun hasNotEllipsizedText() {
-        driver.check(ViewAssertions.matches(Matchers.not(LayoutMatchers.hasEllipsizedText())))
+        driver.check(matches(not(LayoutMatchers.hasEllipsizedText())))
     }
 
     override fun hasTag(tag: Any) {
@@ -105,7 +111,7 @@ class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
         @ColorInt tint: Int?
     ) {
         driver.check(
-            ViewAssertions.matches(
+            matches(
                 CompoundDrawableMatcher(
                     left,
                     top,
@@ -119,9 +125,9 @@ class LabelChecksImpl(private val driver: ChecksDriver) : LabelChecks {
 
     private fun displayedAndMatchedWith(matcher: Matcher<View>) {
         driver.check(
-            ViewAssertions.matches(
+            matches(
                 AllOf.allOf(
-                    ViewMatchers.isDisplayed(),
+                    isDisplayed(),
                     matcher
                 )
             )

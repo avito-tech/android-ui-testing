@@ -59,17 +59,17 @@ class InteractionContextMatcherActions(
                 .atPosition(0)
         )
 
-        //FIXME
+        // FIXME
         Thread.sleep(1000)
     }
 
     override fun read(allowBlank: Boolean): String =
         TextViewReadAction(allowBlank)
-            .also {
+            .also { action ->
                 interactionContext.perform(
                     RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                         matcher,
-                        DescendantViewActions.performDescendantAction(childMatcher, it)
+                        DescendantViewActions.performDescendantAction(childMatcher, action)
                     )
                         .atPosition(0)
                 )

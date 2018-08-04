@@ -1,28 +1,15 @@
-import com.android.build.api.dsl.extension.AndroidExtension
-import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryPlugin
-import com.android.builder.model.AndroidLibrary
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
 import org.gradle.api.internal.plugins.DslObject
-import org.gradle.api.publish.maven.MavenPom
-import kotlin.properties.Delegates
 
-buildscript {
-    val kotlinVersion: String by project
-
-    repositories {
-        jcenter()
-        google()
-    }
-
-    dependencies {
-        classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath("com.android.tools.build:gradle:3.1.3")
-        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
-    }
+plugins {
+    `kotlin-dsl` apply false
+    id("com.android.application") apply false
+    id("com.github.dcendents.android-maven") version "2.1" apply false
+    id("com.jfrog.bintray") version "1.8.4" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
 }
 
 group = "com.avito.ui-testing"
@@ -30,13 +17,29 @@ version = "0.2.2"
 
 val minSdk: String by project
 val targetSdk: String by project
+val androidStudioPath: String? by project
 
-subprojects {
+detekt {
+    version = "1.0.0.RC8"
+    defaultProfile(Action {
+        input = rootProject.projectDir.absolutePath
+        config = "$rootDir/detekt-config.yml"
+        filters = ".*/resources/.*,.*/build/.*"
+    })
+}
+
+dependencies {
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.version}")
+}
+
+allprojects {
     repositories {
         jcenter()
         google()
     }
+}
 
+subprojects {
     group = rootProject.group
     version = rootProject.version
 
@@ -45,19 +48,31 @@ subprojects {
         apply(plugin = "com.github.dcendents.android-maven")
         apply<BintrayPlugin>()
 
+        // we don't need debug variant for libraries at all
+        configure<BaseExtension> {
+            variantFilter {
+                if (name == "debug") {
+                    setIgnore(true)
+                }
+            }
+        }
+
         val sourcesJarTask = tasks.create<Jar>("sourcesJar") {
             classifier = "sources"
             from(
-                this@subprojects.extensions.getByType(BaseExtension::class.java).sourceSets.getByName(
-                    "main"
-                ).java.srcDirs
+                this@subprojects.extensions.getByType(BaseExtension::class.java)
+                    .sourceSets
+                    .getByName("main")
+                    .java
+                    .srcDirs
             )
         }
 
         val installTask = tasks.getByName("install")
 
         (installTask as Upload).run {
-            DslObject(repositories).convention.getPlugin(MavenRepositoryHandlerConvention::class.java)
+            DslObject(repositories).convention
+                .getPlugin(MavenRepositoryHandlerConvention::class.java)
                 .mavenInstaller {
                     pom {
                         project {
@@ -109,4 +124,17 @@ tasks.withType<Wrapper> {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-task<Delete>("clean") { delete("${rootProject.buildDir}") }
+val checkTask = task("check") {
+    group = "verification"
+    dependsOn("detektCheck")
+}
+
+task("build") {
+    group = "build"
+    dependsOn(checkTask)
+}
+
+task<Delete>("clean") {
+    group = "build"
+    delete("${rootProject.buildDir}")
+}

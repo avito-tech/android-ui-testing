@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-
 class RecyclerInRecyclerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,22 +26,25 @@ class RecyclerInRecyclerActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_LIST = "RECYCLER_LIST"
 
-        fun intent(list: ArrayList<String>): (Intent) -> Intent = { it.putStringArrayListExtra(EXTRA_LIST, list) }
+        fun intent(list: ArrayList<String>): (Intent) -> Intent =
+            { it.putStringArrayListExtra(EXTRA_LIST, list) }
     }
 
     private class Adapter(private val innerRecyclerItems: List<String>) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
-            is RecyclerHolder -> with(holder.recycler) {
-                layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
-                adapter = InnerAdapter(innerRecyclerItems)
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
+            when (holder) {
+                is RecyclerHolder -> with(holder.recycler) {
+                    layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
+                    adapter = InnerAdapter(innerRecyclerItems)
+                }
+                else -> error("Unsupported holder type: ${holder.javaClass.name}")
             }
-            else -> error("Unsupported holder type: ${holder.javaClass.name}")
-        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_with_inner_recycler, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.cell_with_inner_recycler, parent, false)
 
             return RecyclerHolder(view)
         }
@@ -52,15 +54,18 @@ class RecyclerInRecyclerActivity : AppCompatActivity() {
         override fun getItemViewType(position: Int): Int = 0
     }
 
-    private class InnerAdapter(private val labels: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private class InnerAdapter(private val labels: List<String>) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
-            is LabelHolder -> holder.title.text = labels[position]
-            else -> error("Unsupported holder type: ${holder.javaClass.name}")
-        }
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
+            when (holder) {
+                is LabelHolder -> holder.title.text = labels[position]
+                else -> error("Unsupported holder type: ${holder.javaClass.name}")
+            }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.cell, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.cell, parent, false)
 
             return LabelHolder(view)
         }
@@ -79,6 +84,4 @@ class RecyclerInRecyclerActivity : AppCompatActivity() {
 
         val recycler = itemView as RecyclerView
     }
-
-
 }

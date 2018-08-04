@@ -6,9 +6,9 @@ import java.io.File
 internal class SharedPreferences(private val appContext: Context) {
 
     fun clear() {
-        sharedPreferencesFileNames().forEach {
+        sharedPreferencesFileNames().forEach { sharedPreferenceFileName ->
             @Suppress("Missing commit() on SharedPreference editor")
-            appContext.getSharedPreferences(it, Context.MODE_PRIVATE)
+            appContext.getSharedPreferences(sharedPreferenceFileName, Context.MODE_PRIVATE)
                 .edit()
                 .clear()
                 .commit()
@@ -23,6 +23,6 @@ internal class SharedPreferences(private val appContext: Context) {
         return sharedPreferencesLocation()
             .list()
             ?.map { it.replace(".xml", "") }
-                ?: emptyList()
+            ?: emptyList()
     }
 }

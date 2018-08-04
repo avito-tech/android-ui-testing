@@ -26,7 +26,8 @@ class TextViewReadAction(private val allowBlank: Boolean) : ViewAction {
             waitFor {
                 result = view.readText()
                 Assert.assertTrue(
-                    "read() waited, but view.text still has empty string value; use read(allowBlank=true) if you really need it",
+                    "read() waited, but view.text still has empty string value; " +
+                            "use read(allowBlank=true) if you really need it",
                     result.isNotBlank()
                 )
             }

@@ -1,5 +1,6 @@
 package com.avito.android.test.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -14,7 +15,11 @@ import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 
-internal fun Drawable.isSame(context: Context, @DrawableRes resId: Int, @ColorInt tint: Int? = null): Boolean {
+internal fun Drawable.isSame(
+    context: Context,
+    @DrawableRes resId: Int,
+    @ColorInt tint: Int? = null
+): Boolean {
     return if (tint != null) {
         isSame(ContextCompat.getDrawable(context, resId)?.wrapForTinting(tint))
     } else {
@@ -46,9 +51,12 @@ internal fun Int?.getResourceName(resources: Resources): String {
     return resources.getResourceName(this)
 }
 
+// fixme false negative?
+@SuppressLint("ResourceType")
 internal fun Int?.matchDrawable(
     context: Context,
-    drawable: Drawable?, @ColorInt tint: Int? = null
+    drawable: Drawable?,
+    @ColorInt tint: Int? = null
 ): Boolean {
     if (this == null) return true
     if (this == 0 && drawable == null) return true

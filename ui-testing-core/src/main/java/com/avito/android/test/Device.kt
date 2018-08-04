@@ -31,7 +31,7 @@ object Device {
 
     private const val DEFAULT_LAUNCH_TIMEOUT_MS = 10000L
 
-    private val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     private val rootElement: PageObjectElement
         get() = PageObjectElement(ViewMatchers.isRoot())
@@ -78,14 +78,14 @@ object Device {
     }
 
     fun waitForLauncher(timeout: Long = DEFAULT_LAUNCH_TIMEOUT_MS) {
-        with(device) {
+        with(uiDevice) {
             assertThat(launcherPackageName, CoreMatchers.notNullValue())
             assertTrue(wait(Until.hasObject(By.pkg(launcherPackageName).depth(0)), timeout))
         }
     }
 
     fun waitForAppLaunchAndReady(appContext: Context, timeout: Long = DEFAULT_LAUNCH_TIMEOUT_MS) {
-        with(device) {
+        with(uiDevice) {
             assertTrue(wait(Until.hasObject(By.pkg(appContext.packageName).depth(0)), timeout))
         }
     }
@@ -111,8 +111,7 @@ object Device {
 
     object Push {
 
-        fun openNotification(timeoutMillis: Long = 30_000) {
-            val expectedTitle = "Avito (DEV)"
+        fun openNotification(expectedTitle: String, timeoutMillis: Long = 30_000) {
             val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
             device.openNotification()
             assertTrue(device.wait(Until.hasObject(By.text(expectedTitle)), timeoutMillis))
@@ -137,17 +136,13 @@ object Device {
         }
 
         class Notification {
-
-            var intent = "com.google.android.c2dm.intent.RECEIVE"
-            var packageName = "com.avito.android.dev"
+            var intent: String = "com.google.android.c2dm.intent.RECEIVE"
+            var packageName: String = InstrumentationRegistry.getTargetContext().packageName
             var receiverName = "com.google.android.gms.gcm.GcmReceiver"
-            var uri = "ru.avito://1/main"
+            var uri: String = ""
             var messageBody: String = ""
                 set(value) {
-                    assertThat(
-                        "Передаваемая строка не может содержать символы пробела",
-                        value, not(containsString(" "))
-                    )
+                    assertThat(value, not(containsString(" ")))
                     field = value
                 }
             var phash: String? = null

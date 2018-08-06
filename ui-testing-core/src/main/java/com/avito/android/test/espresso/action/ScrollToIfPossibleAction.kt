@@ -47,8 +47,9 @@ class ScrollToIfPossibleAction : ViewAction {
 
         val rect = Rect()
         view.getDrawingRect(rect)
-        if (!view.requestRectangleOnScreen(rect, /*immediate*/true)) {
-        }
+
+        // todo it returns boolean(any parent scrolled or not), do we need to react somehow?
+        view.requestRectangleOnScreen(rect, /*immediate*/true)
 
         uiController.loopMainThreadUntilIdle()
 
@@ -56,7 +57,12 @@ class ScrollToIfPossibleAction : ViewAction {
             throw PerformException.Builder()
                 .withActionDescription(this.description)
                 .withViewDescription(HumanReadables.describe(view))
-                .withCause(RuntimeException("Scrolling to view was attempted, but the view is not displayed"))
+                .withCause(
+                    RuntimeException(
+                        "Scrolling to view was attempted, " +
+                                "but the view is not displayed"
+                    )
+                )
                 .build()
         }
     }

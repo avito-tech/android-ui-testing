@@ -36,7 +36,10 @@ class ReadTextTest {
             activity.findViewById<EditText>(R.id.edit_text).setText("")
         }
 
-        exception.expectMessage("read() waited, but view.text still has empty string value; use read(allowBlank=true) if you really need it")
+        exception.expectMessage(
+            "read() waited, but view.text still has empty string value; " +
+                    "use read(allowBlank=true) if you really need it"
+        )
         Screen.editTextScreen.editText.read(allowBlank = false)
         Unit
     }
@@ -53,5 +56,5 @@ class ReadTextTest {
         Assert.assertEquals("", captured)
     }
 
-    //todo recycler view tests
+    // todo recycler view tests
 }

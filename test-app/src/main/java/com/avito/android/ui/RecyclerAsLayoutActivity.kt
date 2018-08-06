@@ -31,17 +31,20 @@ class RecyclerAsLayoutActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_LIST = "RECYCLER_LIST"
 
-        fun intent(list: ArrayList<String>): (Intent) -> Intent = { it.putStringArrayListExtra(EXTRA_LIST, list) }
+        fun intent(list: ArrayList<String>): (Intent) -> Intent =
+            { it.putStringArrayListExtra(EXTRA_LIST, list) }
     }
 
-    private class Adapter(private val hints: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private class Adapter(private val hints: List<String>) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = when (holder) {
-            is InputHolder -> holder.layout.hint = hints[position]
-            is EditHolder -> holder.editText.hint = hints[position]
-            is LabelHolder -> holder.title.text = hints[position]
-            else -> error("Unsupported holder type: ${holder.javaClass.name}")
-        }
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
+            when (holder) {
+                is InputHolder -> holder.layout.hint = hints[position]
+                is EditHolder -> holder.editText.hint = hints[position]
+                is LabelHolder -> holder.title.text = hints[position]
+                else -> error("Unsupported holder type: ${holder.javaClass.name}")
+            }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val inflate: (layoutId: Int) -> View =

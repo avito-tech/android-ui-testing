@@ -24,6 +24,8 @@ class HintMatcher(val hint: String) : TypeSafeMatcher<View>() {
         }
 }
 
+// not a bad name for a private function
+@Suppress("FunctionMaxLength")
 private fun View.findParentTextInputLayoutRecursively(): TextInputLayout? {
     val view = this.parent as? View
     val textInput = view ?: return null

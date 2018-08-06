@@ -79,27 +79,27 @@ open class ListElement(interactionContext: InteractionContext) :
                     itemMatcher,
                     itemMatcher
                 )
-            ),
-            { childMatcher ->
-                PageObjectElement(
-                    childMatcher,
-                    actions = InteractionContextMatcherActions(
+            )
+        ) { childMatcher ->
+            PageObjectElement(
+                childMatcher,
+                actions = InteractionContextMatcherActions(
+                    interactionContext,
+                    itemMatcher,
+                    childMatcher
+                ),
+                checks = ChecksImpl(
+                    InteractionContextMatcherChecksDriver(
                         interactionContext,
                         itemMatcher,
                         childMatcher
-                    ),
-                    checks = ChecksImpl(
-                        InteractionContextMatcherChecksDriver(
-                            interactionContext,
-                            itemMatcher,
-                            childMatcher
-                        )
                     )
                 )
-            })
+            )
+        }
     }
 
-    //todo make me lazy
+    // todo make me lazy
     protected inline fun <reified T : PageObjectElement> typedItemByMatcher(
         matcher: Matcher<View>,
         position: Int = 0
@@ -134,24 +134,24 @@ open class ListElement(interactionContext: InteractionContext) :
                     position,
                     itemMatcher
                 )
-            ),
-            { childMatcher ->
-                PageObjectElement(
-                    childMatcher,
-                    actions = InteractionContextPositionActions(
+            )
+        ) { childMatcher ->
+            PageObjectElement(
+                childMatcher,
+                actions = InteractionContextPositionActions(
+                    interactionContext,
+                    position,
+                    childMatcher
+                ),
+                checks = ChecksImpl(
+                    InteractionContextPositionChecksDriver(
                         interactionContext,
                         position,
                         childMatcher
-                    ),
-                    checks = ChecksImpl(
-                        InteractionContextPositionChecksDriver(
-                            interactionContext,
-                            position,
-                            childMatcher
-                        )
                     )
                 )
-            })
+            )
+        }
     }
 
     class ListActions private constructor(
@@ -212,13 +212,16 @@ open class ListElement(interactionContext: InteractionContext) :
             precision: PrecisionDescriber
         ) {
             actions.swipe(object : SwipeDirection {
-                override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
+                override fun toCoordinateProvider():
+                        Pair<CoordinatesProvider, CoordinatesProvider> {
                     return when (direction) {
                         TOP_TO_BOTTOM -> CENTER to BOTTOM_CENTER
                         BOTTOM_TO_TOP -> CENTER to TOP_CENTER
                         LEFT_TO_RIGHT -> CENTER to CENTER_RIGHT
                         RIGHT_TO_LEFT -> CENTER to CENTER_LEFT
-                        else -> throw IllegalArgumentException("Can't do \"swipe\". Argument $direction is not supported")
+                        else -> throw IllegalArgumentException(
+                            "Can't do \"swipe\". Argument $direction is not supported"
+                        )
                     }
                 }
             }, Swipe.FAST, Press.FINGER)

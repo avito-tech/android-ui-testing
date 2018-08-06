@@ -60,7 +60,8 @@ object AvitoPositionAssertions {
 
         assertThat(
             failDescription.toString(),
-            Math.abs(location1.absoluteLocation - location2.absoluteLocation) < PIXEL_COMPARISON_TOLERANCE,
+            Math.abs(location1.absoluteLocation - location2.absoluteLocation)
+                    < PIXEL_COMPARISON_TOLERANCE,
             equalTo(true)
         )
     }
@@ -74,7 +75,7 @@ object AvitoPositionAssertions {
         private val view: View,
         override val description: String = "vertical center"
     ) : ScreenLocation {
-        constructor(viewMatcher: Matcher<View>, root: View) : this(
+        constructor(viewMatcher: Matcher<View>, root: View?) : this(
             findView(viewMatcher, root),
             "vertical center of " + viewMatcher.toString()
         )
@@ -91,7 +92,7 @@ object AvitoPositionAssertions {
         private val view: View,
         override val description: String = "bottom"
     ) : ScreenLocation {
-        constructor(viewMatcher: Matcher<View>, root: View) : this(
+        constructor(viewMatcher: Matcher<View>, root: View?) : this(
             findView(viewMatcher, root),
             "bottom of " + viewMatcher.toString()
         )
@@ -104,7 +105,7 @@ object AvitoPositionAssertions {
             }
     }
 
-    private fun getTopViewGroup(view: View): ViewGroup {
+    private fun getTopViewGroup(view: View): ViewGroup? {
         var currentParent: ViewParent? = view.parent
         var topView: ViewGroup? = null
         while (currentParent != null) {
@@ -113,11 +114,10 @@ object AvitoPositionAssertions {
             }
             currentParent = currentParent.parent
         }
-        topView!!
         return topView
     }
 
-    private fun findView(toView: Matcher<View>, root: View): View {
+    private fun findView(toView: Matcher<View>, root: View?): View {
         val viewPredicate = Predicate<View> { input -> toView.matches(input) }
         val matchedViewIterator =
             Iterables.filter(breadthFirstViewTraversal(root), viewPredicate).iterator()
@@ -129,7 +129,11 @@ object AvitoPositionAssertions {
                     .withViewMatcher(toView)
                     .withView1(matchedView)
                     .withView2(matchedViewIterator.next())
-                    .withOtherAmbiguousViews(*matchedViewIterator.asSequence().toList().toTypedArray())
+                    .withOtherAmbiguousViews(
+                        *matchedViewIterator.asSequence()
+                            .toList()
+                            .toTypedArray()
+                    )
                     .build()
             } else {
                 matchedView = matchedViewIterator.next()
@@ -143,7 +147,6 @@ object AvitoPositionAssertions {
         }
         return matchedView
     }
-
 }
 
 private const val PIXEL_COMPARISON_TOLERANCE = 2

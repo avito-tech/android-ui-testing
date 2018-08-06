@@ -1,8 +1,8 @@
 package com.avito.android.test.matcher
 
+import java.util.regex.Pattern
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
-import java.util.regex.Pattern
 
 class StringPatternMatcher(private val pattern: Pattern) : TypeSafeMatcher<String>() {
 

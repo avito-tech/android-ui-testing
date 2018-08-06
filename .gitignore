@@ -2,8 +2,8 @@
 .gradle/
 *build/
 local.properties
-
 **/.idea/*
 !.idea/codeStyles
 !.idea/inspectionProfiles
 !.idea/dictionaries
+**/gen/*

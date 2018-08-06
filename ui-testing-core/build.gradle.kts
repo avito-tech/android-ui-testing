@@ -1,7 +1,4 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
-import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
-import org.gradle.api.publish.maven.MavenPom
+
 
 val kotlinVersion: String by project
 val espressoVersion: String by project

@@ -30,7 +30,7 @@ class ActionsImpl(private val driver: ActionsDriver) : Actions {
     override fun swipe(direction: SwipeDirection, speed: Swiper, precision: PrecisionDescriber) {
         driver.perform(EspressoActions.swipe(direction, speed, precision))
 
-        //FIXME
+        // FIXME
         Thread.sleep(1000)
     }
 

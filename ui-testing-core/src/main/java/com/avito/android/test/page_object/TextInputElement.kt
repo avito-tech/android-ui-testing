@@ -1,6 +1,6 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.assertion.ViewAssertions
+import android.support.test.espresso.assertion.ViewAssertions.matches
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksImpl
@@ -25,26 +25,18 @@ class TextInputChecks(private val interactionContext: InteractionContext) :
     TextFieldHintChecks {
 
     override fun withErrorText(text: String) {
-        interactionContext.check(ViewAssertions.matches(TextInputLayoutErrorMatcher(`is`(text))))
+        interactionContext.check(matches(TextInputLayoutErrorMatcher(`is`(text))))
     }
 
     override fun withHintText(text: String) {
-        interactionContext.check(ViewAssertions.matches(TextInputLayoutHintMatcher(`is`(text))))
+        interactionContext.check(matches(TextInputLayoutHintMatcher(`is`(text))))
     }
 
     override fun isPasswordVisible() {
-        interactionContext.check(ViewAssertions.matches(TextInputPasswordVisibilityMatcher(`is`(true))))
+        interactionContext.check(matches(TextInputPasswordVisibilityMatcher(`is`(true))))
     }
 
     override fun isPasswordHidden() {
-        interactionContext.check(
-            ViewAssertions.matches(
-                TextInputPasswordVisibilityMatcher(
-                    `is`(
-                        false
-                    )
-                )
-            )
-        )
+        interactionContext.check(matches(TextInputPasswordVisibilityMatcher(`is`(false))))
     }
 }

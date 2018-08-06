@@ -1,9 +1,9 @@
 package com.avito.android.test.page_object
 
 import android.support.test.espresso.Espresso
-import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.support.test.espresso.action.ViewActions.clearText
+import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
@@ -26,7 +26,8 @@ open class TextField(interactionContext: InteractionContext) :
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
     override val checks: TextFieldChecks = TextFieldChecksImpl(interactionContext)
-    // do not replace with `val`, otherwise it will not be possible to specify explicitly text typing heuristic in someone's screen in future
+    // do not replace with `val`, otherwise it will not be possible
+    // to specify explicitly text typing heuristic in someone's screen in future
     var doNotUseReplace: Boolean = false
 }
 
@@ -54,21 +55,21 @@ class TextFieldActionImpl(private val interactionContext: InteractionContext) :
         interactionContext.perform(
             actionWithAssertions(ScrollToIfPossibleAction()),
             actionWithAssertions(SafeTypeTextAction(text, true)),
-            ViewActions.pressImeActionButton()
+            pressImeActionButton()
         )
     }
 
     override fun pressImeAction() {
         interactionContext.perform(
             actionWithAssertions(ScrollToIfPossibleAction()),
-            ViewActions.pressImeActionButton()
+            pressImeActionButton()
         )
     }
 
     override fun append(text: String) {
         interactionContext.perform(
-            ViewActions.actionWithAssertions(ScrollToIfPossibleAction()),
-            ViewActions.actionWithAssertions(SafeTypeTextAction(text, true, true))
+            actionWithAssertions(ScrollToIfPossibleAction()),
+            actionWithAssertions(SafeTypeTextAction(text, true, true))
         )
     }
 }

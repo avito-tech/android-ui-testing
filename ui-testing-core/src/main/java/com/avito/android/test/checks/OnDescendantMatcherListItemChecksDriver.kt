@@ -6,8 +6,8 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.avito.android.test.interceptor.AssertionInterceptor
 import com.avito.android.test.UITestConfig
+import com.avito.android.test.interceptor.AssertionInterceptor
 import com.avito.android.test.waitToPerform
 import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher

@@ -4,7 +4,7 @@ interface FieldActions {
 
     fun write(text: String)
 
-    //todo move to keyboard actors
+    // todo move to keyboard actors
     fun writeAndPressImeAction(text: String)
 
     fun pressImeAction()

@@ -134,11 +134,21 @@ class ChecksImpl(private val driver: ChecksDriver) : Checks,
     }
 
     override fun isFocusableInTouchMode() {
-        driver.check(matches(com.avito.android.test.matcher.ViewMatchers.isFocusableInTouchMode()))
+        driver.check(
+            matches(
+                com.avito.android.test.matcher.ViewMatchers.isFocusableInTouchMode()
+            )
+        )
     }
 
     override fun isNotFocusableInTouchMode() {
-        driver.check(matches(not(com.avito.android.test.matcher.ViewMatchers.isFocusableInTouchMode())))
+        driver.check(
+            matches(
+                not(
+                    com.avito.android.test.matcher.ViewMatchers.isFocusableInTouchMode()
+                )
+            )
+        )
     }
 
     override fun isNotCompletelyDisplayed() {

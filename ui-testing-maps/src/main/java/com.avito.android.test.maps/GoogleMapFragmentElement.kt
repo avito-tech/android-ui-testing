@@ -10,15 +10,15 @@ class GoogleMapFragmentElement(
     @IdRes private val id: Int,
     private val mapProvider: GoogleMapProvider = FragmentGoogleMapProvider(
         id = id,
-        timeoutMs = CHECKS_TIMEOUT_MS
+        timeoutMs = checksTimeoutMs
     )
 ) : PageObject(), GoogleMapActions by GoogleMapActionsImpl(
-    timeoutMs = CHECKS_TIMEOUT_MS,
+    timeoutMs = checksTimeoutMs,
     mapProvider = mapProvider
 ) {
 
     val checks: GoogleMapChecks =
-        GoogleMapChecksImpl(timeoutMs = CHECKS_TIMEOUT_MS, mapProvider = mapProvider)
+        GoogleMapChecksImpl(timeoutMs = checksTimeoutMs, mapProvider = mapProvider)
 }
 
-private val CHECKS_TIMEOUT_MS = TimeUnit.SECONDS.toMillis(10)
+private val checksTimeoutMs = TimeUnit.SECONDS.toMillis(10)

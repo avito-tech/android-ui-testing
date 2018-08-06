@@ -28,24 +28,26 @@ class KeyboardElement : PageObject() {
 
     /**
      * WARNING: we can't check keyboard status after rotating screen using programmatically way.
-     * For this case, we can't detect keyboard open status and always returns false for isDisplayed method
-     * and true for isNotDisplayed method.
+     * For this case, we can't detect keyboard open status and always returns false for
+     * isDisplayed method and true for isNotDisplayed method.
      *
      * https://issuetracker.google.com/u/1/issues/68137674
      */
     class CheckLibrary {
         companion object {
+            // not a bad name for private const
+            @Suppress("VariableMaxLength")
             private const val KEYBOARD_MINIMUM_HEIGHT_PERCENTAGE = .30f
         }
 
         fun isDisplayed(activity: Activity) {
-            //FIXME(MBS-1301)
+            // FIXME(MBS-1301)
             Thread.sleep(1000)
             checkDisplayed(activity, true)
         }
 
         fun isNotDisplayed(activity: Activity) {
-            //FIXME(MBS-1301)
+            // FIXME(MBS-1301)
             Thread.sleep(1000)
             checkDisplayed(activity, false)
         }
@@ -104,14 +106,14 @@ class KeyboardElement : PageObject() {
                         "is not displayed"
                     }
                     val sizes =
-                        " actualEffectiveHeight: $activityEffectiveHeight thresholdEffectiveHeight: $threshold"
+                        " actualEffectiveHeight: $activityEffectiveHeight " +
+                                "thresholdEffectiveHeight: $threshold"
 
                     "(keyboard $status on the screen.${if (withSizes) sizes else ""})"
                 }
 
             val doesNotMatch = "doesn't match the selected view."
             val expected = "Expected:"
-
 
             return "${getStatusMessage(!displayed, true)} $doesNotMatch" +
                     " $expected ${getStatusMessage(displayed, false)}"

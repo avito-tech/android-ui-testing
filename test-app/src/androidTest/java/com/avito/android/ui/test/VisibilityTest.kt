@@ -31,7 +31,10 @@ class VisibilityTest {
             rule.activity.findViewById<View>(R.id.text).visibility = View.INVISIBLE
         }
         exception.expect(AssertionFailedError::class.java)
-        exception.expectMessage("'view has effective visibility=VISIBLE' doesn't match the selected view.")
+        exception.expectMessage(
+            "'view has effective visibility=VISIBLE' " +
+                    "doesn't match the selected view."
+        )
         Screen.visibility.label.checks.isVisible()
     }
 }

@@ -1,10 +1,10 @@
 package com.avito.android.test.maps
 
 import com.google.android.gms.maps.model.LatLng
+import java.lang.Math.abs
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import java.lang.Math.abs
 
 fun hasTheSameCoordinatesAs(expected: LatLng): Matcher<LatLng> = object : BaseMatcher<LatLng>() {
 

@@ -1,6 +1,5 @@
 package com.avito.android.test.page_object
 
-
 import android.support.design.widget.TabLayout
 import android.support.test.espresso.PerformException
 import android.support.test.espresso.UiController

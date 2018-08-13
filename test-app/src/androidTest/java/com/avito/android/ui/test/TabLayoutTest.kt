@@ -4,7 +4,6 @@ import com.avito.android.ui.TabLayoutActivity
 import org.junit.Rule
 import org.junit.Test
 
-
 class TabLayoutTest {
 
     @get:Rule

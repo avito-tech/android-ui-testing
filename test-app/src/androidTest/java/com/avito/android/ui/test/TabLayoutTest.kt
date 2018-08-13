@@ -11,13 +11,13 @@ class TabLayoutTest {
     val rule = screenRule<TabLayoutActivity>(launchActivity = true)
 
     @Test
-    fun tabsCountIsFour() {
-        Screen.tabLayoutScreen.tabs.checks.withTabsCount(4)
+    fun tabsCountIs1000() {
+        Screen.tabLayoutScreen.tabs.checks.withTabsCount(1000)
     }
 
     @Test
-    fun selectTab0_tabIsDisplayed() {
-        Screen.tabLayoutScreen.tabs.select(0)
-        Screen.tabLayoutScreen.tabs.checks.withSelectedPosition(0)
+    fun selectTab500_tabIsDisplayed() {
+        Screen.tabLayoutScreen.tabs.select(500)
+        Screen.tabLayoutScreen.tabs.checks.withSelectedPosition(500)
     }
 }

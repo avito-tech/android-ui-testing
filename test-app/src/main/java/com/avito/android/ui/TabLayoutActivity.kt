@@ -11,8 +11,9 @@ class TabLayoutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tab_layout)
 
         findViewById<TabLayout>(R.id.tabs).apply {
-            (1..4).forEach {
-                addTab(newTab().setText("$it"))
+            tabMode = TabLayout.MODE_SCROLLABLE
+            (1..1000).forEach {
+                addTab(newTab().setText("Tab $it"))
             }
         }
     }

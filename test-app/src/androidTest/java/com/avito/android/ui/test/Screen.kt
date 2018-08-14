@@ -34,4 +34,7 @@ object Screen {
 
     val editTextScreen: EditTextScreen
         get() = EditTextScreen()
+
+    val tabLayoutScreen: TabLayoutScreen
+        get() = TabLayoutScreen()
 }

@@ -31,6 +31,7 @@ import com.avito.android.test.matcher.ToolbarSubTitleResMatcher
 import com.avito.android.test.matcher.ToolbarSubtitleMatcher
 import com.avito.android.test.matcher.ToolbarTitleMatcher
 import com.avito.android.test.matcher.ToolbarTitleResMatcher
+import com.avito.android.test.waitFor
 import com.avito.android.test.waitToPerform
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -172,10 +173,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
                 )
             }
 
-            if (ToolbarReadMenuItemsAction()
-                    .apply { toolbarInteraction.perform(this) }
-                    .hasHiddenItem(titleMatcher)
-            ) {
+            if (hasOverflowMenu()) {
                 // do not click if disableOverflowMenuAutoOpen() was specified
                 overflowMenuButton?.click()
                 overflowInteraction.waitToPerform(interceptedActions)
@@ -185,16 +183,23 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         }
 
         override fun check(assertion: ViewAssertion) {
-            if (ToolbarReadMenuItemsAction()
-                    .apply { toolbarInteraction.perform(this) }
-                    .hasHiddenItem(titleMatcher)
-            ) {
+            if (hasOverflowMenu()) {
                 overflowMenuButton?.click()
                 overflowInteraction.check(assertion)
                 Device.pressBack()
             } else {
                 actionInteraction.check(assertion)
             }
+        }
+
+        private fun hasOverflowMenu(): Boolean {
+            var hasOverflowMenu = false
+            waitFor(allowedExceptions = setOf(IllegalStateException::class.java)) {
+                hasOverflowMenu = ToolbarReadMenuItemsAction()
+                    .apply { toolbarInteraction.perform(this) }
+                    .hasHiddenItem(titleMatcher)
+            }
+            return hasOverflowMenu
         }
     }
 }

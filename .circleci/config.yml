@@ -88,6 +88,9 @@ jobs:
           path: ui-testing-core/build/reports/
           destination: /ui-testing-core/
       - store_artifacts:
+          path: ui-testing-core/build/test-results/
+          destination: /ui-testing-core/test-results/
+      - store_artifacts:
           path: ui-testing-maps/build/reports/
           destination: /ui-testing-maps/
 

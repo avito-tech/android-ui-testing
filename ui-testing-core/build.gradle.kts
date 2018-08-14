@@ -35,3 +35,9 @@ dependencies {
     implementation("org.hamcrest:hamcrest-library:1.3")
     implementation("junit:junit:$junitVersion")
 }
+
+tasks.withType<Test> {
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}

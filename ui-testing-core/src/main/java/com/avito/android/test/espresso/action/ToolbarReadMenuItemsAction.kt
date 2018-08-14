@@ -5,6 +5,7 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.avito.android.test.util.getFieldByReflection
 import java.util.ArrayList
 import org.hamcrest.Matcher
 
@@ -18,15 +19,16 @@ class ToolbarReadMenuItemsAction : ViewAction {
 
     override fun perform(uiController: UiController, view: View) {
         val toolbar = view as Toolbar
-        val mExpandedMenuPresenter =
-            Toolbar::class.java.getDeclaredField("mExpandedMenuPresenter")
-                .also { it.isAccessible = true }.get(toolbar)
-        val mMenu = mExpandedMenuPresenter.javaClass.getDeclaredField("mMenu")
-            .also { it.isAccessible = true }
-            .get(mExpandedMenuPresenter)
-        val mNonActionItems = mMenu.javaClass.getDeclaredField("mNonActionItems").also {
-            it.isAccessible = true
-        }.get(mMenu) as ArrayList<*>
+        val mExpandedMenuPresenter = toolbar.getFieldByReflection<Any?>("mExpandedMenuPresenter")
+        if (mExpandedMenuPresenter == null) {
+            throw IllegalStateException("Cannot check overlofw menu. Seems like menu is being initialized")
+        }
+        val mMenu = mExpandedMenuPresenter.getFieldByReflection<Any?>("mMenu")
+
+        if (mMenu == null) {
+            throw IllegalStateException("Cannot check overlofw menu. Seems like menu is being initialized")
+        }
+        val mNonActionItems = mMenu.getFieldByReflection<ArrayList<*>>("mNonActionItems")
         hiddenItems = mNonActionItems.map { it.toString() }
     }
 

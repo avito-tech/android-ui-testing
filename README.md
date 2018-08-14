@@ -1,6 +1,6 @@
 # Avito Android UI testing library
 
-## Should I use it
+## Should I use it?
 
 Not now. Work in progress.
 
@@ -27,19 +27,18 @@ dependencies {
 
 ### UITestConfig
 
-Use UITestConfig to tune library's parameters for your project
-
-Custom instrumentation test runner is the best place for it
+Use UITestConfig to tune library's parameters for your project.
+Custom instrumentation test runner is the best place for it.
 
 ## Core features
 
 ### Interceptors
 
-Functions that invokes before every action and assertion with all information about target and intention.
+Functions that are invoked before every action and assertion with all information about target and intention.
 
 #### Use cases
 
- - Log human readable walk-through of your tests (greatly increases report clarity)
+ - Log human readable walk-through of your tests (greatly increases report clarity).
  
 #### Setup 
 
@@ -58,9 +57,9 @@ See `test-app/androidTest`
 
 ### Release
 
-To upload to bintray (mirrored to jcenter): `./gradlew bintrayUpload --info`
+To upload to bintray (mirrored to jcenter): `./gradlew bintrayUpload --info`.
 
-Use `--info` to debug `bintrayUpload` task, because if completes silently in case of error
+Use `--info` to debug `bintrayUpload` task, because it completes silently in case of error.
 
 Required environment variables:
 

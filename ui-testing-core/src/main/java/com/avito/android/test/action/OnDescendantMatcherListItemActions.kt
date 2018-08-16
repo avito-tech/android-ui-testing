@@ -70,7 +70,7 @@ class OnDescendantMatcherListItemActions(
     }
 
     override fun read(allowBlank: Boolean): String =
-        TextViewReadAction.getResultVia(allowBlank) { action ->
+        TextViewReadAction.getResult(allowBlank) { action ->
             interaction.waitToPerform(
                 RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                     matcher,

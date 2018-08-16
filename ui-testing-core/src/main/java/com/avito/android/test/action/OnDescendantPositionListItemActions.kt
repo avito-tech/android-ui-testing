@@ -67,8 +67,7 @@ class OnDescendantPositionListItemActions(
     }
 
     override fun read(allowBlank: Boolean): String =
-        TextViewReadAction.getResultVia(allowBlank)
-        { action ->
+        TextViewReadAction.getResult(allowBlank) { action ->
             interaction.waitToPerform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     position,

@@ -12,12 +12,17 @@ import org.junit.Assert.assertFalse
 class TextViewReadAction : ViewAction {
 
     companion object {
-        fun getResultVia(allowBlank: Boolean, perform: (TextViewReadAction) -> Unit): String {
+
+        /**
+         * @param perform use suitable driver to perform this view action
+         */
+        fun getResult(allowBlank: Boolean, perform: (TextViewReadAction) -> Unit): String {
             val action = TextViewReadAction()
             return if (allowBlank) {
                 perform(action)
                 action.result ?: ""
             } else {
+                //FYI: will loop inside driver's loop here
                 waitFor(allowedExceptions = setOf(AssertionError::class.java)) {
                     perform(action)
                     assertFalse(

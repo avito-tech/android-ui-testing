@@ -64,7 +64,7 @@ class InteractionContextMatcherActions(
     }
 
     override fun read(allowBlank: Boolean): String =
-        TextViewReadAction.getResultVia(allowBlank) { action ->
+        TextViewReadAction.getResult(allowBlank) { action ->
             interactionContext.perform(
                 RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                     matcher,

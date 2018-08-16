@@ -61,7 +61,7 @@ class InteractionContextPositionActions(
     }
 
     override fun read(allowBlank: Boolean): String =
-        TextViewReadAction.getResultVia(allowBlank) { action ->
+        TextViewReadAction.getResult(allowBlank) { action ->
             interactionContext.perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     position,

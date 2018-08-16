@@ -56,5 +56,20 @@ class ReadTextTest {
         Assert.assertEquals("", captured)
     }
 
+    @Test
+    fun readText_with_delay() = with(rule) {
+        launchActivity(null)
+
+        rule.runOnUiThread {
+            activity.findViewById<EditText>(R.id.edit_text).run {
+                setText("")
+                postDelayed({ setText("delayedText") }, 1000)
+            }
+        }
+
+        val captured = Screen.editTextScreen.editText.read(allowBlank = false)
+        Assert.assertEquals("delayedText", captured)
+    }
+
     // todo recycler view tests
 }

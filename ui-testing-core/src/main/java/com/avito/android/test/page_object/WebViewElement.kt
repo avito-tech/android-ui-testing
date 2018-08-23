@@ -12,8 +12,7 @@ import org.hamcrest.Matcher
 class WebViewElement(
     private val webViewMatcher: Matcher<View>,
     private val elementMatcher: Atom<ElementReference>
-) :
-    PageObject() {
+) : PageObject {
 
     val actions: WebElementActions
         get() = WebElementActions(

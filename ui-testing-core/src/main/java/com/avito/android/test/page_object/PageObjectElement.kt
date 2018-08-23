@@ -12,12 +12,22 @@ import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.matcher.NoViewMatcher
 import org.hamcrest.Matcher
 
-open class PageObjectElement(
-    @Deprecated("don't use this matcher directly") val matcher: Matcher<View>,
-    val interactionContext: InteractionContext = SimpleInteractionContext(matcher),
-    open val actions: Actions = ActionsImpl(interactionContext),
-    open val checks: Checks = ChecksImpl(interactionContext)
-) : PageObject(), Actions by actions {
+
+interface PageObjectElement : PageObject, Actions {
+    @Deprecated("don't use this matcher directly")
+    val matcher: Matcher<View>
+    val interactionContext: InteractionContext
+    val actions: Actions
+    val checks: Checks
+}
+
+
+open class BasePageObjectElement(
+    @Deprecated("don't use this matcher directly") override val matcher: Matcher<View>,
+    override val interactionContext: InteractionContext = SimpleInteractionContext(matcher),
+    override val actions: Actions = ActionsImpl(interactionContext),
+    override val checks: Checks = ChecksImpl(interactionContext)
+) : PageObjectElement, Actions by actions {
 
     constructor(matcher: Matcher<View>, interactionContext: InteractionContext) :
             this(

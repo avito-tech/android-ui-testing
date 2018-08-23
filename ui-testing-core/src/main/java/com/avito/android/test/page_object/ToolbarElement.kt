@@ -44,7 +44,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.TypeSafeMatcher
 
 open class ToolbarElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext) {
+    BasePageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View> = isAssignableFrom(Toolbar::class.java)) : this(
         SimpleInteractionContext(matcher)
@@ -73,7 +73,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         )
     )
 
-    val overflowMenuButton = PageObjectElement(overflowButtonMatcher)
+    val overflowMenuButton = BasePageObjectElement(overflowButtonMatcher)
 
     protected fun overflowMenuItem(titleMatcher: Matcher<String>) =
         MenuItem(isAssignableFrom(Toolbar::class.java), titleMatcher, overflowMenuButton)
@@ -89,7 +89,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         private val toolbarMatcher: Matcher<View>,
         private val titleMatcher: Matcher<String>,
         private var overflowMenuButton: PageObjectElement?
-    ) : PageObjectElement(RestrictedDirectAccessMatcher()) {
+    ) : BasePageObjectElement(RestrictedDirectAccessMatcher()) {
 
         override val actions: Actions
             get() = ActionsImpl(

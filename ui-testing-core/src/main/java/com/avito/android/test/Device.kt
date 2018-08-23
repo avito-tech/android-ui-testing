@@ -14,6 +14,7 @@ import com.avito.android.test.espresso.action.OrientationChangeAction
 import com.avito.android.test.internal.Cache
 import com.avito.android.test.internal.SQLiteDB
 import com.avito.android.test.internal.SharedPreferences
+import com.avito.android.test.page_object.BasePageObjectElement
 import com.avito.android.test.page_object.KeyboardElement
 import com.avito.android.test.page_object.PageObjectElement
 import junit.framework.Assert.assertEquals
@@ -33,8 +34,8 @@ object Device {
 
     private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-    private val rootElement: PageObjectElement
-        get() = PageObjectElement(ViewMatchers.isRoot())
+    private val rootElement: BasePageObjectElement
+        get() = BasePageObjectElement(ViewMatchers.isRoot())
 
     val keyboard = KeyboardElement()
 

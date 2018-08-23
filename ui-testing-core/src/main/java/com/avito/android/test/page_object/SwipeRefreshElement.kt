@@ -20,7 +20,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.core.Is.`is`
 
 class SwipeRefreshElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext) {
+    BasePageObjectElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

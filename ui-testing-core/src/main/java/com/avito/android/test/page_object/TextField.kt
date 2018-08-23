@@ -20,7 +20,7 @@ import com.avito.android.test.espresso.action.ScrollToIfPossibleAction
 import org.hamcrest.Matcher
 
 open class TextField(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext),
+    BasePageObjectElement(interactionContext),
     FieldActions by TextFieldActionImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))

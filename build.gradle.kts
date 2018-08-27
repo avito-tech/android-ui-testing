@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.2.4"
+version = project.properties["uiTestingVersion"] ?: "undefined"
 
 val minSdk: String by project
 val targetSdk: String by project

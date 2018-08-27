@@ -6,15 +6,11 @@ Not now. Work in progress.
 
 ## Roadmap
 
-- full test coverage of current features
-- docs about all features
-- [the issue](https://github.com/avito-tech/android-ui-testing/issues/11)
+See [Milestones](https://github.com/avito-tech/android-ui-testing/milestones)
 
 ## Configure
 
 ```groovy
-def uiTestingVersion = '0.2.2'
-
 repositories {
     jcenter()
 }
@@ -24,6 +20,8 @@ dependencies {
     androidTestImplementation 'com.avito.ui-testing:ui-testing-maps:$uiTestingVersion'
 }
 ```
+
+See [Releases](https://github.com/avito-tech/android-ui-testing/releases) for latest `$uiTestingVersion`.
 
 ### UITestConfig
 
@@ -57,12 +55,4 @@ See `test-app/androidTest`
 
 ### Release
 
-To upload to bintray (mirrored to jcenter): `./gradlew bintrayUpload --info`.
-
-Use `--info` to debug `bintrayUpload` task, because it completes silently in case of error.
-
-Required environment variables:
-
- - BINTRAY_USER
- - BINTRAY_API_KEY
- - BINTRAY_GPG_PASSPHRASE
+Push `vX.X.X` tag to master

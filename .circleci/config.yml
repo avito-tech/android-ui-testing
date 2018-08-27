@@ -94,6 +94,13 @@ jobs:
           path: ui-testing-maps/build/reports/
           destination: /ui-testing-maps/
 
+  publish:
+    <<: *android_config
+    steps:
+      - run:
+          name: Gradle publish
+          command: ./.circleci/publish.sh
+
   test_instrumented:
     <<: *gcloud_config
     steps:
@@ -135,9 +142,21 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
+
+  checks:
     jobs:
       - build
       - test_instrumented:
           requires:
             - build
+
+  publish-release:
+    jobs:
+      - publish:
+          requires:
+            - checks
+          filters:
+            tags:
+              only: /^v*/
+            branches:
+              ignore: /.*/

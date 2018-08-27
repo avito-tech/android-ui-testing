@@ -1,19 +1,29 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryPlugin
+import com.android.ide.common.xml.XmlFormatPreferences.defaults
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
+import groovy.lang.GroovyObject
+import org.gradle.api.internal.plugins.DefaultArtifactPublicationSet
 import org.gradle.api.internal.plugins.DslObject
+import org.jfrog.gradle.plugin.artifactory.ArtifactoryPlugin
+import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
+import org.jfrog.gradle.plugin.artifactory.dsl.DoubleDelegateWrapper
+import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
+import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
+import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 
 plugins {
     `kotlin-dsl` apply false
     id("com.android.application") apply false
     id("com.github.dcendents.android-maven") version "2.1" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
+    id("com.jfrog.artifactory") version "4.7.5" apply false
     id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
 }
 
 group = "com.avito.ui-testing"
-version = "0.2.4"
+version = "0.2.5-SNAPSHOT"
 
 val minSdk: String by project
 val targetSdk: String by project
@@ -46,7 +56,6 @@ subprojects {
     plugins.withType(LibraryPlugin::class.java) {
 
         apply(plugin = "com.github.dcendents.android-maven")
-        apply<BintrayPlugin>()
 
         // we don't need debug variant for libraries at all
         configure<BaseExtension> {
@@ -85,11 +94,13 @@ subprojects {
                 }
         }
 
-        tasks.getByName("bintrayUpload").dependsOn(installTask)
-
         artifacts {
             add("archives", sourcesJarTask)
         }
+
+        // Release artifacts uploading
+        apply<BintrayPlugin>()
+        tasks.getByName("bintrayUpload").dependsOn(installTask)
 
         configure<BintrayExtension> {
             user = System.getenv("BINTRAY_USER")
@@ -113,6 +124,24 @@ subprojects {
                         sign = true
                         passphrase = System.getenv("BINTRAY_GPG_PASSPHRASE")
                     })
+                })
+            })
+        }
+
+        // Snapshot artifacts uploading
+        apply<ArtifactoryPlugin>()
+        tasks.getByName("artifactoryPublish").dependsOn(installTask)
+        configure<ArtifactoryPluginConvention> {
+            setContextUrl(System.getenv("ARTIFACTORY_URL"))
+            publish(delegateClosureOf<PublisherConfig> {
+                repository(delegateClosureOf<GroovyObject> {
+                    setProperty("repoKey", System.getenv("ARTIFACTORY_REPO"))
+                    setProperty("username", System.getenv("ARTIFACTORY_USER"))
+                    setProperty("password", System.getenv("ARTIFACTORY_PASSWORD"))
+                    setProperty("maven", true)
+                })
+                defaults(delegateClosureOf<GroovyObject> {
+                    invokeMethod("publishConfigs", "archives")
                 })
             })
         }

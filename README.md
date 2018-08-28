@@ -55,6 +55,19 @@ See `test-app/androidTest`
 
 ## Contribution
 
+### Snapshot uploading
+
+To upload snapshot version to your own artifactory server:  `./gradlew artifactoryPublish --info`.
+
+Use `--info` to debug `artifactoryPublish` task, because it completes silently in case of error.
+
+Required environment variables:
+
+ - ARTIFACTORY_URL
+ - ARTIFACTORY_USER
+ - ARTIFACTORY_PASSWORD
+ - ARTIFACTORY_REPO
+
 ### Release
 
 To upload to bintray (mirrored to jcenter): `./gradlew bintrayUpload --info`.

@@ -13,7 +13,7 @@ import com.avito.android.test.matcher.TextInputPasswordVisibilityMatcher
 import org.hamcrest.Matchers.`is`
 
 class TextInputElement(interactionContext: InteractionContext) :
-    BasePageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     override val checks: TextInputChecks = TextInputChecks(interactionContext)
 }

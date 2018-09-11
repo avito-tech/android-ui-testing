@@ -10,7 +10,7 @@ import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThan
 
 class FloatingViewElement(interactionContext: InteractionContext) :
-    BasePageObjectElement(interactionContext, checks = FloatingViewChecksImpl(interactionContext))
+    ViewElement(interactionContext, checks = FloatingViewChecksImpl(interactionContext))
 
 class FloatingViewChecksImpl(private val interactionContext: InteractionContext) :
     Checks by ChecksImpl(interactionContext) {

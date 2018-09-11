@@ -21,12 +21,16 @@ class ToolbarReadMenuItemsAction : ViewAction {
         val toolbar = view as Toolbar
         val mExpandedMenuPresenter = toolbar.getFieldByReflection<Any?>("mExpandedMenuPresenter")
         if (mExpandedMenuPresenter == null) {
-            throw IllegalStateException("Cannot check overlofw menu. Seems like menu is being initialized")
+            throw IllegalStateException(
+                "Cannot check overflofw menu. Seems like menu is being initialized"
+            )
         }
         val mMenu = mExpandedMenuPresenter.getFieldByReflection<Any?>("mMenu")
 
         if (mMenu == null) {
-            throw IllegalStateException("Cannot check overlofw menu. Seems like menu is being initialized")
+            throw IllegalStateException(
+                "Cannot check overflow menu. Seems like menu is being initialized"
+            )
         }
         val mNonActionItems = mMenu.getFieldByReflection<ArrayList<*>>("mNonActionItems")
         hiddenItems = mNonActionItems.map { it.toString() }

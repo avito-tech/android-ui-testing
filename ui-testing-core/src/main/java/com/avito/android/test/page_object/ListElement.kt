@@ -48,7 +48,7 @@ import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.core.AnyOf.anyOf
 
 open class ListElement(interactionContext: InteractionContext) :
-    BasePageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -81,7 +81,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 )
             )
         ) { childMatcher ->
-            BasePageObjectElement(
+            ViewElement(
                 childMatcher,
                 actions = InteractionContextMatcherActions(
                     interactionContext,
@@ -136,7 +136,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 )
             )
         ) { childMatcher ->
-            BasePageObjectElement(
+            ViewElement(
                 childMatcher,
                 actions = InteractionContextPositionActions(
                     interactionContext,

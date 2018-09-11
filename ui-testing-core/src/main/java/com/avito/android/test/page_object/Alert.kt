@@ -6,9 +6,9 @@ import android.support.v7.widget.DialogTitle
 
 class Alert : PageObject {
 
-    val messageElement = BasePageObjectElement(withId(android.R.id.message))
+    val messageElement = ViewElement(withId(android.R.id.message))
 
-    val title = BasePageObjectElement(ViewMatchers.isAssignableFrom(DialogTitle::class.java))
+    val title = ViewElement(ViewMatchers.isAssignableFrom(DialogTitle::class.java))
 
-    val okButton = BasePageObjectElement(withId(android.R.id.button1))
+    val okButton = ViewElement(withId(android.R.id.button1))
 }

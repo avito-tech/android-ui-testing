@@ -15,7 +15,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 
 class ToolbarMenuElement(interactionContext: InteractionContext) :
-    BasePageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

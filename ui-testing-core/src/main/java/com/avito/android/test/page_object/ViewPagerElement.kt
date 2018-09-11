@@ -15,7 +15,7 @@ import com.avito.android.test.matcher.ViewPagersTabsCountMatcher
 import org.hamcrest.Matcher
 
 class ViewPagerElement(interactionContext: InteractionContext) :
-    BasePageObjectElement(interactionContext),
+    ViewElement(interactionContext),
     ViewPagerActions by ViewPagerActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))

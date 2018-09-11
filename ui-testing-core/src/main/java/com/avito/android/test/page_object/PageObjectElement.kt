@@ -12,7 +12,6 @@ import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.matcher.NoViewMatcher
 import org.hamcrest.Matcher
 
-
 interface PageObjectElement : PageObject, Actions {
     @Deprecated("don't use this matcher directly")
     val matcher: Matcher<View>
@@ -21,8 +20,7 @@ interface PageObjectElement : PageObject, Actions {
     val checks: Checks
 }
 
-
-open class BasePageObjectElement(
+open class ViewElement(
     @Deprecated("don't use this matcher directly") override val matcher: Matcher<View>,
     override val interactionContext: InteractionContext = SimpleInteractionContext(matcher),
     override val actions: Actions = ActionsImpl(interactionContext),

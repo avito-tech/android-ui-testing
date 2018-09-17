@@ -15,7 +15,7 @@ import com.avito.android.test.internal.Cache
 import com.avito.android.test.internal.SQLiteDB
 import com.avito.android.test.internal.SharedPreferences
 import com.avito.android.test.page_object.KeyboardElement
-import com.avito.android.test.page_object.PageObjectElement
+import com.avito.android.test.page_object.ViewElement
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.hamcrest.CoreMatchers
@@ -33,8 +33,8 @@ object Device {
 
     private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-    private val rootElement: PageObjectElement
-        get() = PageObjectElement(ViewMatchers.isRoot())
+    private val rootElement: ViewElement
+        get() = ViewElement(ViewMatchers.isRoot())
 
     val keyboard = KeyboardElement()
 

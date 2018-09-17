@@ -12,7 +12,7 @@ import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
 class ProgressBarElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

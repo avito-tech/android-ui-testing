@@ -7,7 +7,7 @@ import org.hamcrest.Matcher
 
 @Deprecated("Use PageObjectElement")
 class TextViewElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 }

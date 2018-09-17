@@ -14,7 +14,7 @@ import com.avito.android.test.matcher.ImageShownMatcher
 import org.hamcrest.Matcher
 
 open class ImageViewElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext) {
+    ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

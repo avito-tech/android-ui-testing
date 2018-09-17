@@ -10,7 +10,7 @@ import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.ActionsDriver
 import org.hamcrest.Matcher
 
-class SwitchElement(interactionContext: InteractionContext) : PageObjectElement(interactionContext),
+class SwitchElement(interactionContext: InteractionContext) : ViewElement(interactionContext),
     SwitchElementActions by SwitchElementActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))

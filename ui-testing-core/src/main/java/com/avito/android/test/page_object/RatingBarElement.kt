@@ -16,7 +16,7 @@ import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
 class RatingBarElement(interactionContext: InteractionContext) :
-    PageObjectElement(interactionContext),
+    ViewElement(interactionContext),
     RatingBarActions by RatingBarActionsImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))

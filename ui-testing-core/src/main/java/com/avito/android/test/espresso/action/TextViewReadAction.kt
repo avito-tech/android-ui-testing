@@ -22,7 +22,7 @@ class TextViewReadAction : ViewAction {
                 perform(action)
                 action.result ?: ""
             } else {
-                //FYI: will loop inside driver's loop here
+                // FYI: will loop inside driver's loop here
                 waitFor(allowedExceptions = setOf(AssertionError::class.java)) {
                     perform(action)
                     assertFalse(

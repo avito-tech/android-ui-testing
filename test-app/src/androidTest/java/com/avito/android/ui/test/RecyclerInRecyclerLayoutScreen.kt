@@ -9,6 +9,7 @@ import com.avito.android.test.action.Actions
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.page_object.ListElement
 import com.avito.android.test.page_object.PageObjectElement
+import com.avito.android.test.page_object.ViewElement
 import com.avito.android.ui.R
 import org.hamcrest.Matcher
 
@@ -34,7 +35,7 @@ class RecyclerInRecyclerLayoutScreen : ListElement(ViewMatchers.withId(R.id.recy
             actions: Actions,
             checks: Checks,
             childFactory: (Matcher<View>) -> PageObjectElement
-        ) : PageObjectElement(matcher, actions = actions, checks = checks) {
+        ) : ViewElement(matcher, actions = actions, checks = checks) {
 
             val title = childFactory(withId(R.id.title))
         }

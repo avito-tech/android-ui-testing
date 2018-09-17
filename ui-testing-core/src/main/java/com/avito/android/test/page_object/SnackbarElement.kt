@@ -16,7 +16,7 @@ import org.hamcrest.Matchers
  * @warning hidden snackbar stays in hierarchy longer than you might expect;
  * if you encounter weird "duplicate snackbars" it's known issue
  */
-class SnackbarElement(textMatcher: Matcher<String>? = null) : PageObjectElement(
+class SnackbarElement(textMatcher: Matcher<String>? = null) : ViewElement(
     if (textMatcher != null) {
         Matchers.allOf(
             ViewMatchers.isAssignableFrom(Snackbar.SnackbarLayout::class.java),
@@ -27,14 +27,14 @@ class SnackbarElement(textMatcher: Matcher<String>? = null) : PageObjectElement(
     }
 ) {
 
-    val message = PageObjectElement(
+    val message = ViewElement(
         Matchers.allOf(
             ViewMatchers.withId(android.support.design.R.id.snackbar_text),
             ViewMatchers.isDescendantOfA(matcher)
         )
     )
 
-    val button = PageObjectElement(
+    val button = ViewElement(
         Matchers.allOf(
             ViewMatchers.withId(android.support.design.R.id.snackbar_action),
             ViewMatchers.isDescendantOfA(matcher)

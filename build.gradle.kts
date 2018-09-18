@@ -4,14 +4,10 @@ import com.android.ide.common.xml.XmlFormatPreferences.defaults
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
 import groovy.lang.GroovyObject
-import org.gradle.api.internal.plugins.DefaultArtifactPublicationSet
 import org.gradle.api.internal.plugins.DslObject
 import org.jfrog.gradle.plugin.artifactory.ArtifactoryPlugin
 import org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention
-import org.jfrog.gradle.plugin.artifactory.dsl.DoubleDelegateWrapper
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
-import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
-import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 
 plugins {
     `kotlin-dsl` apply false
@@ -23,7 +19,7 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.2.5-SNAPSHOT"
+version = "0.4.0-SNAPSHOT"
 
 val minSdk: String by project
 val targetSdk: String by project

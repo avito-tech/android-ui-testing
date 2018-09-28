@@ -1,4 +1,5 @@
 import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 import com.android.ide.common.xml.XmlFormatPreferences.defaults
 import com.jfrog.bintray.gradle.BintrayExtension
@@ -49,35 +50,25 @@ subprojects {
     group = rootProject.group
     version = rootProject.version
 
-    plugins.withType(LibraryPlugin::class.java) {
+    plugins.withType<LibraryPlugin> {
 
         apply(plugin = "com.github.dcendents.android-maven")
+        apply<BintrayPlugin>()
+        apply<ArtifactoryPlugin>()
 
         // we don't need debug variant for libraries at all
-        configure<BaseExtension> {
-            variantFilter {
-                if (name == "debug") {
-                    setIgnore(true)
-                }
-            }
+        extension.variantFilter {
+            if (name == "debug") setIgnore(true)
         }
 
         val sourcesJarTask = tasks.create<Jar>("sourcesJar") {
             classifier = "sources"
-            from(
-                this@subprojects.extensions.getByType(BaseExtension::class.java)
-                    .sourceSets
-                    .getByName("main")
-                    .java
-                    .srcDirs
-            )
+            from(this@withType.extension.sourceSets["main"].java.srcDirs)
         }
 
-        val installTask = tasks.getByName("install")
-
-        (installTask as Upload).run {
+        (tasks["install"] as Upload).run {
             DslObject(repositories).convention
-                .getPlugin(MavenRepositoryHandlerConvention::class.java)
+                .getPlugin<MavenRepositoryHandlerConvention>()
                 .mavenInstaller {
                     pom {
                         project {
@@ -88,22 +79,24 @@ subprojects {
                         }
                     }
                 }
+
+            tasks["bintrayUpload"].dependsOn(this)
+            tasks["artifactoryPublish"].dependsOn(this)
         }
 
+        val configurationName = "archives"
+
         artifacts {
-            add("archives", sourcesJarTask)
+            add(configurationName, sourcesJarTask)
         }
 
         // Release artifacts uploading
-        apply<BintrayPlugin>()
-        tasks.getByName("bintrayUpload").dependsOn(installTask)
-
         configure<BintrayExtension> {
             user = System.getenv("BINTRAY_USER")
             key = System.getenv("BINTRAY_API_KEY")
 
             publish = true
-            setConfigurations("archives")
+            setConfigurations(configurationName)
 
             pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
                 repo = "maven"
@@ -125,8 +118,6 @@ subprojects {
         }
 
         // Snapshot artifacts uploading
-        apply<ArtifactoryPlugin>()
-        tasks.getByName("artifactoryPublish").dependsOn(installTask)
         configure<ArtifactoryPluginConvention> {
             setContextUrl(System.getenv("ARTIFACTORY_URL"))
             publish(delegateClosureOf<PublisherConfig> {
@@ -137,7 +128,7 @@ subprojects {
                     setProperty("maven", true)
                 })
                 defaults(delegateClosureOf<GroovyObject> {
-                    invokeMethod("publishConfigs", "archives")
+                    invokeMethod("publishConfigs", configurationName)
                 })
             })
         }
@@ -145,7 +136,7 @@ subprojects {
 }
 
 tasks.withType<Wrapper> {
-    gradleVersion = "4.9"
+    gradleVersion = "4.10.2"
     distributionType = Wrapper.DistributionType.BIN
 }
 

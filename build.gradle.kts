@@ -41,8 +41,8 @@ dependencies {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 }
 

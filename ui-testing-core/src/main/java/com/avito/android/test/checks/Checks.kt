@@ -1,5 +1,7 @@
 package com.avito.android.test.checks
 
+import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
 import android.view.View
 import org.hamcrest.Matcher
 
@@ -183,4 +185,6 @@ interface Checks : LabelChecks {
     fun isNotClickable()
 
     fun hasFocus()
+
+    fun hasBackground(@DrawableRes drawable: Int? = null, @ColorRes tint: Int? = null)
 }

@@ -9,6 +9,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibilit
 import android.view.View
 import com.avito.android.test.espresso.assertion.ViewExistsAssertion
 import com.avito.android.test.matcher.AvitoPositionAssertions
+import com.avito.android.test.matcher.DrawableBackgroundMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
@@ -161,5 +162,16 @@ class ChecksImpl(private val driver: ChecksDriver) : Checks,
 
     override fun isNotClickable() {
         driver.check(matches(not(ViewMatchers.isClickable())))
+    }
+
+    override fun hasBackground(drawable: Int?, tint: Int?) {
+        driver.check(
+            matches(
+                DrawableBackgroundMatcher(
+                    src = drawable,
+                    tint = tint
+                )
+            )
+        )
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
@@ -36,11 +37,16 @@ fun Drawable.wrapForTinting(@ColorInt color: Int): Drawable {
 
 internal fun Drawable.isSame(other: Drawable?): Boolean {
     other ?: return false
-    if (this is StateListDrawable && other is StateListDrawable) {
-        return current.isSame(other.current)
-    }
-    if (this is BitmapDrawable && other is BitmapDrawable) {
-        return bitmap.sameAs(other.bitmap)
+    when {
+        this is StateListDrawable && other is StateListDrawable -> {
+            return current.isSame(other.current)
+        }
+        this is BitmapDrawable && other is BitmapDrawable -> {
+            return bitmap.sameAs(other.bitmap)
+        }
+        this is ColorDrawable && other is ColorDrawable -> {
+            return color == other.color
+        }
     }
     return this.toBitmap().sameAs(other.toBitmap())
 }

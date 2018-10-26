@@ -37,4 +37,7 @@ object Screen {
 
     val tabLayoutScreen: TabLayoutScreen
         get() = TabLayoutScreen()
+
+    val backgroundDrawableScreen: BackgroundDrawableScreen
+        get() = BackgroundDrawableScreen()
 }

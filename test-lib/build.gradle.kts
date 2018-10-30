@@ -5,7 +5,7 @@ val minSdk: String by project
 val supportVersion: String by project
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
 }
 
@@ -41,8 +41,6 @@ dependencies {
     implementation("com.android.support:appcompat-v7:$supportVersion")
     implementation("com.android.support:recyclerview-v7:$supportVersion")
     implementation("com.android.support:design:$supportVersion")
-    implementation("com.android.support:design:$supportVersion")
-    implementation(project(":test-lib"))
 
     androidTestImplementation(project(":ui-testing-core"))
 }

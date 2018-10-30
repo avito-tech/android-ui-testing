@@ -17,7 +17,6 @@
         <activity android:name=".DrawableActivity" />
         <activity android:name=".RecyclerAsLayoutActivity" />
         <activity android:name=".RecyclerInRecyclerActivity" />
-        <activity android:name=".AppBarActivity" />
         <activity android:name=".TabLayoutActivity" />
         <activity
             android:name=".EditTextActivity"

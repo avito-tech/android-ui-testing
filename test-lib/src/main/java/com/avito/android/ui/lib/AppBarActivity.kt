@@ -1,4 +1,4 @@
-package com.avito.android.ui
+package com.avito.android.ui.lib
 
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout

@@ -14,6 +14,9 @@ object Screen {
     val swipeRefresh: SwipeRefreshScreen
         get() = SwipeRefreshScreen()
 
+    val appBarScreen: AppBarScreen
+        get() = AppBarScreen()
+
     val identicalCellsRecycler: IdenticalCellsRecyclerScreen
         get() = IdenticalCellsRecyclerScreen()
 

@@ -3,7 +3,7 @@ package com.avito.android.ui.test
 import android.support.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.page_object.AppBarElement
 import com.avito.android.test.page_object.ViewElement
-import com.avito.android.ui.lib.R
+import com.avito.android.ui.R
 
 class AppBarScreen {
 

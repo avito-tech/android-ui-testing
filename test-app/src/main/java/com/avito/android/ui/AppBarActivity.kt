@@ -14,6 +14,8 @@ class AppBarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_app_bar)
         appBarLayout = findViewById(R.id.appbar)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.title = "Title"
+        toolbar.subtitle = "Subtitle"
         setSupportActionBar(toolbar)
     }
 

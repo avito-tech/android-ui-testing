@@ -9,11 +9,10 @@ import org.hamcrest.Matcher
 /**
  * from http://blog.sqisland.com/2015/05/espresso-match-toolbar-title.html
  */
-internal class ToolbarTitleMatcher(
-    private val textMatcher: Matcher<CharSequence>
-) : BoundedMatcher<View, Toolbar>(Toolbar::class.java) {
+internal class ToolbarTitleMatcher(private val textMatcher: Matcher<out CharSequence>) :
+        BoundedMatcher<View, Toolbar>(Toolbar::class.java) {
 
-    private var actualText: String? = null
+    private var actualText: CharSequence? = null
 
     override fun describeTo(description: Description) {
         description.appendText("with toolbar title: ")
@@ -24,7 +23,7 @@ internal class ToolbarTitleMatcher(
     }
 
     override fun matchesSafely(toolbar: Toolbar): Boolean {
-        actualText = toolbar.title?.toString()
+        actualText = toolbar.title
         return textMatcher.matches(actualText)
     }
 }

@@ -208,13 +208,9 @@ interface ToolbarElementChecks : Checks {
 
     fun withTitle(text: String)
 
-    fun withTitle(matcher: Matcher<String>)
-
     fun withTitle(@StringRes resId: Int)
 
     fun withSubtitle(text: String)
-
-    fun withSubtitle(matcher: Matcher<String>)
 
     fun withSubtitle(@StringRes resId: Int)
 }
@@ -226,16 +222,8 @@ class ToolbarElementChecksImpl(private val driver: ChecksDriver) : ToolbarElemen
         driver.check(ViewAssertions.matches(ToolbarTitleMatcher(`is`(text))))
     }
 
-    override fun withTitle(matcher: Matcher<String>) {
-        driver.check(ViewAssertions.matches(ToolbarTitleMatcher(matcher)))
-    }
-
     override fun withTitle(@StringRes resId: Int) {
         driver.check(ViewAssertions.matches(ToolbarTitleResMatcher(resId)))
-    }
-
-    override fun withSubtitle(matcher: Matcher<String>) {
-        driver.check(ViewAssertions.matches(ToolbarSubtitleMatcher(matcher)))
     }
 
     override fun withSubtitle(text: String) {

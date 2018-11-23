@@ -7,10 +7,10 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 
 internal class ToolbarSubtitleMatcher(
-    private val textMatcher: Matcher<out CharSequence>
+    private val textMatcher: Matcher<CharSequence>
 ) : BoundedMatcher<View, Toolbar>(Toolbar::class.java) {
 
-    private var actualText: CharSequence? = null
+    private var actualText: String? = null
 
     override fun describeTo(description: Description) {
         description.appendText("with toolbar subtitle: ")
@@ -21,7 +21,7 @@ internal class ToolbarSubtitleMatcher(
     }
 
     override fun matchesSafely(toolbar: Toolbar): Boolean {
-        actualText = toolbar.subtitle
+        actualText = toolbar.subtitle.toString()
         return textMatcher.matches(actualText)
     }
 }

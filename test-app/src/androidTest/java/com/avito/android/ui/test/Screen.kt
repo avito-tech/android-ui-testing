@@ -40,4 +40,7 @@ object Screen {
 
     val backgroundDrawableScreen: BackgroundDrawableScreen
         get() = BackgroundDrawableScreen()
+
+    val recyclerWithSingleLongItemScreen: RecyclerWithSingleLongItemScreen
+        get() = RecyclerWithSingleLongItemScreen()
 }

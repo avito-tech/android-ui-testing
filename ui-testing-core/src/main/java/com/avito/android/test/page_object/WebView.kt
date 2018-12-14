@@ -19,7 +19,10 @@ open class WebView(private val webViewMatcher: Matcher<View>) : PageObject {
 
     val checks = WebViewChecksImpl()
 
-    fun withElement(elementMatcher: Atom<ElementReference>) = WebViewElement(elementMatcher)
+    fun withElement(
+        elementMatcher: Atom<ElementReference>,
+        timeoutSeconds: Long = WEB_ELEMENT_TIMEOUT_SECONDS
+    ) = WebViewElement(elementMatcher, timeoutSeconds)
 
     interface WebViewChecks {
 
@@ -33,20 +36,25 @@ open class WebView(private val webViewMatcher: Matcher<View>) : PageObject {
         }
     }
 
-    inner class WebViewElement(private val elementMatcher: Atom<ElementReference>) : PageObject {
+    inner class WebViewElement(
+        private val elementMatcher: Atom<ElementReference>,
+        private val timeoutSeconds: Long
+    ) : PageObject {
 
         val actions: WebElementActions
             get() = WebElementActions(
-                interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
+                interaction.withTimeout(timeoutSeconds, TimeUnit.SECONDS).withElement(
                     elementMatcher
                 )
             )
 
         val checks: WebElementChecks
             get() = WebElementChecks(
-                interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
+                interaction.withTimeout(timeoutSeconds, TimeUnit.SECONDS).withElement(
                     elementMatcher
                 )
             )
     }
 }
+
+private const val WEB_ELEMENT_TIMEOUT_SECONDS = 5L

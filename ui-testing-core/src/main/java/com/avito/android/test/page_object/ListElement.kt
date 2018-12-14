@@ -1,5 +1,6 @@
 package com.avito.android.test.page_object
 
+import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.CoordinatesProvider
 import android.support.test.espresso.action.GeneralLocation.BOTTOM_CENTER
 import android.support.test.espresso.action.GeneralLocation.CENTER
@@ -39,8 +40,11 @@ import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
 import com.avito.android.test.espresso.action.RecyclerViewVerticalOffsetAction
 import com.avito.android.test.espresso.action.ViewGetTranslationYAction
+import com.avito.android.test.espresso.action.ScrollToElementAction
+import com.avito.android.test.espresso.action.ViewActionOnItemAtPosition
 import com.avito.android.test.matcher.RecyclerViewMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
+import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo
@@ -178,6 +182,26 @@ open class ListElement(interactionContext: InteractionContext) :
                     holder,
                     ViewActions.click()
                 ).atPosition(position)
+            )
+        }
+
+        fun scrollToChild(position: Int = 0, targetChildViewId: Int) {
+            driver.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
+            driver.perform(ScrollToElementAction(position, targetChildViewId))
+        }
+
+        fun actionOnChild(
+            position: Int = 0,
+            targetChildViewId: Int,
+            childMatcher: Matcher<View>,
+            action: ViewAction
+        ) {
+            scrollToChild(position, targetChildViewId)
+            driver.perform(
+                ViewActionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    position,
+                    DescendantViewActions.performDescendantAction(childMatcher, action)
+                )
             )
         }
 

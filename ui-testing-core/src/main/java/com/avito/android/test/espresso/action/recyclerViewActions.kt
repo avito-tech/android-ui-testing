@@ -315,3 +315,64 @@ private class ScrollToPositionViewAction(private val position: Int) : ViewAction
         uiController.loopMainThreadUntilIdle()
     }
 }
+
+/**
+ * [ViewAction] which scrolls [RecyclerView] to a view with [targetViewId].
+ */
+class ScrollToElementAction(
+    private val position: Int,
+    private val targetViewId: Int
+) : ViewAction {
+
+    override fun getDescription(): String = "scroll to element in item"
+
+    override fun getConstraints(): Matcher<View> =
+        allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+
+    override fun perform(uiController: UiController, view: View) {
+        val recyclerView = view as RecyclerView
+        val itemView = recyclerView.layoutManager.findViewByPosition(position) ?: return
+        val targetView = itemView.findViewById<View>(targetViewId) ?: return
+
+        val targetViewLocation = IntArray(2)
+        targetView.getLocationOnScreen(targetViewLocation)
+        val recyclerViewLocation = IntArray(2)
+        recyclerView.getLocationOnScreen(recyclerViewLocation)
+
+        val y = targetViewLocation[1] - recyclerViewLocation[1]
+
+        recyclerView.scrollBy(0, y)
+
+        uiController.loopMainThreadUntilIdle()
+    }
+}
+
+/**
+ * Perform [ViewAction] on [position] item.
+ */
+class ViewActionOnItemAtPosition<VH : RecyclerView.ViewHolder>(
+    private val position: Int,
+    private val viewAction: ViewAction
+) : ViewAction {
+
+    override fun getConstraints(): Matcher<View> =
+        allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+
+    override fun getDescription(): String =
+        ("performing ViewAction: " + viewAction.description + " on item at position: " + position)
+
+    override fun perform(uiController: UiController, view: View) {
+        val recyclerView = view as RecyclerView
+
+        @Suppress("UNCHECKED_CAST")
+        val viewHolderForPosition: RecyclerView.ViewHolder? =
+            recyclerView.findViewHolderForLayoutPosition(position) as VH?
+
+        val viewAtPosition: View = viewHolderForPosition?.itemView
+            ?: throw PerformException.Builder().withActionDescription(this.toString())
+                .withViewDescription("null")
+                .withCause(IllegalStateException("No view at position: $position")).build()
+
+        viewAction.perform(uiController, viewAtPosition)
+    }
+}

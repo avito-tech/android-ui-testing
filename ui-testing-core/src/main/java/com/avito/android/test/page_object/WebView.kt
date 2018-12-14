@@ -33,18 +33,20 @@ open class WebView(private val webViewMatcher: Matcher<View>) : PageObject {
         }
     }
 
-    inner class WebViewElement(elementMatcher: Atom<ElementReference>) : PageObject {
+    inner class WebViewElement(private val elementMatcher: Atom<ElementReference>) : PageObject {
 
-        val actions = WebElementActions(
-            interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
-                elementMatcher
+        val actions: WebElementActions
+            get() = WebElementActions(
+                interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
+                    elementMatcher
+                )
             )
-        )
 
-        val checks = WebElementChecks(
-            interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
-                elementMatcher
+        val checks: WebElementChecks
+            get() = WebElementChecks(
+                interaction.withTimeout(5, TimeUnit.SECONDS).withElement(
+                    elementMatcher
+                )
             )
-        )
     }
 }

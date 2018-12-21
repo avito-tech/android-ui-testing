@@ -39,9 +39,10 @@ import com.avito.android.test.espresso.action.RecyclerSpanCountAction
 import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
 import com.avito.android.test.espresso.action.RecyclerViewVerticalOffsetAction
-import com.avito.android.test.espresso.action.ViewGetTranslationYAction
 import com.avito.android.test.espresso.action.ScrollToElementAction
+import com.avito.android.test.espresso.action.SmoothScrollToPositionViewAction
 import com.avito.android.test.espresso.action.ViewActionOnItemAtPosition
+import com.avito.android.test.espresso.action.ViewGetTranslationYAction
 import com.avito.android.test.matcher.RecyclerViewMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
 import com.forkingcode.espresso.contrib.DescendantViewActions
@@ -168,6 +169,10 @@ open class ListElement(interactionContext: InteractionContext) :
 
         fun scrollToPosition(position: Int) {
             driver.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
+        }
+
+        fun smoothScrollToPosition(position: Int = 0) {
+            driver.perform(SmoothScrollToPositionViewAction(position))
         }
 
         fun scrollToEnd() = scrollToPosition(items - 1)

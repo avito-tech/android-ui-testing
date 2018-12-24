@@ -1,5 +1,3 @@
-import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 import com.android.ide.common.xml.XmlFormatPreferences.defaults
 import com.jfrog.bintray.gradle.BintrayExtension

@@ -3,11 +3,11 @@ package com.avito.android.ui.test
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
+import com.avito.android.ui.R
 import com.avito.android.ui.RecyclerWithLongItemsActivity
+import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
-import com.avito.android.ui.R
-import org.hamcrest.Matchers.allOf
 
 class RecyclerWithSingleLongItemTest {
 

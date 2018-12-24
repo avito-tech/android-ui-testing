@@ -17,6 +17,7 @@ class BackgroundDrawableTest {
 
     @Test
     fun backgroundDrawable_matches_whenBackgroundIsIconResource() {
-        Screen.backgroundDrawableScreen.viewWithBackgroundCheckIcon.checks.hasBackground(R.drawable.ic_check_black_24dp)
+        Screen.backgroundDrawableScreen.viewWithBackgroundCheckIcon.checks
+            .hasBackground(R.drawable.ic_check_black_24dp)
     }
 }

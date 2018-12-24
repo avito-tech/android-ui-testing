@@ -26,6 +26,9 @@ object Screen {
     val recyclerAsLayout: RecyclerAsLayoutScreen
         get() = RecyclerAsLayoutScreen()
 
+    val longRecycler: LongRecyclerScreen
+        get() = LongRecyclerScreen()
+
     val recyclerInRecycler: RecyclerInRecyclerLayoutScreen
         get() = RecyclerInRecyclerLayoutScreen()
 

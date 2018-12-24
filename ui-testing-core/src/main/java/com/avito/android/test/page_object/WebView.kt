@@ -8,9 +8,9 @@ import android.support.test.espresso.web.sugar.Web
 import android.view.View
 import com.avito.android.test.action.WebElementActions
 import com.avito.android.test.checks.WebElementChecks
+import java.util.concurrent.TimeUnit
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.containsString
-import java.util.concurrent.TimeUnit
 
 open class WebView(private val webViewMatcher: Matcher<View>) : PageObject {
 

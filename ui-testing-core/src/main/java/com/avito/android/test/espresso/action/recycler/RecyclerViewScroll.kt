@@ -13,7 +13,7 @@ import com.avito.android.test.espresso.action.scroll.scrollToScrollableParentCen
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
-class ScrollToPositionViewAction(private val position: Int) : ViewAction {
+private class ScrollToPositionViewAction(private val position: Int) : ViewAction {
 
     override fun getConstraints(): Matcher<View> {
         return Matchers.allOf(
@@ -27,7 +27,7 @@ class ScrollToPositionViewAction(private val position: Int) : ViewAction {
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
 
-        recyclerView.scrollToPositionToCenter(
+        recyclerView.scrollItemAtPositionToCenter(
             uiController = uiController,
             position = position
         )
@@ -38,7 +38,7 @@ fun scrollToPosition(position: Int): ViewAction {
     return ScrollToPositionViewAction(position)
 }
 
-class ScrollToElementInsideRecyclerViewItem(
+private class ScrollToElementInsideRecyclerViewItem(
     private val position: Int,
     private val targetViewId: Int
 ) : ViewAction {
@@ -54,7 +54,7 @@ class ScrollToElementInsideRecyclerViewItem(
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
 
-        recyclerView.scrollToViewInsidePositionToCenter(
+        recyclerView.scrollToViewInsideItemAtPositionToCenter(
             uiController = uiController,
             position = position,
             childId = targetViewId
@@ -71,7 +71,7 @@ fun scrollToElementInsideRecyclerViewItem(
 )
 
 
-class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
+internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderMatcher: Matcher<VH>,
     private val atPosition: Int = RecyclerView.NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
@@ -150,6 +150,13 @@ fun <VH : RecyclerView.ViewHolder> scrollToHolder(
 ): RecyclerViewActions.PositionableRecyclerViewAction =
     ScrollToViewAction(viewHolderMatcher)
 
+fun <VH : RecyclerView.ViewHolder> scrollToHolder(
+    viewHolderMatcher: Matcher<VH>,
+    position: Int
+): RecyclerViewActions.PositionableRecyclerViewAction {
+    return ScrollToViewAction(viewHolderMatcher, position)
+}
+
 fun <VH : RecyclerView.ViewHolder> scrollTo(
     itemViewMatcher: Matcher<View>
 ): RecyclerViewActions.PositionableRecyclerViewAction {
@@ -157,7 +164,7 @@ fun <VH : RecyclerView.ViewHolder> scrollTo(
     return ScrollToViewAction(viewHolderMatcher)
 }
 
-fun RecyclerView.scrollToPositionToCenter(
+private fun RecyclerView.scrollItemAtPositionToCenter(
     uiController: UiController,
     position: Int
 ) {
@@ -175,7 +182,7 @@ fun RecyclerView.scrollToPositionToCenter(
     uiController.loopMainThreadUntilIdle()
 }
 
-fun RecyclerView.scrollToViewInsidePositionToCenter(
+private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
     uiController: UiController,
     position: Int,
     childId: Int

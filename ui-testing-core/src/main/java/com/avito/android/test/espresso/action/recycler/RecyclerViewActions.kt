@@ -20,7 +20,7 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import java.util.ArrayList
 
-class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
+private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
     viewHolderMatcher: Matcher<VH>,
     viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
@@ -137,21 +137,11 @@ internal fun <T : VH, VH : RecyclerView.ViewHolder> itemsMatching(
     return matchedItems
 }
 
-/**
- * Wrapper for matched items in recycler view which contains position and description of matched
- * view.
- */
 internal class MatchedItem(val position: Int, val description: String) {
 
     override fun toString(): String = description
 }
 
-/**
- * Creates matcher for view holder with given item view matcher.
- *
- * @param itemViewMatcher a item view matcher which is used to match item.
- * @return a matcher which matches a view holder containing item matching itemViewMatcher.
- */
 fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(itemViewMatcher: Matcher<View>) =
     object : TypeSafeMatcher<VH>() {
         override fun matchesSafely(viewHolder: VH): Boolean {
@@ -176,17 +166,6 @@ fun <VH : RecyclerView.ViewHolder> itemDoesntExists(
     )
 }
 
-/**
- * Performs a [ViewAction] on a view at position.
- *
- *
- *  1. Scroll Recycler View to position
- *  1. Perform an action on the view at position
- *
- *
- * @param position position of a view in [RecyclerView]
- * @param viewAction the action that is performed on the view matched by itemViewMatcher
- */
 fun <VH : RecyclerView.ViewHolder> actionOnItemAtPosition(
     position: Int,
     viewAction: ViewAction
@@ -212,7 +191,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
 
-        ScrollToPositionViewAction(position).perform(uiController, view)
+        scrollToPosition(position).perform(uiController, view)
         uiController.loopMainThreadUntilIdle()
 
         @Suppress("UNCHECKED_CAST")
@@ -238,8 +217,8 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
 
     private val viewHolderMatcher: Matcher<VH> = checkNotNull(viewHolderMatcher)
     private val viewAction: ViewAction = checkNotNull(viewAction)
-    private val scroller: ScrollToViewAction<VH> =
-        ScrollToViewAction(
+    private val scroller: RecyclerViewActions.PositionableRecyclerViewAction =
+        scrollToHolder(
             viewHolderMatcher,
             atPosition
         )
@@ -312,9 +291,6 @@ fun <VH : RecyclerView.ViewHolder> actionOnItem(
     return ActionOnItemViewAction(viewHolderMatcher, viewAction)
 }
 
-/**
- * Perform [ViewAction] on [position] item.
- */
 class ViewActionOnItemAtPosition<VH : RecyclerView.ViewHolder>(
     private val position: Int,
     private val viewAction: ViewAction

@@ -19,9 +19,6 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anyOf
 
-/**
- * Don't use directly, only via EspressoActions
- */
 class ScrollToIfPossibleAction : ViewAction {
 
     private val scrollableContainerMatcher = anyOf(

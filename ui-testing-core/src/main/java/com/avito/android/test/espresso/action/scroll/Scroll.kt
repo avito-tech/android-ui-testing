@@ -5,7 +5,7 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 
-fun View.scrollToScrollableParentCenterPosition() {
+internal fun View.scrollToScrollableParentCenterPosition() {
     val parent = getScrollableContainer(this)
 
     val center = Point(
@@ -18,7 +18,7 @@ fun View.scrollToScrollableParentCenterPosition() {
     )
 }
 
-fun View.scrollToScrollableParentPosition(position: Point) {
+internal fun View.scrollToScrollableParentPosition(position: Point) {
     val parent = getScrollableContainer(this)
 
     val viewPositionInsideContainer = getPositionInScrollableParent()
@@ -28,7 +28,7 @@ fun View.scrollToScrollableParentPosition(position: Point) {
     )
 }
 
-fun getScrollableContainer(view: View): ViewGroup {
+private fun getScrollableContainer(view: View): ViewGroup {
     if (view is ViewGroup && view.isScrollContainer) {
         return view
     }

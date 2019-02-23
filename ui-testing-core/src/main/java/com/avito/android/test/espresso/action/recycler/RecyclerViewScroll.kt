@@ -34,6 +34,24 @@ private class ScrollToPositionViewAction(private val position: Int) : ViewAction
     }
 }
 
+class SmoothScrollToPositionViewAction constructor(private val position: Int) : ViewAction {
+    override fun getConstraints(): Matcher<View> {
+        return Matchers.allOf(
+            ViewMatchers.isAssignableFrom(RecyclerView::class.java),
+            ViewMatchers.isDisplayed()
+        )
+    }
+
+    override fun getDescription(): String {
+        return "smooth scroll RecyclerView to position: $position"
+    }
+
+    override fun perform(uiController: UiController, view: View) {
+        val recyclerView = view as RecyclerView
+        recyclerView.smoothScrollToPosition(position)
+    }
+}
+
 fun scrollToPosition(position: Int): ViewAction {
     return ScrollToPositionViewAction(position)
 }

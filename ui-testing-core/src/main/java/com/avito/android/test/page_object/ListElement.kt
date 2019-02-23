@@ -39,10 +39,10 @@ import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
 import com.avito.android.test.espresso.action.RecyclerViewVerticalOffsetAction
 import com.avito.android.test.espresso.action.ViewGetTranslationYAction
+import com.avito.android.test.espresso.action.recycler.SmoothScrollToPositionViewAction
 import com.avito.android.test.espresso.action.recycler.ViewActionOnItemAtPosition
 import com.avito.android.test.espresso.action.recycler.actionOnHolderItem
 import com.avito.android.test.espresso.action.recycler.scrollToElementInsideRecyclerViewItem
-import com.avito.android.test.espresso.action.scroll.SmoothScrollToPositionViewAction
 import com.avito.android.test.matcher.RecyclerViewMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
 import com.forkingcode.espresso.contrib.DescendantViewActions

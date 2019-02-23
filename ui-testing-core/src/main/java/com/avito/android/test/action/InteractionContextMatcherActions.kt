@@ -4,12 +4,13 @@ import android.support.test.espresso.action.PrecisionDescriber
 import android.support.test.espresso.action.SwipeDirection
 import android.support.test.espresso.action.Swiper
 import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.TextViewReadAction
+import com.avito.android.test.espresso.action.recycler.actionOnItem
+import com.avito.android.test.espresso.action.recycler.scrollTo
 import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher
 
@@ -21,7 +22,7 @@ class InteractionContextMatcherActions(
 
     override fun scrollTo() {
         interactionContext.perform(
-            RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(matcher).atPosition(
+            scrollTo<RecyclerView.ViewHolder>(matcher).atPosition(
                 0
             )
         )
@@ -29,7 +30,7 @@ class InteractionContextMatcherActions(
 
     override fun click() {
         interactionContext.perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            actionOnItem<RecyclerView.ViewHolder>(
                 matcher,
                 DescendantViewActions.performDescendantAction(childMatcher, ViewActions.click())
             )
@@ -39,7 +40,7 @@ class InteractionContextMatcherActions(
 
     override fun longClick() {
         interactionContext.perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            actionOnItem<RecyclerView.ViewHolder>(
                 matcher,
                 DescendantViewActions.performDescendantAction(childMatcher, ViewActions.longClick())
             )
@@ -49,7 +50,7 @@ class InteractionContextMatcherActions(
 
     override fun swipe(direction: SwipeDirection, speed: Swiper, precision: PrecisionDescriber) {
         interactionContext.perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            actionOnItem<RecyclerView.ViewHolder>(
                 matcher,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
@@ -66,7 +67,7 @@ class InteractionContextMatcherActions(
     override fun read(allowBlank: Boolean): String =
         TextViewReadAction.getResult(allowBlank) { action ->
             interactionContext.perform(
-                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                actionOnItem<RecyclerView.ViewHolder>(
                     matcher,
                     DescendantViewActions.performDescendantAction(childMatcher, action)
                 )

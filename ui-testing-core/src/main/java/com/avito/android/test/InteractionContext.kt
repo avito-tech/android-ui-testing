@@ -5,12 +5,13 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.ViewAssertion
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.assertion.isDoesntExistAssertion
-import android.support.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver
+import com.avito.android.test.espresso.action.recycler.actionOnItem
+import com.avito.android.test.espresso.action.recycler.itemDoesntExists
 import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.interceptor.AssertionInterceptor
 import com.forkingcode.espresso.contrib.DescendantViewActions.checkDescendantViewAction
@@ -78,7 +79,7 @@ class RecyclerViewInteractionContext(
 
         if (assertion.isDoesntExistAssertion()) {
             interactionContext.perform(
-                com.avito.android.test.espresso.action.actionOnItem<RecyclerView.ViewHolder>(
+                itemDoesntExists<RecyclerView.ViewHolder>(
                     cellMatcher,
                     checkDescendantViewAction(childMatcher, intercepted)
                 )

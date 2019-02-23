@@ -9,8 +9,8 @@ import android.support.test.espresso.action.SwipeDirection
 import android.support.test.espresso.action.Swiper
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import com.avito.android.test.espresso.action.SafeTypeTextAction
-import com.avito.android.test.espresso.action.ScrollToIfPossibleAction
 import com.avito.android.test.espresso.action.WaitForIdleAction
+import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 
 /**
  * Avito in-house ViewActions

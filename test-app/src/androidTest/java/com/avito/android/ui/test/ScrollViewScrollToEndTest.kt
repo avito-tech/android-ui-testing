@@ -1,6 +1,6 @@
 package com.avito.android.ui.test
 
-import com.avito.android.test.espresso.action.ScrollViewScrollToEndAction
+import com.avito.android.test.espresso.action.scroll.ScrollViewScrollToEndAction
 import com.avito.android.ui.DistantViewOnScrollActivity
 import org.junit.Rule
 import org.junit.Test

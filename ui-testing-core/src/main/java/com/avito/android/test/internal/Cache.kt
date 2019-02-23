@@ -2,10 +2,10 @@ package com.avito.android.test.internal
 
 import android.content.Context
 import com.avito.android.test.waitFor
-import java.io.File
-import java.util.Arrays
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert
+import java.io.File
+import java.util.Arrays
 
 internal class Cache(private val appContext: Context) {
 

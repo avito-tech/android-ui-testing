@@ -1,4 +1,4 @@
-package com.avito.android.test.espresso.action
+package com.avito.android.test.espresso.action.scroll
 
 import android.graphics.Rect
 import android.support.test.espresso.PerformException
@@ -53,6 +53,14 @@ class ScrollToIfPossibleAction : ViewAction {
 
         uiController.loopMainThreadUntilIdle()
 
+        try {
+            view.scrollToScrollableParentCenterPosition()
+        } catch (t: Throwable) {
+
+        }
+
+        uiController.loopMainThreadUntilIdle()
+
         if (!view.isDisplayed()) {
             throw PerformException.Builder()
                 .withActionDescription(this.description)
@@ -60,7 +68,7 @@ class ScrollToIfPossibleAction : ViewAction {
                 .withCause(
                     RuntimeException(
                         "Scrolling to view was attempted, " +
-                                "but the view is not displayed"
+                            "but the view is not displayed"
                     )
                 )
                 .build()

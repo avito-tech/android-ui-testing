@@ -27,7 +27,7 @@ class TextViewReadAction : ViewAction {
                     perform(action)
                     assertFalse(
                         "read() waited, but view.text still has empty string value; " +
-                                "use read(allowBlank=true) if you really need it",
+                            "use read(allowBlank=true) if you really need it",
                         action.result.isNullOrBlank()
                     )
                 }

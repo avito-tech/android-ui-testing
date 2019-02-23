@@ -16,7 +16,7 @@ import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.checks.TextFieldHintChecks
 import com.avito.android.test.espresso.action.SafeTypeTextAction
-import com.avito.android.test.espresso.action.ScrollToIfPossibleAction
+import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 import org.hamcrest.Matcher
 
 open class TextField(interactionContext: InteractionContext) :

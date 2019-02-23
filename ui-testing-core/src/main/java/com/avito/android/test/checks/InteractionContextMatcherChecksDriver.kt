@@ -1,11 +1,11 @@
 package com.avito.android.test.checks
 
 import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.UITestConfig
+import com.avito.android.test.espresso.action.recycler.actionOnItem
 import com.avito.android.test.interceptor.AssertionInterceptor
 import com.forkingcode.espresso.contrib.DescendantViewActions
 import org.hamcrest.Matcher
@@ -21,7 +21,7 @@ class InteractionContextMatcherChecksDriver(
             AssertionInterceptor.Proxy(assertion, UITestConfig.assertionInterceptors)
 
         interactionContext.perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            actionOnItem<RecyclerView.ViewHolder>(
                 matcher,
                 DescendantViewActions.checkDescendantViewAction(childMatcher, interceptedAssertion)
             ).atPosition(0)

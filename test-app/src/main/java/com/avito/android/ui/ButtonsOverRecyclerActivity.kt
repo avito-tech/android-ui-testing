@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import java.lang.RuntimeException
 
 class ButtonsOverRecyclerActivity : AppCompatActivity() {
 
@@ -20,6 +22,14 @@ class ButtonsOverRecyclerActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recycler).apply {
             layoutManager = LinearLayoutManager(this@ButtonsOverRecyclerActivity)
             adapter = Adapter(data)
+        }
+
+        findViewById<Button>(R.id.top_button).setOnClickListener {
+            throw RuntimeException("Top button clicked!")
+        }
+
+        findViewById<Button>(R.id.bottom_button).setOnClickListener {
+            throw RuntimeException("Bottom button clicked!")
         }
     }
 

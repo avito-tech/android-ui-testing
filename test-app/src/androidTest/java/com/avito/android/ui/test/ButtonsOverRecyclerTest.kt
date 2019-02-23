@@ -22,4 +22,9 @@ class ButtonsOverRecyclerTest {
             checks.firstVisiblePosition(equalTo(0))
         }
     }
+
+    @Test
+    fun listElement_elementClicked_whenThereIsOverlappedButton() {
+        Screen.buttonsOverRecycler.list.cellAt(60).click()
+    }
 }

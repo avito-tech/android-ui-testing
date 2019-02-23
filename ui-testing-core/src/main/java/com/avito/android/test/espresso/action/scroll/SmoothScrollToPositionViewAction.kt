@@ -1,4 +1,4 @@
-package com.avito.android.test.espresso.action
+package com.avito.android.test.espresso.action.scroll
 
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction

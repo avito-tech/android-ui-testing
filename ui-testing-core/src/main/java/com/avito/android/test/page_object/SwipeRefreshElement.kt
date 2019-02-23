@@ -70,7 +70,7 @@ class SwipeRefreshTolerantAction : ViewAction {
 
     override fun getDescription() =
         "SwipeRefreshLayout performing ViewAction: ${action.description} " +
-                "with tolerance $VIEW_DISPLAY_PERCENTAGE"
+            "with tolerance $VIEW_DISPLAY_PERCENTAGE"
 
     override fun getConstraints(): Matcher<View> = isDisplayingAtLeast(VIEW_DISPLAY_PERCENTAGE)
 

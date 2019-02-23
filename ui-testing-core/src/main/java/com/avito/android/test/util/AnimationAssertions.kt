@@ -21,7 +21,7 @@ fun verifyAnimationsDisabled(context: Context) {
     } catch (t: Throwable) {
         throw RuntimeException(
             "You can't run instrumentation tests on device with enabled animations." +
-                "You should disable it in settings (Settings -> Developer options)."
+                    "You should disable it in settings (Settings -> Developer options)."
         )
     }
 }

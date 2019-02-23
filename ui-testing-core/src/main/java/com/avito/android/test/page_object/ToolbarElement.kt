@@ -143,7 +143,7 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         override fun describeTo(description: Description) {
             description.appendText(
                 "Use element.actions.<action> syntax. " +
-                    "Direct access restricted for MenuItems"
+                        "Direct access restricted for MenuItems"
             )
         }
 

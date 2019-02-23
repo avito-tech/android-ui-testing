@@ -258,7 +258,7 @@ open class ListElement(interactionContext: InteractionContext) :
         ) {
             actions.swipe(object : SwipeDirection {
                 override fun toCoordinateProvider():
-                    Pair<CoordinatesProvider, CoordinatesProvider> {
+                        Pair<CoordinatesProvider, CoordinatesProvider> {
                     return when (direction) {
                         TOP_TO_BOTTOM -> CENTER to BOTTOM_CENTER
                         BOTTOM_TO_TOP -> CENTER to TOP_CENTER

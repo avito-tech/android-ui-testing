@@ -30,17 +30,17 @@ class CompoundDrawableMatcher(
         this.description = getDescription(context.resources)
 
         return left.matchDrawable(context, compoundDrawables[LEFT], tint) &&
-            right.matchDrawable(context, compoundDrawables[RIGHT], tint) &&
-            top.matchDrawable(context, compoundDrawables[TOP], tint) &&
-            bottom.matchDrawable(context, compoundDrawables[BOTTOM], tint)
+                right.matchDrawable(context, compoundDrawables[RIGHT], tint) &&
+                top.matchDrawable(context, compoundDrawables[TOP], tint) &&
+                bottom.matchDrawable(context, compoundDrawables[BOTTOM], tint)
     }
 
     private fun getDescription(resources: Resources): String {
         return "left=${left.getResourceName(resources)}, " +
-            "top=${top.getResourceName(resources)}, " +
-            "right=${right.getResourceName(resources)}, " +
-            "bottom=${bottom.getResourceName(resources)}," +
-            "with tint=${tint?.toString(16) ?: "not applied"}"
+                "top=${top.getResourceName(resources)}, " +
+                "right=${right.getResourceName(resources)}, " +
+                "bottom=${bottom.getResourceName(resources)}," +
+                "with tint=${tint?.toString(16) ?: "not applied"}"
     }
 }
 

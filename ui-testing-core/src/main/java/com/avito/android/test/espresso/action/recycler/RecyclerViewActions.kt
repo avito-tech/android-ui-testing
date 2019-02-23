@@ -76,7 +76,7 @@ private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> 
 
                 assertThat<Boolean>(
                     "View is present in the hierarchy: " +
-                        HumanReadables.describe(viewAtPosition), true, `is`(false)
+                            HumanReadables.describe(viewAtPosition), true, `is`(false)
                 )
             }
             uiController.loopMainThreadUntilIdle()
@@ -186,7 +186,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 
     override fun getDescription(): String =
         ("actionOnItemAtPosition performing ViewAction: " + viewAction.description +
-            " on item at position: " + position)
+                " on item at position: " + position)
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView

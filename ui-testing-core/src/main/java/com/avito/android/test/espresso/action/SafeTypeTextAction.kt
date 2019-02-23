@@ -32,10 +32,10 @@ class SafeTypeTextAction(
      */
     override fun perform(uiController: UiController?, view: View?) {
         doNotUseReplace = doNotUseReplace ||
-            // phone numbers will not work properly with replace in most cases
-            stringToBeTyped.isPhoneNumber() ||
-            // AP-221: cyrillic input will not work correctly with replace in most cases
-            stringToBeTyped.isCyrillic()
+                // phone numbers will not work properly with replace in most cases
+                stringToBeTyped.isPhoneNumber() ||
+                // AP-221: cyrillic input will not work correctly with replace in most cases
+                stringToBeTyped.isCyrillic()
         try {
             if (doNotUseReplace) {
                 typeAction.perform(uiController, view)

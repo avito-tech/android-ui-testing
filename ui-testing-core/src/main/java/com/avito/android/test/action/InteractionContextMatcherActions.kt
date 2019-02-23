@@ -22,9 +22,7 @@ class InteractionContextMatcherActions(
 
     override fun scrollTo() {
         interactionContext.perform(
-            scrollTo<RecyclerView.ViewHolder>(matcher).atPosition(
-                0
-            )
+            scrollTo<RecyclerView.ViewHolder>(matcher).atPosition(0)
         )
     }
 

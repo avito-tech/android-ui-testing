@@ -53,7 +53,9 @@ class ScrollToIfPossibleAction : ViewAction {
         try {
             view.scrollToScrollableParentCenterPosition()
         } catch (t: Throwable) {
-
+            // scrollToScrollableParentCenterPosition contains hard logic to find scrollable
+            // container, so we're just trying to scroll to center of scrollable parent.
+            // This action is optional
         }
 
         uiController.loopMainThreadUntilIdle()

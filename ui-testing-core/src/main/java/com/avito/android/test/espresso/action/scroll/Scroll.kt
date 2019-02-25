@@ -65,7 +65,8 @@ private fun View.getPositionInScrollableParent(): Rect {
 private fun getRelativeToFirstScrollableContainerLeft(view: View): Int {
     if (view.parent !is ViewGroup) {
         throw RuntimeException(
-            "Failed get left coordinate relative to first scrollable parent because parent isn't view group"
+            "Failed get left coordinate relative to first scrollable " +
+                    "parent because parent isn't view group"
         )
     }
 
@@ -81,7 +82,8 @@ private fun getRelativeToFirstScrollableContainerLeft(view: View): Int {
 private fun getRelativeToFirstScrollableContainerTop(view: View): Int {
     if (view.parent !is ViewGroup) {
         throw RuntimeException(
-            "Failed get left coordinate relative to first scrollable parent because parent isn't view group"
+            "Failed get left coordinate relative to first scrollable " +
+                    "parent because parent isn't view group"
         )
     }
 

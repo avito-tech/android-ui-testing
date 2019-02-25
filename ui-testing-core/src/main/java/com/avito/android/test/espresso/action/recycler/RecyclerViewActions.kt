@@ -211,7 +211,8 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 }
 
 private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
-    viewHolderMatcher: Matcher<VH>, viewAction: ViewAction,
+    viewHolderMatcher: Matcher<VH>,
+    viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
 
@@ -242,7 +243,6 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
                 "performing ViewAction: %s on item matching: %s",
                 viewAction.description, viewHolderMatcher
             )
-
         } else {
             String.format(
                 "performing ViewAction: %s on %d-th item matching: %s",
@@ -285,7 +285,8 @@ fun <VH : RecyclerView.ViewHolder> actionOnHolderItem(
     ActionOnItemViewAction(viewHolderMatcher, viewAction)
 
 fun <VH : RecyclerView.ViewHolder> actionOnItem(
-    itemViewMatcher: Matcher<View>, viewAction: ViewAction
+    itemViewMatcher: Matcher<View>,
+    viewAction: ViewAction
 ): RecyclerViewActions.PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
     return ActionOnItemViewAction(viewHolderMatcher, viewAction)

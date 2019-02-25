@@ -88,7 +88,6 @@ fun scrollToElementInsideRecyclerViewItem(
     targetViewId = childViewId
 )
 
-
 internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderMatcher: Matcher<VH>,
     private val atPosition: Int = RecyclerView.NO_POSITION
@@ -194,7 +193,8 @@ private fun RecyclerView.scrollItemAtPositionToCenter(
         layoutManager.findViewByPosition(position)
             .scrollToScrollableParentCenterPosition()
     } catch (t: Throwable) {
-
+        // scrollToScrollableParentCenterPosition contains hard logic to find scrollable container,
+        // so we're just trying to scroll to center of scrollable parent. This action is optional
     }
 
     uiController.loopMainThreadUntilIdle()
@@ -214,7 +214,8 @@ private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
             .findViewById<View>(childId)
             .scrollToScrollableParentCenterPosition()
     } catch (t: Throwable) {
-
+        // scrollToScrollableParentCenterPosition contains hard logic to find scrollable container,
+        // so we're just trying to scroll to center of scrollable parent. This action is optional
     }
 
     uiController.loopMainThreadUntilIdle()

@@ -2,8 +2,15 @@ package com.avito.android.test.espresso.action.scroll
 
 import android.graphics.Point
 import android.graphics.Rect
+import android.support.design.widget.AppBarLayout
 import android.view.View
 import android.view.ViewGroup
+import com.avito.android.test.util.findViewsInParent
+
+internal fun View.collapseAllAppBarsInParent() {
+    findViewsInParent(AppBarLayout::class.java)
+        .forEach { it.setExpanded(false) }
+}
 
 internal fun View.scrollToScrollableParentCenterPosition() {
     val parent = getScrollableContainer(this)
@@ -22,6 +29,7 @@ internal fun View.scrollToScrollableParentPosition(position: Point) {
     val parent = getScrollableContainer(this)
 
     val viewPositionInsideContainer = getPositionInScrollableParent()
+
     parent.scrollBy(
         viewPositionInsideContainer.left - position.x,
         viewPositionInsideContainer.top - position.y
@@ -66,7 +74,7 @@ private fun getRelativeToFirstScrollableContainerLeft(view: View): Int {
     if (view.parent !is ViewGroup) {
         throw RuntimeException(
             "Failed get left coordinate relative to first scrollable " +
-                    "parent because parent isn't view group"
+                "parent because parent isn't view group"
         )
     }
 
@@ -83,7 +91,7 @@ private fun getRelativeToFirstScrollableContainerTop(view: View): Int {
     if (view.parent !is ViewGroup) {
         throw RuntimeException(
             "Failed get left coordinate relative to first scrollable " +
-                    "parent because parent isn't view group"
+                "parent because parent isn't view group"
         )
     }
 

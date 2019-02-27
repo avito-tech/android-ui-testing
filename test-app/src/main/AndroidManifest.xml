@@ -14,6 +14,7 @@
         <activity android:name=".SwipeRefreshActivity" />
         <activity android:name=".IdenticalCellsRecyclerActivity" />
         <activity android:name=".ButtonsOverRecyclerActivity" />
+        <activity android:name=".ButtonsOverRecyclerWithCollapsingToolbarActivity" />
         <activity android:name=".DrawableActivity" />
         <activity android:name=".RecyclerAsLayoutActivity" />
         <activity android:name=".LongRecyclerActivity" />

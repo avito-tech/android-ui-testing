@@ -9,6 +9,7 @@ import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.util.HumanReadables
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.avito.android.test.espresso.action.scroll.collapseAllAppBarsInParent
 import com.avito.android.test.espresso.action.scroll.scrollToScrollableParentCenterPosition
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
@@ -185,8 +186,15 @@ private fun RecyclerView.scrollItemAtPositionToCenter(
     uiController: UiController,
     position: Int
 ) {
-    scrollToPosition(position)
+    try {
+        collapseAllAppBarsInParent()
+        uiController.loopMainThreadUntilIdle()
+    } catch (t: Throwable) {
+        // collapseAllAppBarsInParent contains hard logic to find app bar in parent,
+        // so we're just trying to collapse it. This action is optional
+    }
 
+    scrollToPosition(position)
     uiController.loopMainThreadUntilIdle()
 
     try {
@@ -205,8 +213,15 @@ private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
     position: Int,
     childId: Int
 ) {
-    scrollToPosition(position)
+    try {
+        collapseAllAppBarsInParent()
+        uiController.loopMainThreadUntilIdle()
+    } catch (t: Throwable) {
+        // collapseAllAppBarsInParent contains hard logic to find app bar in parent,
+        // so we're just trying to collapse it. This action is optional
+    }
 
+    scrollToPosition(position)
     uiController.loopMainThreadUntilIdle()
 
     try {

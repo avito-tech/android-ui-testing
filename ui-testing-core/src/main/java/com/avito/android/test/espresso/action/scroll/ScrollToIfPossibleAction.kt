@@ -47,17 +47,17 @@ class ScrollToIfPossibleAction : ViewAction {
 
         // todo it returns boolean(any parent scrolled or not), do we need to react somehow?
         view.requestRectangleOnScreen(rect, /*immediate*/true)
-
         uiController.loopMainThreadUntilIdle()
 
         try {
+            view.collapseAllAppBarsInParent()
+            uiController.loopMainThreadUntilIdle()
             view.scrollToScrollableParentCenterPosition()
         } catch (t: Throwable) {
-            // scrollToScrollableParentCenterPosition contains hard logic to find scrollable
-            // container, so we're just trying to scroll to center of scrollable parent.
+            // this code contains hard logic to recursively find
+            // container, so we're just trying to execute it.
             // This action is optional
         }
-
         uiController.loopMainThreadUntilIdle()
 
         if (!view.isDisplayed()) {

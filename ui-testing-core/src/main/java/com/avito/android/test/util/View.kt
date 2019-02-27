@@ -31,9 +31,9 @@ private fun <T> findViewsInParentRecursively(
         .map { currentParent.getChildAt(it) }
         .filter { it != startView }
         .filter { type.isInstance(it) }
-        .forEach {
+        .forEach { view ->
             @Suppress("UNCHECKED_CAST")
-            result += it as T
+            result += view as T
         }
 
     return findViewsInParentRecursively(

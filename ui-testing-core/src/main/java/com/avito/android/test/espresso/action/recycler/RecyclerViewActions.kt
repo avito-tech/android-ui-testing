@@ -12,13 +12,13 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.util.SparseArray
 import android.view.View
+import java.util.ArrayList
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import java.util.ArrayList
 
 private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
     viewHolderMatcher: Matcher<VH>,

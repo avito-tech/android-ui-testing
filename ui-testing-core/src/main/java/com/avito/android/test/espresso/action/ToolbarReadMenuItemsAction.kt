@@ -6,8 +6,8 @@ import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.v7.widget.Toolbar
 import android.view.View
 import com.avito.android.test.util.getFieldByReflection
-import org.hamcrest.Matcher
 import java.util.ArrayList
+import org.hamcrest.Matcher
 
 class ToolbarReadMenuItemsAction : ViewAction {
 

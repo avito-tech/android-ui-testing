@@ -5,9 +5,9 @@ import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ReplaceTextAction
 import android.support.test.espresso.action.TypeTextAction
 import android.view.View
+import java.lang.Character.UnicodeBlock
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
-import java.lang.Character.UnicodeBlock
 
 /**
  * Don't use directly, only via EspressoActions

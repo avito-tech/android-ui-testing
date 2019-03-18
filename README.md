@@ -1,6 +1,6 @@
 # Avito Android UI testing library
 
-[ ![Download](https://api.bintray.com/packages/avito-tech/maven/android-ui-testing/images/download.svg?version=0.3.4) ](https://bintray.com/avito-tech/maven/android-ui-testing/0.3.4/link)
+[ ![Download](https://api.bintray.com/packages/avito-tech/maven/android-ui-testing/images/download.svg) ](https://bintray.com/avito-tech/maven/android-ui-testing/_latestVersion)
 
 ## Should I use it?
 

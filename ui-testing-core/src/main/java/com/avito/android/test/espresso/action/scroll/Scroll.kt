@@ -31,8 +31,8 @@ internal fun View.scrollToScrollableParentPosition(position: Point) {
     val viewPositionInsideContainer = getPositionInScrollableParent()
 
     parent.scrollBy(
-        viewPositionInsideContainer.left - position.x,
-        viewPositionInsideContainer.top - position.y
+        viewPositionInsideContainer.left - position.x + width / 2,
+        viewPositionInsideContainer.top - position.y + height / 2
     )
 }
 

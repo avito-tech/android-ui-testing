@@ -194,8 +194,10 @@ private fun RecyclerView.scrollItemAtPositionToCenter(
         // so we're just trying to collapse it. This action is optional
     }
 
-    scrollToPosition(position)
-    uiController.loopMainThreadUntilIdle()
+    if (!viewForItemAtPositionExists(position)) {
+        scrollToPosition(position)
+        uiController.loopMainThreadUntilIdle()
+    }
 
     try {
         layoutManager.findViewByPosition(position)
@@ -221,8 +223,10 @@ private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
         // so we're just trying to collapse it. This action is optional
     }
 
-    scrollToPosition(position)
-    uiController.loopMainThreadUntilIdle()
+    if (!viewForItemAtPositionExists(position)) {
+        scrollToPosition(position)
+        uiController.loopMainThreadUntilIdle()
+    }
 
     try {
         layoutManager.findViewByPosition(position)
@@ -235,3 +239,6 @@ private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
 
     uiController.loopMainThreadUntilIdle()
 }
+
+private fun RecyclerView.viewForItemAtPositionExists(position: Int): Boolean =
+    findViewHolderForAdapterPosition(position) != null

@@ -1,5 +1,6 @@
 # Avito Android UI testing library
 
+[ ![Build](https://circleci.com/gh/avito-tech/android-ui-testing.svg?style=svg) ](https://circleci.com/gh/avito-tech/android-ui-testing/tree/master)
 [ ![Download](https://api.bintray.com/packages/avito-tech/maven/android-ui-testing/images/download.svg) ](https://bintray.com/avito-tech/maven/android-ui-testing/_latestVersion)
 
 ## Should I use it?

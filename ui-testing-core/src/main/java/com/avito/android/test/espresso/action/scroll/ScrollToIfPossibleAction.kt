@@ -1,4 +1,4 @@
-package com.avito.android.test.espresso.action
+package com.avito.android.test.espresso.action.scroll
 
 import android.graphics.Rect
 import android.support.test.espresso.PerformException
@@ -19,9 +19,6 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anyOf
 
-/**
- * Don't use directly, only via EspressoActions
- */
 class ScrollToIfPossibleAction : ViewAction {
 
     private val scrollableContainerMatcher = anyOf(
@@ -50,7 +47,17 @@ class ScrollToIfPossibleAction : ViewAction {
 
         // todo it returns boolean(any parent scrolled or not), do we need to react somehow?
         view.requestRectangleOnScreen(rect, /*immediate*/true)
+        uiController.loopMainThreadUntilIdle()
 
+        try {
+            view.collapseAllAppBarsInParent()
+            uiController.loopMainThreadUntilIdle()
+            view.scrollToScrollableParentCenterPosition()
+        } catch (t: Throwable) {
+            // this code contains hard logic to recursively find
+            // container, so we're just trying to execute it.
+            // This action is optional
+        }
         uiController.loopMainThreadUntilIdle()
 
         if (!view.isDisplayed()) {

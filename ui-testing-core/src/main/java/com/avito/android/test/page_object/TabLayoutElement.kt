@@ -65,11 +65,11 @@ private class TabLayoutSelectAction(private val tabIndex: Int) : ViewAction {
 
     override fun perform(uiController: UiController, view: View) {
         val tabAtIndex = (view as TabLayout).getTabAt(tabIndex)
-                ?: throw PerformException.Builder()
-                    .withActionDescription(this.description)
-                    .withViewDescription(HumanReadables.describe(view))
-                    .withCause(Throwable("No tab at index $tabIndex"))
-                    .build()
+            ?: throw PerformException.Builder()
+                .withActionDescription(this.description)
+                .withViewDescription(HumanReadables.describe(view))
+                .withCause(Throwable("No tab at index $tabIndex"))
+                .build()
 
         tabAtIndex.select()
         uiController.loopMainThreadUntilIdle()

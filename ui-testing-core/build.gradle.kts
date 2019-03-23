@@ -1,5 +1,3 @@
-
-
 val kotlinVersion: String by project
 val espressoVersion: String by project
 val supportVersion: String by project

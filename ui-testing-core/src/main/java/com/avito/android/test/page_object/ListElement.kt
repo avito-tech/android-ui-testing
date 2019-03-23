@@ -18,7 +18,6 @@ import android.support.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
 import android.support.test.espresso.action.Swiper
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -39,10 +38,11 @@ import com.avito.android.test.espresso.action.RecyclerSpanCountAction
 import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
 import com.avito.android.test.espresso.action.RecyclerViewVerticalOffsetAction
-import com.avito.android.test.espresso.action.ScrollToElementAction
-import com.avito.android.test.espresso.action.SmoothScrollToPositionViewAction
-import com.avito.android.test.espresso.action.ViewActionOnItemAtPosition
 import com.avito.android.test.espresso.action.ViewGetTranslationYAction
+import com.avito.android.test.espresso.action.recycler.SmoothScrollToPositionViewAction
+import com.avito.android.test.espresso.action.recycler.ViewActionOnItemAtPosition
+import com.avito.android.test.espresso.action.recycler.actionOnHolderItem
+import com.avito.android.test.espresso.action.recycler.scrollToElementInsideRecyclerViewItem
 import com.avito.android.test.matcher.RecyclerViewMatcher
 import com.avito.android.test.matcher.ViewGroupMatcher
 import com.forkingcode.espresso.contrib.DescendantViewActions
@@ -168,22 +168,34 @@ open class ListElement(interactionContext: InteractionContext) :
         constructor(driver: ActionsDriver) : this(driver, ActionsImpl(driver))
 
         fun scrollToPosition(position: Int) {
-            driver.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
+            driver.perform(
+                com.avito.android.test.espresso.action.recycler.scrollToPosition(
+                    position
+                )
+            )
         }
 
         fun smoothScrollToPosition(position: Int = 0) {
-            driver.perform(SmoothScrollToPositionViewAction(position))
+            driver.perform(
+                SmoothScrollToPositionViewAction(
+                    position
+                )
+            )
         }
 
         fun scrollToEnd() = scrollToPosition(items - 1)
 
         fun scrollToHolder(holder: Matcher<RecyclerView.ViewHolder>) {
-            driver.perform(RecyclerViewActions.scrollToHolder<RecyclerView.ViewHolder>(holder))
+            driver.perform(
+                com.avito.android.test.espresso.action.recycler.scrollToHolder(
+                    holder
+                )
+            )
         }
 
         fun clickOnHolder(holder: Matcher<RecyclerView.ViewHolder>, position: Int = 0) {
             driver.perform(
-                RecyclerViewActions.actionOnHolderItem(
+                actionOnHolderItem(
                     holder,
                     ViewActions.click()
                 ).atPosition(position)
@@ -191,8 +203,12 @@ open class ListElement(interactionContext: InteractionContext) :
         }
 
         fun scrollToChild(position: Int = 0, targetChildViewId: Int) {
-            driver.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position))
-            driver.perform(ScrollToElementAction(position, targetChildViewId))
+            driver.perform(
+                scrollToElementInsideRecyclerViewItem(
+                    position = position,
+                    childViewId = targetChildViewId
+                )
+            )
         }
 
         fun actionOnChild(

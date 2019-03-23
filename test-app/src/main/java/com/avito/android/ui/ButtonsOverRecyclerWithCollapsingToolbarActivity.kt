@@ -9,23 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import java.lang.RuntimeException
 
-class ButtonsOverRecyclerActivity : AppCompatActivity() {
+class ButtonsOverRecyclerWithCollapsingToolbarActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_buttons_over_recycler)
+        setContentView(R.layout.activity_buttons_over_recycler_with_collapsing_toolbar)
 
         val data = (1..99).map { it.toString() }.toList()
 
         findViewById<RecyclerView>(R.id.recycler).apply {
-            layoutManager = LinearLayoutManager(this@ButtonsOverRecyclerActivity)
+            layoutManager =
+                LinearLayoutManager(this@ButtonsOverRecyclerWithCollapsingToolbarActivity)
             adapter = Adapter(data)
-        }
-
-        findViewById<Button>(R.id.top_button).setOnClickListener {
-            throw RuntimeException("Top button clicked!")
         }
 
         findViewById<Button>(R.id.bottom_button).setOnClickListener {

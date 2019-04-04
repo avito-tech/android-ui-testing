@@ -11,4 +11,8 @@ class Alert : PageObject {
     val title = ViewElement(ViewMatchers.isAssignableFrom(DialogTitle::class.java))
 
     val okButton = ViewElement(withId(android.R.id.button1))
+
+    val negativeButton = ViewElement(withId(android.R.id.button2))
+
+    val neutralButton = ViewElement(withId(android.R.id.button3))
 }

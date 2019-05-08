@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class StateFullRecyclerViewAdapterActivity : AppCompatActivity() {
+class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class StateFullRecyclerViewAdapterActivity : AppCompatActivity() {
 
         val data = (1..99)
             .map {
-                StateFullItem(
+                StatefulItem(
                     title = it.toString(),
                     viewedCount = 0
                 )
@@ -25,13 +25,13 @@ class StateFullRecyclerViewAdapterActivity : AppCompatActivity() {
             .toList()
 
         findViewById<RecyclerView>(R.id.recycler).apply {
-            layoutManager = LinearLayoutManager(this@StateFullRecyclerViewAdapterActivity)
-            adapter = StateFullAdapter(data.toMutableList())
+            layoutManager = LinearLayoutManager(this@StatefulRecyclerViewAdapterActivity)
+            adapter = StatefulAdapter(data.toMutableList())
         }
     }
 
-    private class StateFullAdapter(
-        private val items: MutableList<StateFullItem>
+    private class StatefulAdapter(
+        private val items: MutableList<StatefulItem>
     ) : RecyclerView.Adapter<ViewHolder>() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -59,7 +59,7 @@ class StateFullRecyclerViewAdapterActivity : AppCompatActivity() {
         val title2: TextView = itemView.findViewById(R.id.title2)
     }
 
-    private data class StateFullItem(
+    private data class StatefulItem(
         val title: String,
         var viewedCount: Int = 0
     )

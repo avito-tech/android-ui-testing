@@ -11,7 +11,7 @@ import com.avito.android.test.page_object.ViewElement
 import com.avito.android.ui.R
 import org.hamcrest.Matcher
 
-class StateFullRecyclerViewAdapterScreen {
+class StatefulRecyclerViewAdapterScreen {
 
     val list = List()
 

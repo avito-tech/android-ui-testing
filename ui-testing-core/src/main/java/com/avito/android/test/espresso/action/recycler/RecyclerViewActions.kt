@@ -76,7 +76,7 @@ private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> 
 
                 assertThat<Boolean>(
                     "View is present in the hierarchy: " +
-                            HumanReadables.describe(viewAtPosition), true, `is`(false)
+                        HumanReadables.describe(viewAtPosition), true, `is`(false)
                 )
             }
             uiController.loopMainThreadUntilIdle()
@@ -99,26 +99,41 @@ private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> 
  * @return list of MatchedItem which contains position and description of items in recyclerView.
  * @throws RuntimeException if more than one item or item could not be found. </VH>
  */
-internal fun <T : VH, VH : RecyclerView.ViewHolder> itemsMatching(
+internal fun <VH : RecyclerView.ViewHolder> itemsMatching(
     recyclerView: RecyclerView,
     viewHolderMatcher: Matcher<VH>,
     max: Int
 ): List<MatchedItem> {
     val adapter = recyclerView.adapter
+
     val viewHolderCache = SparseArray<VH>()
     val matchedItems = ArrayList<MatchedItem>()
+
     for (position in 0 until adapter.itemCount) {
         val itemType = adapter.getItemViewType(position)
         var cachedViewHolder: VH? = viewHolderCache.get(itemType)
         // Create a view holder per type if not exists
-        if (null == cachedViewHolder) {
+        if (cachedViewHolder == null) {
             @Suppress("UNCHECKED_CAST")
-            cachedViewHolder = adapter.createViewHolder(recyclerView, itemType) as VH
+
+            cachedViewHolder = (adapter.createViewHolder(recyclerView, itemType) as VH)
+
+            /**
+             * It allows production code to understand, that bindViewHolder has called by
+             * fake rendering process (for find element in recycler view before it will be shown on
+             * real user screen).
+             */
+            (cachedViewHolder as RecyclerView.ViewHolder).itemView.setTag(
+                FAKE_RENDERING_VIEW_HOLDER_TAG_KEY,
+                FAKE_RENDERING_VIEW_HOLDER_TAG_VALUE
+            )
+
             viewHolderCache.put(itemType, cachedViewHolder)
         }
         // Bind data to ViewHolder and apply matcher to view descendants.
         @Suppress("UNCHECKED_CAST")
-        adapter.bindViewHolder(cachedViewHolder as T, position)
+        adapter.bindViewHolder(cachedViewHolder, position)
+
         if (viewHolderMatcher.matches(cachedViewHolder)) {
             matchedItems.add(
                 MatchedItem(
@@ -186,7 +201,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 
     override fun getDescription(): String =
         ("actionOnItemAtPosition performing ViewAction: " + viewAction.description +
-                " on item at position: " + position)
+            " on item at position: " + position)
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView
@@ -318,3 +333,6 @@ class ViewActionOnItemAtPosition<VH : RecyclerView.ViewHolder>(
         viewAction.perform(uiController, viewAtPosition)
     }
 }
+
+private const val FAKE_RENDERING_VIEW_HOLDER_TAG_KEY = Integer.MAX_VALUE - 228
+private const val FAKE_RENDERING_VIEW_HOLDER_TAG_VALUE = "RENDERED_FOR_FAKE_RUN"

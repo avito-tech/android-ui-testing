@@ -23,8 +23,8 @@ object Screen {
     val buttonsOverRecycler: ButtonsOverRecyclerScreen
         get() = ButtonsOverRecyclerScreen()
 
-    val stateFullRecyclerViewAdapterScreen: StateFullRecyclerViewAdapterScreen
-        get() = StateFullRecyclerViewAdapterScreen()
+    val statefulRecyclerViewAdapterScreen: StatefulRecyclerViewAdapterScreen
+        get() = StatefulRecyclerViewAdapterScreen()
 
     val recyclerAsLayout: RecyclerAsLayoutScreen
         get() = RecyclerAsLayoutScreen()

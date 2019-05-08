@@ -1,4 +1,5 @@
 val kotlinVersion: String by settings
+val androidGradlePluginVersion: String by settings
 
 pluginManagement {
     repositories {
@@ -10,7 +11,7 @@ pluginManagement {
             val pluginId = requested.id.id
             when {
                 pluginId.startsWith("com.android.") ->
-                    useModule("com.android.tools.build:gradle:3.3.0")
+                    useModule("com.android.tools.build:gradle:$androidGradlePluginVersion")
 
                 pluginId.startsWith("org.jetbrains.kotlin.") ->
                     useVersion(kotlinVersion)

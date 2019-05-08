@@ -37,16 +37,13 @@ class RecyclerWithLongItemsActivity : AppCompatActivity() {
         }
     }
 
-    private class Adapter :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private class Adapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder?, position: Int) {
-            viewHolder?.let { holder ->
-                val longItemHolder = holder as LongItemHolder
-                longItemHolder.targetViewTop.setAction()
-                longItemHolder.targetViewCenter.setAction()
-                longItemHolder.targetViewBottom.setAction()
-            }
+        override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+            val longItemHolder = viewHolder as LongItemHolder
+            longItemHolder.targetViewTop.setAction()
+            longItemHolder.targetViewCenter.setAction()
+            longItemHolder.targetViewBottom.setAction()
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

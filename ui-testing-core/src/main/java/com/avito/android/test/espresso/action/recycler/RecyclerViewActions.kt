@@ -231,13 +231,8 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
     private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
 
-    private val viewHolderMatcher: Matcher<VH> = checkNotNull(viewHolderMatcher)
-    private val viewAction: ViewAction = checkNotNull(viewAction)
-    private val scroller: RecyclerViewActions.PositionableRecyclerViewAction =
-        scrollToHolder(
-            viewHolderMatcher,
-            atPosition
-        )
+    private val viewHolderMatcher: Matcher<VH> = viewHolderMatcher
+    private val viewAction: ViewAction = viewAction
 
     override fun getConstraints(): Matcher<View> {
         return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
@@ -269,9 +264,6 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
     override fun perform(uiController: UiController, root: View) {
         val recyclerView = root as RecyclerView
         try {
-            scroller.perform(uiController, root)
-            uiController.loopMainThreadUntilIdle()
-            // the above scroller has checked bounds, dupes (maybe) and brought the element into screen.
             val max = if (atPosition == NO_POSITION) 2 else atPosition + 1
             val selectIndex = if (atPosition == NO_POSITION) 0 else atPosition
             val matchedItems = itemsMatching(

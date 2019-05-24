@@ -15,6 +15,11 @@ class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler)
 
+        val changeStateForTestBindings = intent.getBooleanExtra(
+            CHANGE_STATE_FOR_TEST_BINDINGS_KEY,
+            false
+        )
+
         val data = (1..99)
             .map {
                 StatefulItem(
@@ -26,16 +31,22 @@ class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.recycler).apply {
             layoutManager = LinearLayoutManager(this@StatefulRecyclerViewAdapterActivity)
-            adapter = StatefulAdapter(data.toMutableList())
+            adapter = StatefulAdapter(
+                changeStateForTestBindings = changeStateForTestBindings,
+                items = data.toMutableList()
+            )
         }
     }
 
     private class StatefulAdapter(
+        private val changeStateForTestBindings: Boolean,
         private val items: MutableList<StatefulItem>
     ) : RecyclerView.Adapter<ViewHolder>() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            if (!holder.isFakeHolderForTests()) {
+            val isRealHolderBinding = !holder.isFakeHolderForTests()
+
+            if (isRealHolderBinding || changeStateForTestBindings) {
                 items[position].viewedCount++
             }
             holder.title.text = items[position].title
@@ -50,8 +61,7 @@ class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
         /**
          * See method itemsMatching inside RecyclerViewActions.kt for understanding what happens here
          */
-        private fun RecyclerView.ViewHolder.isFakeHolderForTests(): Boolean
-            = itemView.getTag(Integer.MAX_VALUE - 228) != null
+        private fun RecyclerView.ViewHolder.isFakeHolderForTests(): Boolean = itemView.getTag(Integer.MAX_VALUE - 228) != null
     }
 
     private class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -63,4 +73,8 @@ class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
         val title: String,
         var viewedCount: Int = 0
     )
+
+    companion object {
+        const val CHANGE_STATE_FOR_TEST_BINDINGS_KEY = "change_state_for_test_bindings_key"
+    }
 }

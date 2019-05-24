@@ -20,12 +20,10 @@ class StatefulRecyclerViewAdapterScreen {
         fun cellWithTitle(title: String) =
             typedItemByMatcher(ViewMatchers.hasDescendant(ViewMatchers.withText(title)), ::Cell)
 
-        fun cellAt(position: Int) = typedItemAtPosition(
-            ViewMatchers.isAssignableFrom(LinearLayout::class.java),
-            position
-        ) { matcher: Matcher<View>, actions: Actions, checks: Checks, childFactory ->
-            Cell(matcher, actions, checks, childFactory)
-        }
+        fun cellWithTitleCreatedByRecyclerViewInteractionContext(title: String) =
+            typedItemByMatcher<ViewElement>(
+                ViewMatchers.hasDescendant(ViewMatchers.withText(title))
+            )
 
         class Cell(
             matcher: Matcher<View>,

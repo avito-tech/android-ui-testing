@@ -1,5 +1,6 @@
 package com.avito.android.ui.test
 
+import android.content.Intent
 import com.avito.android.ui.StatefulRecyclerViewAdapterActivity
 import org.junit.Rule
 import org.junit.Test
@@ -7,7 +8,7 @@ import org.junit.Test
 class StatefulRecyclerViewAdapterTest {
 
     @get:Rule
-    val rule = screenRule<StatefulRecyclerViewAdapterActivity>(launchActivity = true)
+    val rule = screenRule<StatefulRecyclerViewAdapterActivity>(launchActivity = false)
 
     /**
      * For finding element inside recycler view by view matching we have to render all items
@@ -22,6 +23,8 @@ class StatefulRecyclerViewAdapterTest {
      */
     @Test
     fun adapterState_notAffectedByDynamicRecyclerViewElementFindingLogic_whenProductionCodeAvoidToUsingSideEffectsForFakeViewHolder() {
+        rule.launchActivity(Intent())
+
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").scrollTo()
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("1").scrollTo()
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").scrollTo()
@@ -29,5 +32,59 @@ class StatefulRecyclerViewAdapterTest {
 
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("1")
             .title2.checks.displayedWithText("3")
+    }
+
+    @Test
+    fun adapterState_affectedByDynamicRecyclerViewElementFindingLogic_onlyOnceForOneScrollEvent() {
+        rule.launchActivity {
+            it.apply {
+                putExtra(
+                    StatefulRecyclerViewAdapterActivity.CHANGE_STATE_FOR_TEST_BINDINGS_KEY,
+                    true
+                )
+            }
+        }
+
+        var expectedBindingsCount = 0
+
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").scrollTo().apply {
+            expectedBindingsCount++ // fake binding for finding element
+            expectedBindingsCount++ // real binding for showing element
+        }
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("1").scrollTo()
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").scrollTo().apply {
+            expectedBindingsCount++ // fake binding for finding element
+            expectedBindingsCount++ // real binding for showing element
+        }
+
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60")
+            .title2.checks.displayedWithText(expectedBindingsCount.toString())
+    }
+
+    @Test
+    fun adapterState_affectedByDynamicRecyclerViewElementFindingLogic_onlyOnceForOneClickEvent() {
+        rule.launchActivity {
+            it.apply {
+                putExtra(
+                    StatefulRecyclerViewAdapterActivity.CHANGE_STATE_FOR_TEST_BINDINGS_KEY,
+                    true
+                )
+            }
+        }
+
+        var expectedBindingsCount = 0
+
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").click().apply {
+            expectedBindingsCount++ // fake binding for finding element
+            expectedBindingsCount++ // real binding for showing element
+        }
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("1").click()
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").click().apply {
+            expectedBindingsCount++ // fake binding for finding element
+            expectedBindingsCount++ // real binding for showing element
+        }
+
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60")
+            .title2.checks.displayedWithText(expectedBindingsCount.toString())
     }
 }

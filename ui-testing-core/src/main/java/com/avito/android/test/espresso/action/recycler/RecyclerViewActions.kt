@@ -12,32 +12,31 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.util.SparseArray
 import android.view.View
-import java.util.ArrayList
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
+import java.util.ArrayList
 
-private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
-    viewHolderMatcher: Matcher<VH>,
-    viewAction: ViewAction,
+private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
+    private val viewHolderMatcher: Matcher<VH>,
+    private val viewHolderType: Class<VH>,
+    private val viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
-
-    private val viewHolderMatcher: Matcher<VH> = checkNotNull(viewHolderMatcher)
-    private val viewAction: ViewAction = checkNotNull(viewAction)
 
     override fun getConstraints(): Matcher<View> =
         allOf<View>(isAssignableFrom(RecyclerView::class.java), isDisplayed())
 
     override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
         checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
-        return ViewDoesntExistsInRecyclerCheckHack(
-            viewHolderMatcher,
-            viewAction,
-            position
+        return ViewDoesNotExistsInRecyclerCheckHack(
+            viewHolderType = viewHolderType,
+            viewHolderMatcher = viewHolderMatcher,
+            viewAction = viewAction,
+            atPosition = position
         )
     }
 
@@ -63,9 +62,10 @@ private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> 
             val max = if (atPosition == NO_POSITION) 2 else atPosition + 1
             val selectIndex = if (atPosition == NO_POSITION) 0 else atPosition
             val matchedItems = itemsMatching(
-                recyclerView,
-                viewHolderMatcher,
-                max
+                recyclerView = recyclerView,
+                viewHolderType = viewHolderType,
+                viewHolderMatcher = viewHolderMatcher,
+                max = max
             )
             if (matchedItems.isNotEmpty()) {
                 val position = matchedItems[selectIndex].position
@@ -101,45 +101,62 @@ private class ViewDoesntExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> 
  */
 internal fun <VH : RecyclerView.ViewHolder> itemsMatching(
     recyclerView: RecyclerView,
+    viewHolderType: Class<VH>,
     viewHolderMatcher: Matcher<VH>,
     max: Int
 ): List<MatchedItem> {
     val adapter = recyclerView.adapter
 
     val viewHolderCache = SparseArray<VH>()
+    val shownViewHolders = SparseArray<VH>()
+
     val matchedItems = ArrayList<MatchedItem>()
 
     for (position in 0 until adapter.itemCount) {
-        val itemType = adapter.getItemViewType(position)
-        var cachedViewHolder: VH? = viewHolderCache.get(itemType)
-        // Create a view holder per type if not exists
-        if (cachedViewHolder == null) {
-            @Suppress("UNCHECKED_CAST")
+        val viewHolderForPosition: RecyclerView.ViewHolder? = recyclerView.findViewHolderForAdapterPosition(position)
 
-            cachedViewHolder = (adapter.createViewHolder(recyclerView, itemType) as VH)
-
-            /**
-             * It allows production code to understand, that bindViewHolder has called by
-             * fake rendering process (for find element in recycler view before it will be shown on
-             * real user screen).
-             */
-            (cachedViewHolder as RecyclerView.ViewHolder).itemView.setTag(
-                FAKE_RENDERING_VIEW_HOLDER_TAG_KEY,
-                FAKE_RENDERING_VIEW_HOLDER_TAG_VALUE
-            )
-
-            viewHolderCache.put(itemType, cachedViewHolder)
+        if (viewHolderForPosition != null && viewHolderType.isInstance(viewHolderForPosition)) {
+            shownViewHolders.put(position, viewHolderType.cast(viewHolderForPosition))
         }
-        // Bind data to ViewHolder and apply matcher to view descendants.
-        @Suppress("UNCHECKED_CAST")
-        adapter.bindViewHolder(cachedViewHolder, position)
+    }
 
-        if (viewHolderMatcher.matches(cachedViewHolder)) {
+    for (position in 0 until adapter.itemCount) {
+        var viewHolder: VH? = shownViewHolders.get(position)
+
+        if (viewHolder == null) {
+            val itemType = adapter.getItemViewType(position)
+
+            viewHolder = viewHolderCache.get(itemType)
+
+            if (viewHolder == null) {
+
+                @Suppress("UNCHECKED_CAST")
+                viewHolder = adapter.createViewHolder(recyclerView, itemType) as VH
+
+                /**
+                 * It allows production code to understand, that bindViewHolder has called by
+                 * fake rendering process (for find element in recycler view before it will be shown on
+                 * real user screen).
+                 */
+                (viewHolder as RecyclerView.ViewHolder).itemView.setTag(
+                    FAKE_RENDERING_VIEW_HOLDER_TAG_KEY,
+                    FAKE_RENDERING_VIEW_HOLDER_TAG_VALUE
+                )
+
+                viewHolderCache.put(itemType, viewHolder)
+            }
+            // Bind data to ViewHolder and apply matcher to view descendants.
+            @Suppress("UNCHECKED_CAST")
+            adapter.bindViewHolder(viewHolder, position)
+
+        }
+
+        if (viewHolderMatcher.matches(viewHolder)) {
             matchedItems.add(
                 MatchedItem(
                     position,
                     HumanReadables.getViewHierarchyErrorMessage(
-                        cachedViewHolder.itemView, null,
+                        viewHolder.itemView, null,
                         "\n\n*** Matched ViewHolder item at position: $position ***", null
                     )
                 )
@@ -149,6 +166,7 @@ internal fun <VH : RecyclerView.ViewHolder> itemsMatching(
             }
         }
     }
+
     return matchedItems
 }
 
@@ -169,15 +187,17 @@ fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(itemViewMatcher: Matcher<Vi
         }
     }
 
-fun <VH : RecyclerView.ViewHolder> itemDoesntExists(
+fun <VH : RecyclerView.ViewHolder> itemDoesNotExists(
     itemViewMatcher: Matcher<View>,
+    viewHolderType: Class<VH>,
     viewAction: ViewAction
 ): RecyclerViewActions.PositionableRecyclerViewAction {
-    val viewHolderMatcher =
-        viewHolderMatcher<VH>(itemViewMatcher)
-    return ViewDoesntExistsInRecyclerCheckHack(
-        viewHolderMatcher,
-        viewAction
+    val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
+
+    return ViewDoesNotExistsInRecyclerCheckHack(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType,
+        viewAction = viewAction
     )
 }
 
@@ -227,6 +247,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 
 private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderMatcher: Matcher<VH>,
+    private val viewHolderType: Class<VH>,
     private val viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
@@ -238,9 +259,10 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
     override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
         checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
         return ActionOnItemViewAction(
-            viewHolderMatcher,
-            viewAction,
-            position
+            viewHolderMatcher = viewHolderMatcher,
+            viewHolderType = viewHolderType,
+            viewAction = viewAction,
+            atPosition = position
         )
     }
 
@@ -264,9 +286,10 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
             val max = if (atPosition == NO_POSITION) 2 else atPosition + 1
             val selectIndex = if (atPosition == NO_POSITION) 0 else atPosition
             val matchedItems = itemsMatching(
-                recyclerView,
-                viewHolderMatcher,
-                max
+                recyclerView = recyclerView,
+                viewHolderType = viewHolderType,
+                viewHolderMatcher = viewHolderMatcher,
+                max = max
             )
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 matchedItems[selectIndex].position,
@@ -276,7 +299,7 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
             )
             uiController.loopMainThreadUntilIdle()
         } catch (e: RuntimeException) {
-            throw PerformException.Builder().withActionDescription(this.getDescription())
+            throw PerformException.Builder().withActionDescription(this.description)
                 .withViewDescription(HumanReadables.describe(root)).withCause(e).build()
         }
     }
@@ -284,16 +307,27 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
 
 fun <VH : RecyclerView.ViewHolder> actionOnHolderItem(
     viewHolderMatcher: Matcher<VH>,
+    viewHolderType: Class<VH>,
     viewAction: ViewAction
 ): RecyclerViewActions.PositionableRecyclerViewAction =
-    ActionOnItemViewAction(viewHolderMatcher, viewAction)
+    ActionOnItemViewAction(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType,
+        viewAction = viewAction
+    )
 
 fun <VH : RecyclerView.ViewHolder> actionOnItem(
     itemViewMatcher: Matcher<View>,
+    viewHolderType: Class<VH>,
     viewAction: ViewAction
 ): RecyclerViewActions.PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
-    return ActionOnItemViewAction(viewHolderMatcher, viewAction)
+
+    return ActionOnItemViewAction(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType,
+        viewAction = viewAction
+    )
 }
 
 class ViewActionOnItemAtPosition<VH : RecyclerView.ViewHolder>(

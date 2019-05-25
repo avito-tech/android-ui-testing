@@ -22,15 +22,22 @@ class InteractionContextMatcherActions(
 
     override fun scrollTo() {
         interactionContext.perform(
-            scrollTo<RecyclerView.ViewHolder>(matcher).atPosition(0)
+            scrollTo(
+                itemViewMatcher = matcher,
+                viewHolderType = RecyclerView.ViewHolder::class.java
+            ).atPosition(0)
         )
     }
 
     override fun click() {
         interactionContext.perform(
-            actionOnItem<RecyclerView.ViewHolder>(
-                matcher,
-                DescendantViewActions.performDescendantAction(childMatcher, ViewActions.click())
+            actionOnItem(
+                itemViewMatcher = matcher,
+                viewHolderType = RecyclerView.ViewHolder::class.java,
+                viewAction = DescendantViewActions.performDescendantAction(
+                    childMatcher,
+                    ViewActions.click()
+                )
             )
                 .atPosition(0)
         )
@@ -38,9 +45,13 @@ class InteractionContextMatcherActions(
 
     override fun longClick() {
         interactionContext.perform(
-            actionOnItem<RecyclerView.ViewHolder>(
-                matcher,
-                DescendantViewActions.performDescendantAction(childMatcher, ViewActions.longClick())
+            actionOnItem(
+                itemViewMatcher = matcher,
+                viewHolderType = RecyclerView.ViewHolder::class.java,
+                viewAction = DescendantViewActions.performDescendantAction(
+                    childMatcher,
+                    ViewActions.longClick()
+                )
             )
                 .atPosition(0)
         )
@@ -48,9 +59,10 @@ class InteractionContextMatcherActions(
 
     override fun swipe(direction: SwipeDirection, speed: Swiper, precision: PrecisionDescriber) {
         interactionContext.perform(
-            actionOnItem<RecyclerView.ViewHolder>(
-                matcher,
-                DescendantViewActions.performDescendantAction(
+            actionOnItem(
+                itemViewMatcher = matcher,
+                viewHolderType = RecyclerView.ViewHolder::class.java,
+                viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
                     EspressoActions.swipe(direction, speed, precision)
                 )
@@ -65,9 +77,10 @@ class InteractionContextMatcherActions(
     override fun read(allowBlank: Boolean): String =
         TextViewReadAction.getResult(allowBlank) { action ->
             interactionContext.perform(
-                actionOnItem<RecyclerView.ViewHolder>(
-                    matcher,
-                    DescendantViewActions.performDescendantAction(childMatcher, action)
+                actionOnItem(
+                    itemViewMatcher = matcher,
+                    viewHolderType = RecyclerView.ViewHolder::class.java,
+                    viewAction = DescendantViewActions.performDescendantAction(childMatcher, action)
                 )
                     .atPosition(0)
             )

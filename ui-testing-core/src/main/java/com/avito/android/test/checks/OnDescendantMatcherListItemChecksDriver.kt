@@ -27,9 +27,13 @@ class OnDescendantMatcherListItemChecksDriver(
             AssertionInterceptor.Proxy(assertion, UITestConfig.assertionInterceptors)
 
         interaction.waitToPerform(
-            actionOnItem<RecyclerView.ViewHolder>(
-                matcher,
-                DescendantViewActions.checkDescendantViewAction(childMatcher, interceptedAssertion)
+            actionOnItem(
+                itemViewMatcher = matcher,
+                viewHolderType = RecyclerView.ViewHolder::class.java,
+                viewAction = DescendantViewActions.checkDescendantViewAction(
+                    childMatcher,
+                    interceptedAssertion
+                )
             ).atPosition(0)
         )
     }

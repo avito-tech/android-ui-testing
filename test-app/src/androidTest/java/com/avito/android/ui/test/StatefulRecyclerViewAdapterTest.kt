@@ -114,4 +114,30 @@ class StatefulRecyclerViewAdapterTest {
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60")
             .title2.checks.displayedWithText(expectedBindingsCount.toString())
     }
+
+    @Test
+    fun adapterState_doesNotAffectedByDynamicRecyclerViewElementFindingLogic_whenItemAlreadyOnTheScreen() {
+        rule.launchActivity {
+            it.apply {
+                putExtra(
+                    StatefulRecyclerViewAdapterActivity.CHANGE_STATE_FOR_TEST_BINDINGS_KEY,
+                    true
+                )
+            }
+        }
+
+        var expectedBindingsCount = 0
+
+        expectedBindingsCount++ // initial binding
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitleCreatedByRecyclerViewInteractionContext("1").click() // there is no fake binding because item already on the screen
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitleCreatedByRecyclerViewInteractionContext("60").click() // there is no fake binding because item already on the screen
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitleCreatedByRecyclerViewInteractionContext("1").click().apply {
+            expectedBindingsCount++ // fake binding for finding element
+            expectedBindingsCount++ // real binding for showing element
+        }
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitleCreatedByRecyclerViewInteractionContext("1").click()
+
+        Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("1")
+            .title2.checks.displayedWithText(expectedBindingsCount.toString())
+    }
 }

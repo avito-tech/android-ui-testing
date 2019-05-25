@@ -12,7 +12,7 @@ import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.espresso.action.GroupedViewAction
 import com.avito.android.test.espresso.action.recycler.actionOnItem
-import com.avito.android.test.espresso.action.recycler.itemDoesntExists
+import com.avito.android.test.espresso.action.recycler.itemDoesNotExists
 import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.interceptor.AssertionInterceptor
 import com.forkingcode.espresso.contrib.DescendantViewActions.checkDescendantViewAction
@@ -59,8 +59,9 @@ class RecyclerViewInteractionContext(
     override fun perform(vararg actions: ViewAction) {
         val groupedAction = GroupedViewAction(actions.toList())
 
-        val actionOnItem = actionOnItem<RecyclerView.ViewHolder>(
+        val actionOnItem = actionOnItem(
             itemViewMatcher = cellMatcher,
+            viewHolderType = RecyclerView.ViewHolder::class.java,
             viewAction = performDescendantAction(childMatcher, groupedAction)
         ).atPosition(position)
 
@@ -77,16 +78,18 @@ class RecyclerViewInteractionContext(
 
         if (assertion.isDoesntExistAssertion()) {
             interactionContext.perform(
-                itemDoesntExists<RecyclerView.ViewHolder>(
+                itemDoesNotExists(
                     itemViewMatcher = cellMatcher,
+                    viewHolderType = RecyclerView.ViewHolder::class.java,
                     viewAction = checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)
             )
         } else {
             interactionContext.perform(
-                actionOnItem<RecyclerView.ViewHolder>(
+                actionOnItem(
                     itemViewMatcher = cellMatcher,
+                    viewHolderType = RecyclerView.ViewHolder::class.java,
                     viewAction = checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)

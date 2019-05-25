@@ -188,7 +188,8 @@ open class ListElement(interactionContext: InteractionContext) :
         fun scrollToHolder(holder: Matcher<RecyclerView.ViewHolder>) {
             driver.perform(
                 com.avito.android.test.espresso.action.recycler.scrollToHolder(
-                    holder
+                    viewHolderMatcher = holder,
+                    viewHolderType = RecyclerView.ViewHolder::class.java
                 )
             )
         }
@@ -196,8 +197,9 @@ open class ListElement(interactionContext: InteractionContext) :
         fun clickOnHolder(holder: Matcher<RecyclerView.ViewHolder>, position: Int = 0) {
             driver.perform(
                 actionOnHolderItem(
-                    holder,
-                    ViewActions.click()
+                    viewHolderMatcher = holder,
+                    viewHolderType = RecyclerView.ViewHolder::class.java,
+                    viewAction = ViewActions.click()
                 ).atPosition(position)
             )
         }
@@ -258,7 +260,7 @@ open class ListElement(interactionContext: InteractionContext) :
         ) {
             actions.swipe(object : SwipeDirection {
                 override fun toCoordinateProvider():
-                        Pair<CoordinatesProvider, CoordinatesProvider> {
+                    Pair<CoordinatesProvider, CoordinatesProvider> {
                     return when (direction) {
                         TOP_TO_BOTTOM -> CENTER to BOTTOM_CENTER
                         BOTTOM_TO_TOP -> CENTER to TOP_CENTER

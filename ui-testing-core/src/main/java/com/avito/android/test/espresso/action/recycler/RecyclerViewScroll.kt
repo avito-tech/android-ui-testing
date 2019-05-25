@@ -91,14 +91,16 @@ fun scrollToElementInsideRecyclerViewItem(
 
 internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderMatcher: Matcher<VH>,
+    private val viewHolderType: Class<VH>,
     private val atPosition: Int = RecyclerView.NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
 
     override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
         Checks.checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
         return ScrollToViewAction(
-            viewHolderMatcher,
-            position
+            viewHolderMatcher = viewHolderMatcher,
+            viewHolderType = viewHolderType,
+            atPosition = position
         )
     }
 
@@ -126,9 +128,10 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
             val maxMatches = if (atPosition == RecyclerView.NO_POSITION) 2 else atPosition + 1
             val selectIndex = if (atPosition == RecyclerView.NO_POSITION) 0 else atPosition
             val matchedItems = itemsMatching(
-                recyclerView,
-                viewHolderMatcher,
-                maxMatches
+                recyclerView = recyclerView,
+                viewHolderMatcher = viewHolderMatcher,
+                viewHolderType = viewHolderType,
+                max = maxMatches
             )
 
             if (selectIndex >= matchedItems.size) {
@@ -164,22 +167,35 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
 }
 
 fun <VH : RecyclerView.ViewHolder> scrollToHolder(
-    viewHolderMatcher: Matcher<VH>
+    viewHolderMatcher: Matcher<VH>,
+    viewHolderType: Class<VH>
 ): RecyclerViewActions.PositionableRecyclerViewAction =
-    ScrollToViewAction(viewHolderMatcher)
+    ScrollToViewAction(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType
+    )
 
 fun <VH : RecyclerView.ViewHolder> scrollToHolder(
     viewHolderMatcher: Matcher<VH>,
+    viewHolderType: Class<VH>,
     position: Int
-): RecyclerViewActions.PositionableRecyclerViewAction {
-    return ScrollToViewAction(viewHolderMatcher, position)
-}
+): RecyclerViewActions.PositionableRecyclerViewAction =
+    ScrollToViewAction(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType,
+        atPosition = position
+    )
 
 fun <VH : RecyclerView.ViewHolder> scrollTo(
-    itemViewMatcher: Matcher<View>
+    itemViewMatcher: Matcher<View>,
+    viewHolderType: Class<VH>
 ): RecyclerViewActions.PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
-    return ScrollToViewAction(viewHolderMatcher)
+
+    return ScrollToViewAction(
+        viewHolderMatcher = viewHolderMatcher,
+        viewHolderType = viewHolderType
+    )
 }
 
 private fun RecyclerView.scrollItemAtPositionToCenter(

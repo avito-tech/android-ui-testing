@@ -2,7 +2,6 @@ package com.avito.android.ui.test
 
 import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
-import android.widget.LinearLayout
 import com.avito.android.test.action.Actions
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.page_object.ListElement

@@ -226,13 +226,10 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 }
 
 private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
-    viewHolderMatcher: Matcher<VH>,
-    viewAction: ViewAction,
+    private val viewHolderMatcher: Matcher<VH>,
+    private val viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
 ) : RecyclerViewActions.PositionableRecyclerViewAction {
-
-    private val viewHolderMatcher: Matcher<VH> = viewHolderMatcher
-    private val viewAction: ViewAction = viewAction
 
     override fun getConstraints(): Matcher<View> {
         return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())

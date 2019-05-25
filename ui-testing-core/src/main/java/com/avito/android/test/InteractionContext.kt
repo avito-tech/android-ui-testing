@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver
+import com.avito.android.test.espresso.action.GroupedViewAction
 import com.avito.android.test.espresso.action.recycler.actionOnItem
 import com.avito.android.test.espresso.action.recycler.itemDoesntExists
 import com.avito.android.test.interceptor.ActionInterceptor
@@ -56,22 +57,19 @@ class RecyclerViewInteractionContext(
 ) : InteractionContext {
 
     override fun perform(vararg actions: ViewAction) {
-        actions
-            .map { action ->
-                actionOnItem<RecyclerView.ViewHolder>(
-                    cellMatcher,
-                    performDescendantAction(childMatcher, action)
-                ).atPosition(position)
-            }
-            .map { actionOnItem ->
-                ActionInterceptor.Proxy(
-                    actionOnItem,
-                    UITestConfig.actionInterceptors
-                )
-            }
-            .forEach { interceptedActionOnItem ->
-                interactionContext.perform(interceptedActionOnItem)
-            }
+        val groupedAction = GroupedViewAction(actions.toList())
+
+        val actionOnItem = actionOnItem<RecyclerView.ViewHolder>(
+            itemViewMatcher = cellMatcher,
+            viewAction = performDescendantAction(childMatcher, groupedAction)
+        ).atPosition(position)
+
+        ActionInterceptor.Proxy(
+            source = actionOnItem,
+            interceptors = UITestConfig.actionInterceptors
+        )
+
+        interactionContext.perform(actionOnItem)
     }
 
     override fun check(assertion: ViewAssertion) {
@@ -80,16 +78,16 @@ class RecyclerViewInteractionContext(
         if (assertion.isDoesntExistAssertion()) {
             interactionContext.perform(
                 itemDoesntExists<RecyclerView.ViewHolder>(
-                    cellMatcher,
-                    checkDescendantViewAction(childMatcher, intercepted)
+                    itemViewMatcher = cellMatcher,
+                    viewAction = checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)
             )
         } else {
             interactionContext.perform(
                 actionOnItem<RecyclerView.ViewHolder>(
-                    cellMatcher,
-                    checkDescendantViewAction(childMatcher, intercepted)
+                    itemViewMatcher = cellMatcher,
+                    viewAction = checkDescendantViewAction(childMatcher, intercepted)
                 )
                     .atPosition(position)
             )
@@ -98,9 +96,9 @@ class RecyclerViewInteractionContext(
 
     override fun provideChildContext(matcher: Matcher<View>): InteractionContext =
         RecyclerViewInteractionContext(
-            interactionContext,
-            cellMatcher,
-            allOf(isDescendantOfA(childMatcher), matcher),
-            position
+            interactionContext = interactionContext,
+            cellMatcher = cellMatcher,
+            childMatcher = allOf(isDescendantOfA(childMatcher), matcher),
+            position = position
         )
 }

@@ -89,13 +89,12 @@ private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder>
 
 /**
  * Finds positions of items in [RecyclerView] which is matching given viewHolderMatcher.
- * This is similar to positionMatching(RecyclerView, Matcher<VH>), except that it returns list of
- * multiple positions if there are, rather than throwing Ambiguous view error exception.
  *
  * @param recyclerView recycler view which is hosting items.
  * @param viewHolderMatcher a
  * [`Matcher`](http://hamcrest.org/JavaHamcrest/javadoc/1.3/org/hamcrest/Matcher.html) that matches
  * an item view in [RecyclerView]
+ * @param viewHolderType as type token for checking view holder type get from view hierarchy
  * @return list of MatchedItem which contains position and description of items in recyclerView.
  * @throws RuntimeException if more than one item or item could not be found. </VH>
  */
@@ -112,6 +111,8 @@ internal fun <VH : RecyclerView.ViewHolder> itemsMatching(
 
     val matchedItems = ArrayList<MatchedItem>()
 
+    // We can avoid fake binding for already shown elements because we can get bound view holder
+    // from hierarchy.
     for (position in 0 until adapter.itemCount) {
         val viewHolderForPosition: RecyclerView.ViewHolder? = recyclerView.findViewHolderForAdapterPosition(position)
 

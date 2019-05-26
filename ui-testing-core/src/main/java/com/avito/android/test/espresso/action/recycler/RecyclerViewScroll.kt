@@ -154,7 +154,7 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
                 }
                 throw RuntimeException(ambiguousViewError.toString())
             }
-            ScrollToPositionViewAction(matchedItems[selectIndex].position).perform(
+            scrollToPosition(matchedItems[selectIndex].position).perform(
                 uiController,
                 recyclerView
             )

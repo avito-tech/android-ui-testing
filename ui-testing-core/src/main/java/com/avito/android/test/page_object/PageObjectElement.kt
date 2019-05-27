@@ -28,23 +28,23 @@ open class ViewElement(
 ) : PageObjectElement, Actions by actions {
 
     constructor(matcher: Matcher<View>, interactionContext: InteractionContext) :
-            this(
-                matcher,
-                interactionContext,
-                ActionsImpl(interactionContext),
-                ChecksImpl(interactionContext)
-            )
+        this(
+            matcher,
+            interactionContext,
+            ActionsImpl(interactionContext),
+            ChecksImpl(interactionContext)
+        )
 
     constructor(interactionContext: InteractionContext, checks: Checks) :
-            this(NoViewMatcher(), interactionContext, ActionsImpl(interactionContext), checks)
+        this(NoViewMatcher(), interactionContext, ActionsImpl(interactionContext), checks)
 
     constructor(interactionContext: InteractionContext) :
-            this(
-                NoViewMatcher(),
-                interactionContext,
-                ActionsImpl(interactionContext),
-                ChecksImpl(interactionContext)
-            )
+        this(
+            NoViewMatcher(),
+            interactionContext,
+            ActionsImpl(interactionContext),
+            ChecksImpl(interactionContext)
+        )
 
     @Deprecated("remove")
     open val interaction: ViewInteraction

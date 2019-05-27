@@ -9,7 +9,7 @@ class NoViewMatcher : TypeSafeMatcher<View>() {
     override fun describeTo(description: Description) {
         description.appendText(
             " If you see this description: you use legacy PageObjectElement constructor; " +
-                    "It is forbidden for now, because it doesn't respect interaction context"
+                "It is forbidden for now, because it doesn't respect interaction context"
         )
     }
 

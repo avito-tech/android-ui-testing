@@ -61,7 +61,7 @@ object AvitoPositionAssertions {
         assertThat(
             failDescription.toString(),
             Math.abs(location1.absoluteLocation - location2.absoluteLocation)
-                    < PIXEL_COMPARISON_TOLERANCE,
+                < PIXEL_COMPARISON_TOLERANCE,
             equalTo(true)
         )
     }

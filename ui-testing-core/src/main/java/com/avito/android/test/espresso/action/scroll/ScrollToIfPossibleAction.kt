@@ -67,7 +67,7 @@ class ScrollToIfPossibleAction : ViewAction {
                 .withCause(
                     RuntimeException(
                         "Scrolling to view was attempted, " +
-                                "but the view is not displayed"
+                            "but the view is not displayed"
                     )
                 )
                 .build()

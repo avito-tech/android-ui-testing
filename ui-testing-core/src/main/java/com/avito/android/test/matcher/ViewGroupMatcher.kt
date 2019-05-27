@@ -36,8 +36,8 @@ class ViewGroupMatcher {
                 val parent = view.parent as ViewGroup
 
                 return parentMatcher.matches(parent) &&
-                        parent.childCount > childPosition &&
-                        parent.getChildAt(childPosition) == view
+                    parent.childCount > childPosition &&
+                    parent.getChildAt(childPosition) == view
             }
         }
     }

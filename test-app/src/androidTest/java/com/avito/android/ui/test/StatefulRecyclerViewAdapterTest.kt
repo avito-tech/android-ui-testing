@@ -22,7 +22,8 @@ class StatefulRecyclerViewAdapterTest {
      * For more details look at recycler view adapter inside StatefulRecyclerViewAdapterActivity
      */
     @Test
-    fun adapterState_notAffectedByDynamicRecyclerViewElementFindingLogic_whenProductionCodeAvoidToUsingSideEffectsForFakeViewHolder() {
+    fun adapterState_notAffectedByDynamicRecyclerViewElementFindingLogic_whenProductionCodeAvoidToUsingSideEffectsForFakeViewHolder(
+    ) {
         rule.launchActivity(Intent())
 
         Screen.statefulRecyclerViewAdapterScreen.list.cellWithTitle("60").scrollTo()
@@ -89,7 +90,8 @@ class StatefulRecyclerViewAdapterTest {
     }
 
     @Test
-    fun adapterState_affectedByDynamicRecyclerViewElementFindingLogic_onlyOnceForOneClickEventWithItemsCreatedWithRecyclerViewInteractionContext() {
+    fun adapterState_affectedByDynamicRecyclerViewElementFindingLogic_onlyOnceForOneClickEventWithItemsCreatedWithRecyclerViewInteractionContext(
+    ) {
         rule.launchActivity {
             it.apply {
                 putExtra(
@@ -116,7 +118,8 @@ class StatefulRecyclerViewAdapterTest {
     }
 
     @Test
-    fun adapterState_doesNotAffectedByDynamicRecyclerViewElementFindingLogic_whenItemAlreadyOnTheScreen() {
+    fun adapterState_doesNotAffectedByDynamicRecyclerViewElementFindingLogic_whenItemAlreadyOnTheScreen(
+    ) {
         rule.launchActivity {
             it.apply {
                 putExtra(

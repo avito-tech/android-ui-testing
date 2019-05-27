@@ -159,9 +159,9 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
                 recyclerView
             )
             uiController.loopMainThreadUntilIdle()
-        } catch (e: RuntimeException) {
+        } catch (t: Throwable) {
             throw PerformException.Builder().withActionDescription(this.description)
-                .withViewDescription(HumanReadables.describe(view)).withCause(e).build()
+                .withViewDescription(HumanReadables.describe(view)).withCause(t).build()
         }
     }
 }

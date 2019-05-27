@@ -54,7 +54,6 @@ private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder>
     override fun perform(uiController: UiController, root: View) {
         val recyclerView = root as RecyclerView
         try {
-            // the above scroller has checked bounds, dupes (maybe) and brought the element into screen.
             val max = if (atPosition == NO_POSITION) 2 else atPosition + 1
             val selectIndex = if (atPosition == NO_POSITION) 0 else atPosition
             val matchedItems = itemsMatching(
@@ -76,9 +75,9 @@ private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder>
                 )
             }
             uiController.loopMainThreadUntilIdle()
-        } catch (e: RuntimeException) {
+        } catch (t: Throwable) {
             throw PerformException.Builder().withActionDescription(this.description)
-                .withViewDescription(HumanReadables.describe(root)).withCause(e).build()
+                .withViewDescription(HumanReadables.describe(root)).withCause(t).build()
         }
     }
 }
@@ -194,9 +193,9 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
                 uiController, root
             )
             uiController.loopMainThreadUntilIdle()
-        } catch (e: RuntimeException) {
+        } catch (t: Throwable) {
             throw PerformException.Builder().withActionDescription(this.description)
-                .withViewDescription(HumanReadables.describe(root)).withCause(e).build()
+                .withViewDescription(HumanReadables.describe(root)).withCause(t).build()
         }
     }
 }

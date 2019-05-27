@@ -1,5 +1,4 @@
 import com.android.build.gradle.LibraryPlugin
-import com.android.ide.common.xml.XmlFormatPreferences.defaults
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
 import groovy.lang.GroovyObject
@@ -14,28 +13,14 @@ plugins {
     id("com.github.dcendents.android-maven") version "2.1" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
     id("com.jfrog.artifactory") version "4.7.5" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.0.0.RC8"
 }
 
 group = "com.avito.ui-testing"
-version = "0.4.2-SNAPSHOT"
+version = "0.4.2"
 
 val minSdk: String by project
 val targetSdk: String by project
 val androidStudioPath: String? by project
-
-detekt {
-    version = "1.0.0.RC8"
-    defaultProfile(Action {
-        input = rootProject.projectDir.absolutePath
-        config = "$rootDir/detekt-config.yml"
-        filters = ".*/resources/.*,.*/build/.*"
-    })
-}
-
-dependencies {
-    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.version}")
-}
 
 allprojects {
     repositories {
@@ -140,7 +125,6 @@ tasks.withType<Wrapper> {
 
 val checkTask = task("check") {
     group = "verification"
-    dependsOn("detektCheck")
 }
 
 task("build") {

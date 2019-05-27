@@ -126,11 +126,11 @@ object Device {
             val notification = Notification()
             notification.init()
             val command = "am broadcast" +
-                    " -a ${notification.intent}" +
-                    " -n ${notification.packageName}/${notification.receiverName}" +
-                    " --es uri ${notification.uri}" +
-                    (notification.phash?.let { " --es phash $it" } ?: "") +
-                    " --es notification {\"body\":\"${notification.messageBody}\"}"
+                " -a ${notification.intent}" +
+                " -n ${notification.packageName}/${notification.receiverName}" +
+                " --es uri ${notification.uri}" +
+                (notification.phash?.let { " --es phash $it" } ?: "") +
+                " --es notification {\"body\":\"${notification.messageBody}\"}"
             UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
                 .executeShellCommand(command)
         }

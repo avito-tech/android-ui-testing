@@ -143,10 +143,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
                 .withCause(IllegalStateException("No view holder at position: $position"))
                 .build()
 
-        val viewAtPosition =
-            viewHolderForPosition.itemView
-                ?: throw PerformException.Builder().withActionDescription(this.toString())
-                    .withCause(IllegalStateException("No view at position: $position")).build()
+        val viewAtPosition = viewHolderForPosition.itemView
 
         viewAction.perform(uiController, viewAtPosition)
     }

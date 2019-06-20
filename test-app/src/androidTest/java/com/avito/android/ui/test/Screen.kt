@@ -35,9 +35,6 @@ object Screen {
     val recyclerInRecycler: RecyclerInRecyclerLayoutScreen
         get() = RecyclerInRecyclerLayoutScreen()
 
-    val startForResultScreen: StartForResultScreen
-        get() = StartForResultScreen()
-
     val editTextScreen: EditTextScreen
         get() = EditTextScreen()
 

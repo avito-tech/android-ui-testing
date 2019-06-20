@@ -1,9 +1,9 @@
 package com.avito.android.ui.test
 
 import android.app.Activity
-import android.support.test.espresso.contrib.ActivityResultMatchers
 import com.avito.android.test.Device
 import com.avito.android.ui.StartForResultActivity
+import com.avito.android.ui.test.matcher.ActivityResultMatchers
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test

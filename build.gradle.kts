@@ -16,16 +16,28 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.4.3-SNAPSHOT"
+version = "0.4.4-snapshot"
 
 val minSdk: String by project
 val targetSdk: String by project
 val androidStudioPath: String? by project
+val supportVersion: String by project
 
 allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("com.android.support:support-v4:$supportVersion")
+            force("com.android.support:appcompat-v7:$supportVersion")
+            force("com.android.support:recyclerview-v7:$supportVersion")
+            force("com.android.support:design:$supportVersion")
+        }
     }
 }
 

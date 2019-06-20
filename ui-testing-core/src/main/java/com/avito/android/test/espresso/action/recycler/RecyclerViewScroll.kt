@@ -3,7 +3,6 @@ package com.avito.android.test.espresso.action.recycler
 import android.support.test.espresso.PerformException
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.intent.Checks
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.util.HumanReadables
@@ -93,9 +92,9 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderMatcher: Matcher<VH>,
     private val viewHolderType: Class<VH>,
     private val atPosition: Int = RecyclerView.NO_POSITION
-) : RecyclerViewActions.PositionableRecyclerViewAction {
+) : PositionableRecyclerViewAction {
 
-    override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
+    override fun atPosition(position: Int): PositionableRecyclerViewAction {
         Checks.checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
         return ScrollToViewAction(
             viewHolderMatcher = viewHolderMatcher,
@@ -169,7 +168,7 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
 fun <VH : RecyclerView.ViewHolder> scrollToHolder(
     viewHolderMatcher: Matcher<VH>,
     viewHolderType: Class<VH>
-): RecyclerViewActions.PositionableRecyclerViewAction =
+): PositionableRecyclerViewAction =
     ScrollToViewAction(
         viewHolderMatcher = viewHolderMatcher,
         viewHolderType = viewHolderType
@@ -179,7 +178,7 @@ fun <VH : RecyclerView.ViewHolder> scrollToHolder(
     viewHolderMatcher: Matcher<VH>,
     viewHolderType: Class<VH>,
     position: Int
-): RecyclerViewActions.PositionableRecyclerViewAction =
+): PositionableRecyclerViewAction =
     ScrollToViewAction(
         viewHolderMatcher = viewHolderMatcher,
         viewHolderType = viewHolderType,
@@ -189,7 +188,7 @@ fun <VH : RecyclerView.ViewHolder> scrollToHolder(
 fun <VH : RecyclerView.ViewHolder> scrollTo(
     itemViewMatcher: Matcher<View>,
     viewHolderType: Class<VH>
-): RecyclerViewActions.PositionableRecyclerViewAction {
+): PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
 
     return ScrollToViewAction(
@@ -216,8 +215,9 @@ private fun RecyclerView.scrollItemAtPositionToCenter(
     }
 
     try {
-        layoutManager.findViewByPosition(position)
-            .scrollToScrollableParentCenterPosition()
+        layoutManager
+            ?.findViewByPosition(position)
+            ?.scrollToScrollableParentCenterPosition()
     } catch (t: Throwable) {
         // scrollToScrollableParentCenterPosition contains hard logic to find scrollable container,
         // so we're just trying to scroll to center of scrollable parent. This action is optional
@@ -245,9 +245,10 @@ private fun RecyclerView.scrollToViewInsideItemAtPositionToCenter(
     }
 
     try {
-        layoutManager.findViewByPosition(position)
-            .findViewById<View>(childId)
-            .scrollToScrollableParentCenterPosition()
+        layoutManager
+            ?.findViewByPosition(position)
+            ?.findViewById<View>(childId)
+            ?.scrollToScrollableParentCenterPosition()
     } catch (t: Throwable) {
         // scrollToScrollableParentCenterPosition contains hard logic to find scrollable container,
         // so we're just trying to scroll to center of scrollable parent. This action is optional

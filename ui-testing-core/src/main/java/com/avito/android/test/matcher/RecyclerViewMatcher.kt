@@ -14,7 +14,7 @@ class RecyclerViewMatcher {
             private var actualCount: Int? = null
 
             override fun performMatching(recyclerView: RecyclerView): Boolean {
-                actualCount = recyclerView.adapter.itemCount
+                actualCount = recyclerView.adapter!!.itemCount
 
                 return countMatcher.matches(actualCount)
             }

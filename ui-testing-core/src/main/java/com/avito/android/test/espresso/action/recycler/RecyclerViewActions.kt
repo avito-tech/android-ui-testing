@@ -3,7 +3,6 @@ package com.avito.android.test.espresso.action.recycler
 import android.support.test.espresso.PerformException
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.intent.Checks.checkArgument
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -16,17 +15,30 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 
+interface PositionableRecyclerViewAction : ViewAction {
+
+    /**
+     * Returns a new ViewAction which will cause the ViewAction to operate upon the position-th
+     * element which the matcher has selected.
+     *
+     * @param position a 0-based index into the list of matching elements within the RecyclerView.
+     * @return PositionableRecyclerViewAction a new ViewAction focused on a particular position.
+     * @throws IllegalArgumentException if position < 0.
+     */
+    fun atPosition(position: Int): PositionableRecyclerViewAction
+}
+
 private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder> constructor(
     private val viewHolderMatcher: Matcher<VH>,
     private val viewHolderType: Class<VH>,
     private val viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
-) : RecyclerViewActions.PositionableRecyclerViewAction {
+) : PositionableRecyclerViewAction {
 
     override fun getConstraints(): Matcher<View> =
         allOf<View>(isAssignableFrom(RecyclerView::class.java), isDisplayed())
 
-    override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
+    override fun atPosition(position: Int): PositionableRecyclerViewAction {
         checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
         return ViewDoesNotExistsInRecyclerCheckHack(
             viewHolderType = viewHolderType,
@@ -86,7 +98,7 @@ fun <VH : RecyclerView.ViewHolder> itemDoesNotExists(
     itemViewMatcher: Matcher<View>,
     viewHolderType: Class<VH>,
     viewAction: ViewAction
-): RecyclerViewActions.PositionableRecyclerViewAction {
+): PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
 
     return ViewDoesNotExistsInRecyclerCheckHack(
@@ -145,13 +157,13 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
     private val viewHolderType: Class<VH>,
     private val viewAction: ViewAction,
     private val atPosition: Int = NO_POSITION
-) : RecyclerViewActions.PositionableRecyclerViewAction {
+) : PositionableRecyclerViewAction {
 
     override fun getConstraints(): Matcher<View> {
         return allOf(isAssignableFrom(RecyclerView::class.java), isDisplayed())
     }
 
-    override fun atPosition(position: Int): RecyclerViewActions.PositionableRecyclerViewAction {
+    override fun atPosition(position: Int): PositionableRecyclerViewAction {
         checkArgument(position >= 0, "%d is used as an index - must be >= 0", position)
         return ActionOnItemViewAction(
             viewHolderMatcher = viewHolderMatcher,
@@ -204,7 +216,7 @@ fun <VH : RecyclerView.ViewHolder> actionOnHolderItem(
     viewHolderMatcher: Matcher<VH>,
     viewHolderType: Class<VH>,
     viewAction: ViewAction
-): RecyclerViewActions.PositionableRecyclerViewAction =
+): PositionableRecyclerViewAction =
     ActionOnItemViewAction(
         viewHolderMatcher = viewHolderMatcher,
         viewHolderType = viewHolderType,
@@ -215,7 +227,7 @@ fun <VH : RecyclerView.ViewHolder> actionOnItem(
     itemViewMatcher: Matcher<View>,
     viewHolderType: Class<VH>,
     viewAction: ViewAction
-): RecyclerViewActions.PositionableRecyclerViewAction {
+): PositionableRecyclerViewAction {
     val viewHolderMatcher = viewHolderMatcher<VH>(itemViewMatcher)
 
     return ActionOnItemViewAction(

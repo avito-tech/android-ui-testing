@@ -26,7 +26,7 @@ internal fun <VH : RecyclerView.ViewHolder> itemsMatching(
     viewHolderMatcher: Matcher<VH>,
     max: Int
 ): List<MatchedItem> {
-    val adapter = recyclerView.adapter
+    val adapter = recyclerView.adapter!!
 
     val viewHolderCache = SparseArray<VH>()
     val shownViewHolders = SparseArray<VH>()

@@ -14,6 +14,9 @@ object Screen {
     val swipeRefresh: SwipeRefreshScreen
         get() = SwipeRefreshScreen()
 
+    val buttons: ButtonsScreen
+        get() = ButtonsScreen()
+
     val appBarScreen: AppBarScreen
         get() = AppBarScreen()
 

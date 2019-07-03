@@ -24,8 +24,8 @@
         <activity
             android:name=".EditTextActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".StartForResultActivity" />
+        <activity android:name=".ButtonsActivity" />
         <activity android:name=".RecyclerWithLongItemsActivity" />
-        <activity android:name=".StatefulRecyclerViewAdapterActivity"/>
+        <activity android:name=".StatefulRecyclerViewAdapterActivity" />
     </application>
 </manifest>

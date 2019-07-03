@@ -12,14 +12,14 @@ class ActionsImpl(private val driver: ActionsDriver) : Actions {
     override fun click() {
         driver.perform(
             EspressoActions.scrollIfPossible(),
-            ViewActions.click()
+            ActionOnEnabledElement(ViewActions.click())
         )
     }
 
     override fun longClick() {
         driver.perform(
             EspressoActions.scrollIfPossible(),
-            ViewActions.longClick()
+            ActionOnEnabledElement(ViewActions.longClick())
         )
     }
 

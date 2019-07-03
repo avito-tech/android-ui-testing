@@ -11,7 +11,7 @@ class ActionOnEnabledElement(
     private val action: ViewAction
 ) : ViewAction {
 
-    override fun getDescription(): String = "Action: ${action.description} on enabled element"
+    override fun getDescription(): String = "${action.description} on enabled element"
 
     override fun getConstraints(): Matcher<View> = Matchers.allOf(
         ViewMatchers.isEnabled(),

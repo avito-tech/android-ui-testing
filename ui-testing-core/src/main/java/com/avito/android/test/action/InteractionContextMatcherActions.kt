@@ -36,7 +36,7 @@ class InteractionContextMatcherActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    ViewActions.click()
+                    ActionOnEnabledElement(ViewActions.click())
                 )
             )
                 .atPosition(0)
@@ -50,7 +50,7 @@ class InteractionContextMatcherActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    ViewActions.longClick()
+                    ActionOnEnabledElement(ViewActions.longClick())
                 )
             )
                 .atPosition(0)

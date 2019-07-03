@@ -32,7 +32,10 @@ class InteractionContextPositionActions(
         interactionContext.perform(
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 position,
-                DescendantViewActions.performDescendantAction(childMatcher, ViewActions.click())
+                DescendantViewActions.performDescendantAction(
+                    childMatcher,
+                    ActionOnEnabledElement(ViewActions.click())
+                )
             )
         )
     }
@@ -41,7 +44,10 @@ class InteractionContextPositionActions(
         interactionContext.perform(
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 position,
-                DescendantViewActions.performDescendantAction(childMatcher, ViewActions.longClick())
+                DescendantViewActions.performDescendantAction(
+                    childMatcher,
+                    ActionOnEnabledElement(ViewActions.longClick())
+                )
             )
         )
     }

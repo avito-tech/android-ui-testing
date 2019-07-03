@@ -24,6 +24,7 @@ import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.RecyclerViewInteractionContext
 import com.avito.android.test.SimpleInteractionContext
+import com.avito.android.test.action.ActionOnEnabledElement
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
@@ -199,7 +200,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 actionOnHolderItem(
                     viewHolderMatcher = holder,
                     viewHolderType = RecyclerView.ViewHolder::class.java,
-                    viewAction = ViewActions.click()
+                    viewAction = ActionOnEnabledElement(ViewActions.click())
                 ).atPosition(position)
             )
         }

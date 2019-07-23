@@ -28,6 +28,10 @@ object UITestConfig {
      */
     var waiterTimeoutMs: Long = TimeUnit.SECONDS.toMillis(2)
 
+    var activityLaunchTimeoutMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+
+    var openNotificationTimeoutMilliseconds: Long = TimeUnit.SECONDS.toMillis(30)
+
     /**
      * Exceptions to be waited for; any unregistered exceptions will be propagated
      */

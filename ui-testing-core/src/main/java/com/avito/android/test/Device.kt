@@ -24,12 +24,10 @@ import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.not
 
 /**
- * Abstraction of android smartphone from user's perspective
+ * Abstraction of android phone from user's perspective
  * Contains actions and checks not associated with apps
  */
 object Device {
-
-    private const val DEFAULT_LAUNCH_TIMEOUT_MS = 10000L
 
     private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
@@ -77,16 +75,26 @@ object Device {
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Clear out any previous instances
     }
 
-    fun waitForLauncher(timeout: Long = DEFAULT_LAUNCH_TIMEOUT_MS) {
+    fun waitForLauncher(timeout: Long = UITestConfig.activityLaunchTimeoutMilliseconds) {
         with(uiDevice) {
-            assertThat(launcherPackageName, CoreMatchers.notNullValue())
-            assertTrue(wait(Until.hasObject(By.pkg(launcherPackageName).depth(0)), timeout))
+            assertThat(
+                "Launcher package name must be not null",
+                launcherPackageName,
+                CoreMatchers.notNullValue()
+            )
+            assertTrue(
+                "Waiting for launcher screen was exceeded timeout: $timeout milliseconds",
+                wait(Until.hasObject(By.pkg(launcherPackageName).depth(0)), timeout)
+            )
         }
     }
 
-    fun waitForAppLaunchAndReady(appContext: Context, timeout: Long = DEFAULT_LAUNCH_TIMEOUT_MS) {
+    fun waitForAppLaunchAndReady(appContext: Context, timeout: Long = UITestConfig.activityLaunchTimeoutMilliseconds) {
         with(uiDevice) {
-            assertTrue(wait(Until.hasObject(By.pkg(appContext.packageName).depth(0)), timeout))
+            assertTrue(
+                "Waiting for application launching was exceeded timeout: $timeout milliseconds",
+                wait(Until.hasObject(By.pkg(appContext.packageName).depth(0)), timeout)
+            )
         }
     }
 
@@ -111,12 +119,19 @@ object Device {
 
     object Push {
 
-        fun openNotification(expectedTitle: String, timeoutMillis: Long = 30_000) {
+        fun openNotification(expectedTitle: String, timeoutMillis: Long = UITestConfig.openNotificationTimeoutMilliseconds) {
             val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
             device.openNotification()
-            assertTrue(device.wait(Until.hasObject(By.text(expectedTitle)), timeoutMillis))
+            assertTrue(
+                "Waiting for notification with title: $expectedTitle was exceeded timeout: $timeoutMillis milliseconds",
+                device.wait(Until.hasObject(By.text(expectedTitle)), timeoutMillis)
+            )
             val titleObject = device.findObject(By.text(expectedTitle))
-            assertEquals(expectedTitle, titleObject.text)
+            assertEquals(
+                "Notification has incorrect title",
+                expectedTitle,
+                titleObject.text
+            )
             // it is possible to add a sleep here
             // to let some time to item to be synchronized with device after reject, message, etc
             titleObject.click()
@@ -142,7 +157,11 @@ object Device {
             var uri: String = ""
             var messageBody: String = ""
                 set(value) {
-                    assertThat(value, not(containsString(" ")))
+                    assertThat(
+                        "Value must not contains spaces",
+                        value,
+                        not(containsString(" "))
+                    )
                     field = value
                 }
             var phash: String? = null

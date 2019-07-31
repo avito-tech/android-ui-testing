@@ -44,6 +44,10 @@ object UITestConfig {
         PerformException::class.java
     )
 
+    /**
+     * Because of clicks implementation inside Espresso sometimes clicks can be interpreted
+     * as long clicks. Here we have several options to handle it.
+     */
     sealed class ClickRollbackPolicy {
         object DoNothing : ClickRollbackPolicy()
         object TryOneMoreClick : ClickRollbackPolicy()

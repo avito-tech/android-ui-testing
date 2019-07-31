@@ -5,7 +5,6 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.PrecisionDescriber
 import android.support.test.espresso.action.SwipeDirection
 import android.support.test.espresso.action.Swiper
-import android.support.test.espresso.action.ViewActions
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.espresso.EspressoActions
@@ -40,7 +39,7 @@ class OnDescendantPositionListItemActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    ActionOnEnabledElement(ViewActions.click())
+                    LibraryViewActions.click()
                 )
             )
         )
@@ -52,7 +51,7 @@ class OnDescendantPositionListItemActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    ActionOnEnabledElement(ViewActions.longClick())
+                    LibraryViewActions.longClick()
                 )
             )
         )

@@ -32,6 +32,8 @@ object UITestConfig {
 
     var openNotificationTimeoutMilliseconds: Long = TimeUnit.SECONDS.toMillis(30)
 
+    var clickRollbackPolicy: ClickRollbackPolicy = ClickRollbackPolicy.TryOneMoreClick
+
     /**
      * Exceptions to be waited for; any unregistered exceptions will be propagated
      */
@@ -41,4 +43,9 @@ object UITestConfig {
         AssertionError::class.java,
         PerformException::class.java
     )
+
+    sealed class ClickRollbackPolicy {
+        object DoNothing : ClickRollbackPolicy()
+        object TryOneMoreClick : ClickRollbackPolicy()
+    }
 }

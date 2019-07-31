@@ -3,7 +3,6 @@ package com.avito.android.test.action
 import android.support.test.espresso.action.PrecisionDescriber
 import android.support.test.espresso.action.SwipeDirection
 import android.support.test.espresso.action.Swiper
-import android.support.test.espresso.action.ViewActions
 import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.TextViewReadAction
 
@@ -12,14 +11,14 @@ class ActionsImpl(private val driver: ActionsDriver) : Actions {
     override fun click() {
         driver.perform(
             EspressoActions.scrollIfPossible(),
-            ActionOnEnabledElement(ViewActions.click())
+            LibraryViewActions.click()
         )
     }
 
     override fun longClick() {
         driver.perform(
             EspressoActions.scrollIfPossible(),
-            ActionOnEnabledElement(ViewActions.longClick())
+            LibraryViewActions.longClick()
         )
     }
 

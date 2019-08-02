@@ -32,13 +32,26 @@ object UITestConfig {
 
     var openNotificationTimeoutMilliseconds: Long = TimeUnit.SECONDS.toMillis(30)
 
+    var clickRollbackPolicy: ClickRollbackPolicy = ClickRollbackPolicy.Fail
+
     /**
      * Exceptions to be waited for; any unregistered exceptions will be propagated
      */
     var waiterAllowedExceptions = setOf(
         PerformException::class.java,
         NoMatchingViewException::class.java,
-        AssertionError::class.java,
-        PerformException::class.java
+        AssertionError::class.java
     )
+
+    /**
+     * Because of clicks implementation inside Espresso sometimes clicks can be interpreted
+     * as long clicks. Here we have several options to handle it.
+     *
+     * https://stackoverflow.com/questions/32330671/android-espresso-performs-longclick-instead-of-click
+     */
+    sealed class ClickRollbackPolicy {
+        object DoNothing : ClickRollbackPolicy()
+        object TryOneMoreClick : ClickRollbackPolicy()
+        object Fail : ClickRollbackPolicy()
+    }
 }

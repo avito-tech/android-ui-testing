@@ -16,7 +16,6 @@ import android.support.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
 import android.support.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
 import android.support.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
 import android.support.test.espresso.action.Swiper
-import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.v7.widget.RecyclerView
@@ -24,10 +23,10 @@ import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.RecyclerViewInteractionContext
 import com.avito.android.test.SimpleInteractionContext
-import com.avito.android.test.action.ActionOnEnabledElement
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
+import com.avito.android.test.action.LibraryViewActions
 import com.avito.android.test.action.InteractionContextMatcherActions
 import com.avito.android.test.action.InteractionContextPositionActions
 import com.avito.android.test.checks.Checks
@@ -200,7 +199,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 actionOnHolderItem(
                     viewHolderMatcher = holder,
                     viewHolderType = RecyclerView.ViewHolder::class.java,
-                    viewAction = ActionOnEnabledElement(ViewActions.click())
+                    viewAction = LibraryViewActions.click()
                 ).atPosition(position)
             )
         }

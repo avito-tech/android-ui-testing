@@ -11,7 +11,7 @@ import org.hamcrest.core.IsAnything
 
 internal object LibraryViewActions {
 
-    fun click(): ViewAction = when (UITestConfig.clickRollbackPolicy) {
+    fun click(policy: UITestConfig.ClickRollbackPolicy = UITestConfig.clickRollbackPolicy): ViewAction = when (policy) {
         is UITestConfig.ClickRollbackPolicy.DoNothing -> ActionOnEnabledElement(
             ViewActions.click()
         )

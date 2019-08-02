@@ -46,6 +46,8 @@ object UITestConfig {
     /**
      * Because of clicks implementation inside Espresso sometimes clicks can be interpreted
      * as long clicks. Here we have several options to handle it.
+     *
+     * https://stackoverflow.com/questions/32330671/android-espresso-performs-longclick-instead-of-click
      */
     sealed class ClickRollbackPolicy {
         object DoNothing : ClickRollbackPolicy()

@@ -3,31 +3,31 @@ package com.avito.android.test.action
 import android.support.test.espresso.action.PrecisionDescriber
 import android.support.test.espresso.action.SwipeDirection
 import android.support.test.espresso.action.Swiper
-import com.avito.android.test.espresso.LibraryViewActions
+import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.TextViewReadAction
 
 class ActionsImpl(private val driver: ActionsDriver) : Actions {
 
     override fun click() {
         driver.perform(
-            LibraryViewActions.scrollIfPossible(),
-            LibraryViewActions.click()
+            EspressoActions.scrollIfPossible(),
+            EspressoActions.click()
         )
     }
 
     override fun longClick() {
         driver.perform(
-            LibraryViewActions.scrollIfPossible(),
-            LibraryViewActions.longClick()
+            EspressoActions.scrollIfPossible(),
+            EspressoActions.longClick()
         )
     }
 
     override fun scrollTo() {
-        driver.perform(LibraryViewActions.scrollIfPossible())
+        driver.perform(EspressoActions.scrollIfPossible())
     }
 
     override fun swipe(direction: SwipeDirection, speed: Swiper, precision: PrecisionDescriber) {
-        driver.perform(LibraryViewActions.swipe(direction, speed, precision))
+        driver.perform(EspressoActions.swipe(direction, speed, precision))
 
         // FIXME
         Thread.sleep(1000)

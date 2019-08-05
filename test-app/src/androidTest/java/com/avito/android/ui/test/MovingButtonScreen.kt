@@ -7,8 +7,8 @@ import com.avito.android.ui.R
 
 class MovingButtonScreen : PageObject {
 
-    val movedButton = ViewElement(ViewMatchers.withId(R.id.moved_button))
+    val movedButton = ViewElement(ViewMatchers.withId(R.id.moving_button))
 
     val movedButtonClickIndicatorView =
-        ViewElement(ViewMatchers.withId(R.id.moved_button_clicked_text_view))
+        ViewElement(ViewMatchers.withId(R.id.moving_button_clicked_text_view))
 }

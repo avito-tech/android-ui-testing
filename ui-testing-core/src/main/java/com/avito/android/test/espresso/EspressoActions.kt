@@ -22,7 +22,7 @@ import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 import org.hamcrest.Matcher
 import org.hamcrest.core.IsAnything
 
-object LibraryViewActions {
+object EspressoActions {
 
     /**
      * Devices support only latin symbols by default

@@ -33,7 +33,7 @@ import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.checks.InteractionContextMatcherChecksDriver
 import com.avito.android.test.checks.InteractionContextPositionChecksDriver
-import com.avito.android.test.espresso.LibraryViewActions
+import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.RecyclerSpanCountAction
 import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction
@@ -199,7 +199,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 actionOnHolderItem(
                     viewHolderMatcher = holder,
                     viewHolderType = RecyclerView.ViewHolder::class.java,
-                    viewAction = LibraryViewActions.click()
+                    viewAction = EspressoActions.click()
                 ).atPosition(position)
             )
         }

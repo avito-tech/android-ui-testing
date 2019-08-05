@@ -18,10 +18,10 @@ class MovingButtonActivity : AppCompatActivity() {
         setContentView(R.layout.activity_moving_button)
 
         val deathZone = findViewById<View>(R.id.death_zone)
-        val movedButton = findViewById<Button>(R.id.moved_button)
-        val movedButtonClickedIndicator = findViewById<TextView>(R.id.moved_button_clicked_text_view)
+        val movingButton = findViewById<Button>(R.id.moving_button)
+        val movingButtonClickedIndicator = findViewById<TextView>(R.id.moving_button_clicked_text_view)
 
-        deathZone.setOnClickListener { throw RuntimeException("Clicked to a death zone") }
+        deathZone.setOnClickListener { throw RuntimeException("Clicked on a death zone") }
 
         thread {
             val fps = 30
@@ -31,11 +31,11 @@ class MovingButtonActivity : AppCompatActivity() {
             (0..iterationsCount)
                 .forEach { iterationNumber ->
                     runOnUiThread {
-                        val newX = (movedButton.x + cos(iterationNumber.toDouble()) * radius).toFloat()
-                        val newY = (movedButton.y + sin(iterationNumber.toDouble()) * radius).toFloat()
+                        val newX = (movingButton.x + cos(iterationNumber.toDouble()) * radius).toFloat()
+                        val newY = (movingButton.y + sin(iterationNumber.toDouble()) * radius).toFloat()
 
-                        movedButton.x = newX
-                        movedButton.y = newY
+                        movingButton.x = newX
+                        movingButton.y = newY
                     }
 
                     try {
@@ -45,13 +45,13 @@ class MovingButtonActivity : AppCompatActivity() {
                 }
         }
 
-        movedButton.setOnClickListener {
-            movedButtonClickedIndicator.toggleVisibility()
+        movingButton.setOnClickListener {
+            movingButtonClickedIndicator.toggleVisibility()
 
             it.postDelayed(
                 {
                     runOnUiThread {
-                        movedButtonClickedIndicator.toggleVisibility()
+                        movingButtonClickedIndicator.toggleVisibility()
                     }
                 },
                 TimeUnit.SECONDS.toMillis(3)

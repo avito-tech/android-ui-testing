@@ -65,12 +65,12 @@ object UITestConfig {
          * Use clicks and long clicks implementation without IPC.
          *
          * Advantages:
-         *  - Can click to moving objects (espresso has problems with clicking to moving objects, because
+         *  - Can click on moving objects (espresso has problems with clicking on moving objects, because
          *    it takes some time to touch after coordinates calculating).
-         *  - Doesn't have problems with clicks that can be interpreted as long clicks.
+         *  - Doesn't have "misinterpret clicks as long clicks" problem.
          *
          * Disadvantages:
-         *  - Can click through any system elements on the screen. It applies clicks directly to root
+         *  - Can click through any system elements on the screen. It applies clicks directly on root
          *    view of our application. Because of it, crash or permission dialogs can be ignored by
          *    tests.
          *  - Can click through separate decor view of our application. Sometimes we have multiple

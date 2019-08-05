@@ -14,7 +14,7 @@ import com.avito.android.test.action.ActionsImpl
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
-import com.avito.android.test.espresso.LibraryViewActions
+import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.matcher.IsRefreshingMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.core.Is.`is`
@@ -66,7 +66,7 @@ class SwipeRefreshChecksImpl(private val driver: ChecksDriver) : SwipeRefreshChe
  * */
 class SwipeRefreshTolerantAction : ViewAction {
 
-    val action = LibraryViewActions.swipe(SwipeDirections.TOP_TO_BOTTOM)
+    val action = EspressoActions.swipe(SwipeDirections.TOP_TO_BOTTOM)
 
     override fun getDescription() =
         "SwipeRefreshLayout performing ViewAction: ${action.description} " +

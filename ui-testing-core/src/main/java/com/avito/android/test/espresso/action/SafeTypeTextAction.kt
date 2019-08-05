@@ -10,7 +10,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
 /**
- * Don't use directly, only via LibraryViewActions
+ * Don't use directly, only via EspressoActions
  */
 class SafeTypeTextAction(
     private val stringToBeTyped: String,

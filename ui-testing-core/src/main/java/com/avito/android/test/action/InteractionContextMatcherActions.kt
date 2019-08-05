@@ -6,7 +6,7 @@ import android.support.test.espresso.action.Swiper
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.avito.android.test.InteractionContext
-import com.avito.android.test.espresso.LibraryViewActions
+import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.TextViewReadAction
 import com.avito.android.test.espresso.action.recycler.actionOnItem
 import com.avito.android.test.espresso.action.recycler.scrollTo
@@ -35,7 +35,7 @@ class InteractionContextMatcherActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.click()
+                    EspressoActions.click()
                 )
             )
                 .atPosition(0)
@@ -49,7 +49,7 @@ class InteractionContextMatcherActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.longClick()
+                    EspressoActions.longClick()
                 )
             )
                 .atPosition(0)
@@ -63,7 +63,7 @@ class InteractionContextMatcherActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.swipe(direction, speed, precision)
+                    EspressoActions.swipe(direction, speed, precision)
                 )
             )
                 .atPosition(0)

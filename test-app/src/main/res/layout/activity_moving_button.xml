@@ -10,14 +10,14 @@
         android:background="@color/black" />
 
     <Button
-        android:id="@+id/moved_button"
+        android:id="@+id/moving_button"
         android:layout_width="4dp"
         android:layout_height="4dp"
         android:layout_gravity="center"
         android:background="@color/red" />
 
     <TextView
-        android:id="@+id/moved_button_clicked_text_view"
+        android:id="@+id/moving_button_clicked_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

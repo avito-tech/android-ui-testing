@@ -3,7 +3,7 @@ package com.avito.android.test.page_object
 import android.support.design.widget.Snackbar
 import android.support.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
 import android.support.test.espresso.matcher.ViewMatchers
-import com.avito.android.test.espresso.EspressoActions
+import com.avito.android.test.espresso.LibraryViewActions
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
@@ -41,5 +41,5 @@ class SnackbarElement(textMatcher: Matcher<String>? = null) : ViewElement(
         )
     )
 
-    fun swipeOut() = EspressoActions.swipe(RIGHT_TO_LEFT)
+    fun swipeOut() = LibraryViewActions.swipe(RIGHT_TO_LEFT)
 }

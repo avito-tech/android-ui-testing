@@ -9,7 +9,7 @@ import android.support.test.runner.permission.PermissionRequester
 import android.support.test.uiautomator.By
 import android.support.test.uiautomator.UiDevice
 import android.support.test.uiautomator.Until
-import com.avito.android.test.espresso.EspressoActions
+import com.avito.android.test.espresso.LibraryViewActions
 import com.avito.android.test.espresso.action.OrientationChangeAction
 import com.avito.android.test.internal.Cache
 import com.avito.android.test.internal.SQLiteDB
@@ -67,7 +67,7 @@ object Device {
      * todo consider remove
      */
     fun waitForIdle() {
-        rootElement.interaction.perform(EspressoActions.waitForIdle())
+        rootElement.interaction.perform(LibraryViewActions.waitForIdle())
     }
 
     fun getLauncherIntentForAppUnderTest(testContext: Context, appContext: Context): Intent {

@@ -17,6 +17,9 @@ object Screen {
     val buttons: ButtonsScreen
         get() = ButtonsScreen()
 
+    val movingButton: MovingButtonScreen
+        get() = MovingButtonScreen()
+
     val appBarScreen: AppBarScreen
         get() = AppBarScreen()
 

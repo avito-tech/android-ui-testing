@@ -26,7 +26,6 @@ import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
-import com.avito.android.test.action.LibraryViewActions
 import com.avito.android.test.action.InteractionContextMatcherActions
 import com.avito.android.test.action.InteractionContextPositionActions
 import com.avito.android.test.checks.Checks
@@ -34,6 +33,7 @@ import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.checks.InteractionContextMatcherChecksDriver
 import com.avito.android.test.checks.InteractionContextPositionChecksDriver
+import com.avito.android.test.espresso.LibraryViewActions
 import com.avito.android.test.espresso.action.RecyclerSpanCountAction
 import com.avito.android.test.espresso.action.RecyclerViewHorizontalOffsetAction
 import com.avito.android.test.espresso.action.RecyclerViewItemsCountAction

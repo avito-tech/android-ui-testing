@@ -6,6 +6,7 @@ import android.support.test.espresso.action.CoordinatesProvider
 import android.support.test.espresso.action.GeneralLocation
 import android.support.test.espresso.action.PrecisionDescriber
 import android.support.test.espresso.action.Press
+import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import android.view.MotionEvent
 import android.view.View
@@ -70,7 +71,7 @@ class ClickAction(
                 )
                 rootView.dispatchTouchEvent(downEvent)
 
-                uiController.loopMainThreadForAtLeast(ViewConfiguration.getPressedStateDuration().toLong())
+                uiController.loopMainThreadForAtLeast(ViewConfiguration.getTapTimeout().toLong())
 
                 val upEvent = obtainEvent(
                     coordinates = coordinates,
@@ -117,14 +118,18 @@ class ClickAction(
     }
 }
 
-internal fun inProcessClickAction(): ViewAction = ClickAction(
-    coordinatesProvider = GeneralLocation.VISIBLE_CENTER,
-    precisionDescriber = Press.FINGER,
-    event = ClickAction.Event.ClickEvent
+internal fun inProcessClickAction(): ViewAction = actionWithAssertions(
+    ClickAction(
+        coordinatesProvider = GeneralLocation.VISIBLE_CENTER,
+        precisionDescriber = Press.FINGER,
+        event = ClickAction.Event.ClickEvent
+    )
 )
 
-internal fun inProcessLongClickAction(): ViewAction = ClickAction(
-    coordinatesProvider = GeneralLocation.VISIBLE_CENTER,
-    precisionDescriber = Press.FINGER,
-    event = ClickAction.Event.LongClickEvent
+internal fun inProcessLongClickAction(): ViewAction = actionWithAssertions(
+    ClickAction(
+        coordinatesProvider = GeneralLocation.VISIBLE_CENTER,
+        precisionDescriber = Press.FINGER,
+        event = ClickAction.Event.LongClickEvent
+    )
 )

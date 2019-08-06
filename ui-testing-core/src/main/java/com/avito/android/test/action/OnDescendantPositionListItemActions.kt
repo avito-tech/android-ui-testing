@@ -39,7 +39,7 @@ class OnDescendantPositionListItemActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.click()
+                    EspressoActions.click()
                 )
             )
         )
@@ -51,7 +51,7 @@ class OnDescendantPositionListItemActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.longClick()
+                    EspressoActions.longClick()
                 )
             )
         )

@@ -8,12 +8,13 @@ import android.support.test.espresso.ViewInteraction
 /**
  * This method also exposed to the client, for hacking purposes
  */
-fun waitFor(
+fun <T> waitFor(
     frequencyMs: Long = UITestConfig.waiterFrequencyMs,
     timeoutMs: Long = UITestConfig.waiterTimeoutMs,
     allowedExceptions: Set<Class<out Throwable>> = UITestConfig.waiterAllowedExceptions,
-    action: () -> Unit
-) {
+    sleepAction: (frequencyMs: Long) -> Unit = { Thread.sleep(it) },
+    action: () -> T
+): T {
     var timer = 0L
     var caughtAllowedException: Throwable
 
@@ -21,14 +22,13 @@ fun waitFor(
 
     do {
         try {
-            action.invoke()
-            return
+            return action.invoke()
         } catch (e: Throwable) {
             val isExceptionAllowed =
                 allowedExceptions.find { it.isAssignableFrom(e.javaClass) } != null
             when {
                 isExceptionAllowed -> {
-                    Thread.sleep(frequencyMs)
+                    sleepAction(frequencyMs)
                     timer += frequencyMs
                     caughtAllowedException = e
                 }

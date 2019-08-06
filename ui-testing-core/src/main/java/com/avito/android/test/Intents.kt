@@ -32,6 +32,21 @@ object Intents {
             Intents.intended(Matchers.allOf(IntentMatchers.hasAction(action), *additionalMatchers))
         }
 
+        fun activityIntended(className: String) = waitFor {
+            Intents.intended(IntentMatchers.hasComponent(className))
+        }
+
+        inline fun <reified T : Activity> activityIntended(
+            vararg additionalMatchers: Matcher<Intent>
+        ) = waitFor {
+            Intents.intended(
+                Matchers.allOf(
+                    IntentMatchers.hasComponent(T::class.java.name),
+                    *additionalMatchers
+                )
+            )
+        }
+
         fun actionIntended(action: String, key: String, value: String) {
             actionIntended(action, IntentMatchers.hasExtra(key, value))
         }
@@ -43,10 +58,6 @@ object Intents {
             )
         }
 
-        fun activityIntended(className: String) {
-            Intents.intended(IntentMatchers.hasComponent(className))
-        }
-
         inline fun <reified T : Activity> activityIntendedWithUriParam(
             param: String,
             value: String
@@ -54,19 +65,6 @@ object Intents {
             activityIntended<T>(IntentMatchers.hasData(UriMatchers.hasParamWithValue(param, value)))
         }
 
-        inline fun <reified T : Activity> activityIntended(
-            vararg additionalMatchers: Matcher<Intent>
-        ) {
-            Intents.intended(
-                Matchers.allOf(
-                    IntentMatchers.hasComponent(T::class.java.name),
-                    *additionalMatchers
-                )
-            )
-        }
-
-        // todo bad naming, maybe expose args?
-        @Suppress("FunctionMaxLength")
         inline fun <reified T : Activity> activityIntendedWithoutExtraParam(param: String) {
             activityIntended<T>(Matchers.not(IntentMatchers.hasExtraWithKey(param)))
         }

@@ -43,7 +43,7 @@ class OnDescendantMatcherListItemActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.click()
+                    EspressoActions.click()
                 )
             )
                 .atPosition(0)
@@ -57,7 +57,7 @@ class OnDescendantMatcherListItemActions(
                 viewHolderType = RecyclerView.ViewHolder::class.java,
                 viewAction = DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.longClick()
+                    EspressoActions.longClick()
                 )
             )
                 .atPosition(0)

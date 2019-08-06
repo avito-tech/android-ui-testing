@@ -33,7 +33,7 @@ class InteractionContextPositionActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.click()
+                    EspressoActions.click()
                 )
             )
         )
@@ -45,7 +45,7 @@ class InteractionContextPositionActions(
                 position,
                 DescendantViewActions.performDescendantAction(
                     childMatcher,
-                    LibraryViewActions.longClick()
+                    EspressoActions.longClick()
                 )
             )
         )

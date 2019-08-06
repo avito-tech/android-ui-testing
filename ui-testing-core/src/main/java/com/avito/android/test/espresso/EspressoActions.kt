@@ -93,7 +93,6 @@ object EspressoActions {
                                 .withViewDescription("view")
                                 .build()
                         }
-
                     }
                 )
             }

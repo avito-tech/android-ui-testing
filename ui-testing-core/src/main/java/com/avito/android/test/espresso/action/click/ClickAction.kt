@@ -11,6 +11,7 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.webkit.WebView
 import org.hamcrest.Matcher
 
 class ClickAction(
@@ -37,6 +38,7 @@ class ClickAction(
 
         event.perform(
             uiController = uiController,
+            view = view,
             rootView = rootView,
             coordinates = relativeCoordinates,
             precision = precision
@@ -47,6 +49,7 @@ class ClickAction(
 
         abstract fun perform(
             uiController: UiController,
+            view: View,
             rootView: View,
             coordinates: FloatArray,
             precision: FloatArray
@@ -60,6 +63,7 @@ class ClickAction(
 
             override fun perform(
                 uiController: UiController,
+                view: View,
                 rootView: View,
                 coordinates: FloatArray,
                 precision: FloatArray
@@ -82,6 +86,15 @@ class ClickAction(
 
                 downEvent.recycle()
                 upEvent.recycle()
+
+                uiController.loopMainThreadForAtLeast(ViewConfiguration.getPressedStateDuration().toLong())
+
+                /**
+                 * according with [android.support.test.espresso.action.GeneralClickAction.perform]
+                 */
+                if (view is WebView) {
+                    uiController.loopMainThreadForAtLeast(ViewConfiguration.getDoubleTapTimeout().toLong())
+                }
             }
         }
 
@@ -91,6 +104,7 @@ class ClickAction(
 
             override fun perform(
                 uiController: UiController,
+                view: View,
                 rootView: View,
                 coordinates: FloatArray,
                 precision: FloatArray
@@ -113,6 +127,15 @@ class ClickAction(
 
                 downEvent.recycle()
                 upEvent.recycle()
+
+                uiController.loopMainThreadForAtLeast(ViewConfiguration.getPressedStateDuration().toLong())
+
+                /**
+                 * according with [android.support.test.espresso.action.GeneralClickAction.perform]
+                 */
+                if (view is WebView) {
+                    uiController.loopMainThreadForAtLeast(ViewConfiguration.getDoubleTapTimeout().toLong())
+                }
             }
         }
     }

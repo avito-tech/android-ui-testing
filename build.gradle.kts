@@ -57,7 +57,7 @@ subprojects {
         }
 
         val sourcesJarTask = tasks.create<Jar>("sourcesJar") {
-            classifier = "sources"
+            archiveClassifier.set("sources")
             from(this@withType.extension.sourceSets["main"].java.srcDirs)
         }
 
@@ -131,7 +131,7 @@ subprojects {
 }
 
 tasks.withType<Wrapper> {
-    gradleVersion = "5.2.1"
+    gradleVersion = "5.5.1"
     distributionType = Wrapper.DistributionType.BIN
 }
 

@@ -9,11 +9,13 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThan
 
-class FloatingViewElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext, checks = FloatingViewChecksImpl(interactionContext))
+class FloatingViewElement(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext, checks = FloatingViewChecksImpl(interactionContext))
 
-class FloatingViewChecksImpl(private val interactionContext: InteractionContext) :
-    Checks by ChecksImpl(interactionContext) {
+class FloatingViewChecksImpl(
+    private val interactionContext: InteractionContext
+) : Checks by ChecksImpl(interactionContext) {
 
     override fun isDisplayed() {
         assertThat(translationY, lessThan(height.toFloat()))

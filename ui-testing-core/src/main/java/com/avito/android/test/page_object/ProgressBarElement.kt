@@ -11,8 +11,9 @@ import com.avito.android.test.checks.ChecksImpl
 import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
-class ProgressBarElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+class ProgressBarElement(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -24,7 +25,9 @@ interface ProgressBarChecks : Checks {
     fun withProgress(progress: Int)
 }
 
-class ProgressBarChecksImpl(private val driver: ChecksDriver) : ProgressBarChecks,
+class ProgressBarChecksImpl(
+    private val driver: ChecksDriver
+) : ProgressBarChecks,
     Checks by ChecksImpl(driver) {
 
     override fun withProgress(progress: Int) {

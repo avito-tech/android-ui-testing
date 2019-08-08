@@ -18,7 +18,9 @@ import com.avito.android.test.matcher.TabLayoutSelectMatcher
 import com.avito.android.test.matcher.TabLayoutTabsCountMatcher
 import org.hamcrest.Matcher
 
-class TabLayoutElement(interactionContext: InteractionContext) :
+class TabLayoutElement(
+    interactionContext: InteractionContext
+) :
     ViewElement(interactionContext),
     TabLayoutActions by TabLayoutActionsImpl(interactionContext) {
 

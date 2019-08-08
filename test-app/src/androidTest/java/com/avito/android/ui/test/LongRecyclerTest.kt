@@ -24,9 +24,9 @@ class LongRecyclerTest {
             )
         )
 
-        Screen.longRecycler.actions.smoothScrollToPosition(itemsCount)
+        Screen.longRecycler.list.actions.smoothScrollToPosition(itemsCount)
         Thread.sleep(1000L)
 
-        Screen.longRecycler.checks.firstVisiblePosition(greaterThan(400))
+        Screen.longRecycler.list.checks.firstVisiblePosition(greaterThan(400))
     }
 }

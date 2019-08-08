@@ -12,7 +12,7 @@ class GoogleMapFragmentElement(
         id = id,
         timeoutMs = checksTimeoutMs
     )
-) : PageObject, GoogleMapActions by GoogleMapActionsImpl(
+) : PageObject(), GoogleMapActions by GoogleMapActionsImpl(
     timeoutMs = checksTimeoutMs,
     mapProvider = mapProvider
 ) {

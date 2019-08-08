@@ -7,7 +7,7 @@ import android.widget.TextView
 /**
  * Dead simple string representation of any [View]
  */
-fun View?.describe(): String {
+internal fun View?.describe(): String {
     if (this == null) return "null"
 
     val result = mutableListOf<String>()

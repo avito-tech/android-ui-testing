@@ -52,8 +52,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.core.AnyOf.anyOf
 
-open class ListElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+open class ListElement(interactionContext: InteractionContext) : ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -62,47 +61,6 @@ open class ListElement(interactionContext: InteractionContext) :
 
     override val actions = ListActions(interactionContext)
 
-    /**
-     * Interact with first matched element
-     * Will scroll to element automatically
-     */
-    protected inline fun <T> typedItemByMatcher(
-        itemMatcher: Matcher<View>,
-        factory: (
-            matcher: Matcher<View>,
-            actions: Actions,
-            checks: Checks,
-            childFactory: (Matcher<View>) -> PageObjectElement
-        ) -> T
-    ): T {
-        return factory(
-            itemMatcher,
-            InteractionContextMatcherActions(interactionContext, itemMatcher, itemMatcher),
-            ChecksImpl(
-                InteractionContextMatcherChecksDriver(
-                    interactionContext,
-                    itemMatcher,
-                    itemMatcher
-                )
-            )
-        ) { childMatcher ->
-            ViewElement(
-                childMatcher,
-                actions = InteractionContextMatcherActions(
-                    interactionContext,
-                    itemMatcher,
-                    childMatcher
-                ),
-                checks = ChecksImpl(
-                    InteractionContextMatcherChecksDriver(
-                        interactionContext,
-                        itemMatcher,
-                        childMatcher
-                    )
-                )
-            )
-        }
-    }
 
     // todo make me lazy
     protected inline fun <reified T : PageObjectElement> typedItemByMatcher(
@@ -119,6 +77,7 @@ open class ListElement(interactionContext: InteractionContext) :
                 )
             )
 
+    @Deprecated("Use typedItemByMatcher(matcher: Matcher<View>, position: Int = 0) instead")
     protected inline fun <T> typedItemAtPosition(
         itemMatcher: Matcher<View>,
         position: Int,
@@ -152,6 +111,49 @@ open class ListElement(interactionContext: InteractionContext) :
                     InteractionContextPositionChecksDriver(
                         interactionContext,
                         position,
+                        childMatcher
+                    )
+                )
+            )
+        }
+    }
+
+    /**
+     * Interact with first matched element
+     * Will scroll to element automatically
+     */
+    @Deprecated("Use typedItemByMatcher(matcher: Matcher<View>, position: Int = 0) instead")
+    protected inline fun <T> typedItemByMatcher(
+        itemMatcher: Matcher<View>,
+        factory: (
+            matcher: Matcher<View>,
+            actions: Actions,
+            checks: Checks,
+            childFactory: (Matcher<View>) -> PageObjectElement
+        ) -> T
+    ): T {
+        return factory(
+            itemMatcher,
+            InteractionContextMatcherActions(interactionContext, itemMatcher, itemMatcher),
+            ChecksImpl(
+                InteractionContextMatcherChecksDriver(
+                    interactionContext,
+                    itemMatcher,
+                    itemMatcher
+                )
+            )
+        ) { childMatcher ->
+            ViewElement(
+                childMatcher,
+                actions = InteractionContextMatcherActions(
+                    interactionContext,
+                    itemMatcher,
+                    childMatcher
+                ),
+                checks = ChecksImpl(
+                    InteractionContextMatcherChecksDriver(
+                        interactionContext,
+                        itemMatcher,
                         childMatcher
                     )
                 )

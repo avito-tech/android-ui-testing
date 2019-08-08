@@ -19,6 +19,7 @@ import com.forkingcode.espresso.contrib.DescendantViewActions.checkDescendantVie
 import com.forkingcode.espresso.contrib.DescendantViewActions.performDescendantAction
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import java.lang.RuntimeException
 
 interface InteractionContext : ActionsDriver, ChecksDriver {
 

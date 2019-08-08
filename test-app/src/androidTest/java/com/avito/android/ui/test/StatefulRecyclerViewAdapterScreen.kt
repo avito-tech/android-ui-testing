@@ -1,38 +1,30 @@
 package com.avito.android.ui.test
 
-import android.support.test.espresso.matcher.ViewMatchers
-import android.view.View
-import com.avito.android.test.action.Actions
-import com.avito.android.test.checks.Checks
+import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
+import com.avito.android.test.InteractionContext
 import com.avito.android.test.page_object.ListElement
-import com.avito.android.test.page_object.PageObjectElement
+import com.avito.android.test.page_object.PageObject
 import com.avito.android.test.page_object.ViewElement
 import com.avito.android.ui.R
-import org.hamcrest.Matcher
 
-class StatefulRecyclerViewAdapterScreen {
+class StatefulRecyclerViewAdapterScreen : PageObject() {
 
-    val list = List()
+    val list: List = element(withId(R.id.recycler))
 
-    class List : ListElement(ViewMatchers.withId(R.id.recycler)) {
+    class List(override val interactionContext: InteractionContext) : ListElement(interactionContext) {
 
-        fun cellWithTitle(title: String) =
-            typedItemByMatcher(ViewMatchers.hasDescendant(ViewMatchers.withText(title)), ::Cell)
+        fun cellWithTitle(title: String): Cell = typedItemByMatcher(hasDescendant(withText(title)))
 
-        fun cellWithTitleCreatedByRecyclerViewInteractionContext(title: String) =
-            typedItemByMatcher<ViewElement>(
-                ViewMatchers.hasDescendant(ViewMatchers.withText(title))
+        fun cellWithTitleCreatedByRecyclerViewInteractionContext(title: String): ViewElement =
+            typedItemByMatcher(
+                hasDescendant(withText(title))
             )
 
-        class Cell(
-            matcher: Matcher<View>,
-            actions: Actions,
-            checks: Checks,
-            childFactory: (Matcher<View>) -> PageObjectElement
-        ) : ViewElement(matcher, actions = actions, checks = checks) {
-
-            val title = childFactory(ViewMatchers.withId(R.id.title))
-            val title2 = childFactory(ViewMatchers.withId(R.id.title2))
+        class Cell(interactionContext: InteractionContext) : ViewElement(interactionContext) {
+            val title: ViewElement = element(withId(R.id.title))
+            val title2: ViewElement = element(withId(R.id.title2))
         }
     }
 }

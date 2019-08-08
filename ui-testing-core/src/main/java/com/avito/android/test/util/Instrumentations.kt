@@ -27,18 +27,4 @@ fun getCurrentActivity(): Activity {
     return currentActivity ?: throw IllegalStateException("Resumed activity not found")
 }
 
-inline fun <reified T : Activity> assertCurrentActivity() {
-    UiThreadStatement.runOnUiThread {
-        Assert.assertThat(getCurrentActivity(), instanceOf(T::class.java))
-    }
-}
-
-/**
- * Call it to pass message: "Test running failed: Instrumentation run failed due to '$message'"
- * TODO not working with TestOrchestrator
- */
-fun Instrumentation.failInstrumentation(message: String) {
-    error(message)
-}
-
-fun isMainThread() = Looper.myLooper() == Looper.getMainLooper()
+internal fun isMainThread() = Looper.myLooper() == Looper.getMainLooper()

@@ -19,8 +19,9 @@ import com.avito.android.test.matcher.IsRefreshingMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.core.Is.`is`
 
-class SwipeRefreshElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+class SwipeRefreshElement(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
@@ -33,7 +34,9 @@ interface SwipeRefreshActions : Actions {
     fun pullToRefresh()
 }
 
-class SwipeRefreshActionsImpl(private val driver: ActionsDriver) : SwipeRefreshActions,
+class SwipeRefreshActionsImpl(
+    private val driver: ActionsDriver
+) : SwipeRefreshActions,
     Actions by ActionsImpl(driver) {
 
     override fun pullToRefresh() {
@@ -47,7 +50,9 @@ interface SwipeRefreshChecks : Checks {
     fun isNotRefreshing()
 }
 
-class SwipeRefreshChecksImpl(private val driver: ChecksDriver) : SwipeRefreshChecks,
+class SwipeRefreshChecksImpl(
+    private val driver: ChecksDriver
+) : SwipeRefreshChecks,
     Checks by ChecksImpl(driver) {
 
     override fun isRefreshing() {

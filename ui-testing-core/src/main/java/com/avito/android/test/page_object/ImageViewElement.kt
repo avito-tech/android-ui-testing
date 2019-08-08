@@ -13,8 +13,9 @@ import com.avito.android.test.matcher.DrawableMatcherImageButton
 import com.avito.android.test.matcher.ImageShownMatcher
 import org.hamcrest.Matcher
 
-open class ImageViewElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+open class ImageViewElement(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

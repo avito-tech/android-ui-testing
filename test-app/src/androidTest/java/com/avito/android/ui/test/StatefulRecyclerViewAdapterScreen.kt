@@ -15,10 +15,10 @@ class StatefulRecyclerViewAdapterScreen : PageObject() {
 
     class List(override val interactionContext: InteractionContext) : ListElement(interactionContext) {
 
-        fun cellWithTitle(title: String): Cell = typedItemByMatcher(hasDescendant(withText(title)))
+        fun cellWithTitle(title: String): Cell = listElement(hasDescendant(withText(title)))
 
         fun cellWithTitleCreatedByRecyclerViewInteractionContext(title: String): ViewElement =
-            typedItemByMatcher(
+            listElement(
                 hasDescendant(withText(title))
             )
 

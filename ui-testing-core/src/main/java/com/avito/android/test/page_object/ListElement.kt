@@ -61,8 +61,21 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
 
     override val actions = ListActions(interactionContext)
 
+    protected inline fun <reified T : PageObjectElement> listElement(
+        matcher: Matcher<View>,
+        position: Int = 0
+    ): T =
+        T::class.java.getConstructor(InteractionContext::class.java)
+            .newInstance(
+                RecyclerViewInteractionContext(
+                    interactionContext = interactionContext,
+                    cellMatcher = anyOf(hasDescendant(matcher), matcher),
+                    childMatcher = matcher,
+                    position = position
+                )
+            )
 
-    // todo make me lazy
+    @Deprecated("Use listElement(matcher: Matcher<View>, position: Int = 0) instead")
     protected inline fun <reified T : PageObjectElement> typedItemByMatcher(
         matcher: Matcher<View>,
         position: Int = 0
@@ -77,7 +90,7 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
                 )
             )
 
-    @Deprecated("Use typedItemByMatcher(matcher: Matcher<View>, position: Int = 0) instead")
+    @Deprecated("Use listElement(matcher: Matcher<View>, position: Int = 0) instead")
     protected inline fun <T> typedItemAtPosition(
         itemMatcher: Matcher<View>,
         position: Int,
@@ -122,7 +135,7 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
      * Interact with first matched element
      * Will scroll to element automatically
      */
-    @Deprecated("Use typedItemByMatcher(matcher: Matcher<View>, position: Int = 0) instead")
+    @Deprecated("Use listElement(matcher: Matcher<View>, position: Int = 0) instead")
     protected inline fun <T> typedItemByMatcher(
         itemMatcher: Matcher<View>,
         factory: (
@@ -160,6 +173,18 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
             )
         }
     }
+
+    /**
+     * Hide parent method [PageObject.element]
+     */
+    protected inline fun <reified T : PageObjectElement> element(matcher: Matcher<View>): T =
+        throw RuntimeException("Use listElement(Matcher<View>) instead of element(Matcher<View>)")
+
+    /**
+     * Hide parent method [PageObject.element]
+     */
+    protected inline fun <reified T : PageObjectElement> element(): T =
+        throw RuntimeException("Use listElement() instead of element()")
 
     class ListActions private constructor(
         private val driver: ActionsDriver,

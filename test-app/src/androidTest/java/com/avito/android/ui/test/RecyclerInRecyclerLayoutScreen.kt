@@ -22,14 +22,13 @@ class RecyclerInRecyclerLayoutScreen : PageObject() {
 
     class List(interactionContext: InteractionContext) : ListElement(interactionContext) {
 
-        val horizontalList: InnerList
-            get() = typedItemByMatcher(withId(R.id.inner_recycler))
+        val horizontalList: InnerList = listElement(withId(R.id.inner_recycler))
 
         class InnerList(interactionContext: InteractionContext) : ListElement(interactionContext) {
 
-            fun cellWithTitle(title: String): Cell = typedItemByMatcher(hasDescendant(withText(title)))
+            fun cellWithTitle(title: String): Cell = listElement(hasDescendant(withText(title)))
 
-            fun cellAt(position: Int): Cell = typedItemByMatcher(
+            fun cellAt(position: Int): Cell = listElement(
                 ViewMatchers.isAssignableFrom(FrameLayout::class.java),
                 position
             )

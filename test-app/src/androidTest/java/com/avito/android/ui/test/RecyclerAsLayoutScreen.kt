@@ -16,13 +16,8 @@ class RecyclerAsLayoutScreen : PageObject() {
     val list: List = element(withId(R.id.recycler))
 
     class List(interactionContext: InteractionContext) : ListElement(interactionContext) {
-        val inputField: TextInputElement
-            get() = typedItemByMatcher(withId(R.id.input_layout))
-
-        val editText: TextField
-            get() = typedItemByMatcher(withId(R.id.edit_text))
-
-        val label: PageObjectElement
-            get() = typedItemByMatcher<ViewElement>(withId(R.id.title))
+        val inputField: TextInputElement = listElement(withId(R.id.input_layout))
+        val editText: TextField = listElement(withId(R.id.edit_text))
+        val label: ViewElement = listElement(withId(R.id.title))
     }
 }

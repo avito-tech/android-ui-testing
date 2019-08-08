@@ -17,12 +17,9 @@ class IdenticalCellsRecyclerScreen : PageObject() {
 
     class List(interactionContext: InteractionContext) : ListElement(interactionContext) {
 
-        fun cellWithTitle(title: String): Cell = typedItemByMatcher(hasDescendant(withText(title)))
-
-        fun cellAt(position: Int): Cell = typedItemByMatcher(
-            isAssignableFrom(FrameLayout::class.java),
-            position
-        )
+        fun cellWithTitle(title: String): Cell = listElement(hasDescendant(withText(title)))
+        fun cellAt(position: Int): Cell =
+            listElement(isAssignableFrom(FrameLayout::class.java), position)
 
         class Cell(interactionContext: InteractionContext) : ViewElement(interactionContext) {
             val title: ViewElement = element(withId(R.id.title))

@@ -81,7 +81,7 @@ private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder>
                     recyclerView.findViewHolderForAdapterPosition(position) as VH?
                 val viewAtPosition = viewHolderForPosition?.itemView
 
-                assertThat<Boolean>(
+                assertThat(
                     "View is present in the hierarchy: " +
                         HumanReadables.describe(viewAtPosition), true, `is`(false)
                 )
@@ -195,6 +195,18 @@ private class ActionOnItemViewAction<VH : RecyclerView.ViewHolder>(
                 viewHolderMatcher = viewHolderMatcher,
                 max = max
             )
+
+            if (selectIndex >= matchedItems.size) {
+                throw RuntimeException(
+                    String.format(
+                        "Found %d items matching %s, but position %d was requested.",
+                        matchedItems.size,
+                        viewHolderMatcher.toString(),
+                        atPosition
+                    )
+                )
+            }
+
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 matchedItems[selectIndex].position,
                 viewAction

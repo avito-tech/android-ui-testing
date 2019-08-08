@@ -2,10 +2,7 @@ package com.avito.android.test.matcher
 
 import org.hamcrest.Matchers.`is`
 
-/**
- * Avito in-house ViewMatchers
- */
-object ViewMatchers {
+internal object ViewMatchers {
 
     /**
      * Matches if any possible kind of checkable state is true

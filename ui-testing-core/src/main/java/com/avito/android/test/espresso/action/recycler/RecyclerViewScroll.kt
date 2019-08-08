@@ -143,6 +143,7 @@ internal class ScrollToViewAction<VH : RecyclerView.ViewHolder>(
                     )
                 )
             }
+
             if (atPosition == RecyclerView.NO_POSITION && matchedItems.size == 2) {
                 val ambiguousViewError = StringBuilder()
                 ambiguousViewError.append(

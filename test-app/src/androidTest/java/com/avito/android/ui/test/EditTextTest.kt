@@ -13,7 +13,6 @@ class EditTextTest {
     @get:Rule
     val rule = screenRule<EditTextActivity>()
 
-    @Ignore("Not working in firebase")
     @Test
     fun findsKeyboard_whenKeyboardIsOpenedByActivityManifest() = with(rule) {
         launchActivity(null)

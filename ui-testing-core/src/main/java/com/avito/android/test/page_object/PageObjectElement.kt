@@ -14,10 +14,11 @@ import org.hamcrest.Matcher
 abstract class PageObject {
     open val interactionContext: InteractionContext = SimpleInteractionContext(isRoot())
 
-    inline fun <reified T> element(matcher: Matcher<View>): T = T::class.java.getConstructor(InteractionContext::class.java)
-        .newInstance(interactionContext.provideChildContext(matcher))
+    protected inline fun <reified T> element(matcher: Matcher<View>): T =
+        T::class.java.getConstructor(InteractionContext::class.java)
+            .newInstance(interactionContext.provideChildContext(matcher))
 
-    inline fun <reified T> element(): T = T::class.java.getConstructor().newInstance()
+    protected inline fun <reified T> element(): T = T::class.java.getConstructor().newInstance()
 }
 
 abstract class PageObjectElement : PageObject(), Actions {

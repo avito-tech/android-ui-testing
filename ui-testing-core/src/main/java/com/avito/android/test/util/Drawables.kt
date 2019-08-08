@@ -28,7 +28,7 @@ internal fun Drawable.isSame(
     }
 }
 
-fun Drawable.wrapForTinting(@ColorInt color: Int): Drawable {
+internal fun Drawable.wrapForTinting(@ColorInt color: Int): Drawable {
     val drawable = DrawableCompat.wrap(this)
     DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_ATOP)
     DrawableCompat.setTint(drawable.mutate(), color)
@@ -69,7 +69,7 @@ internal fun Int?.matchDrawable(
     return drawable?.isSame(context, this, tint) ?: false
 }
 
-fun Drawable.toBitmap(): Bitmap {
+internal fun Drawable.toBitmap(): Bitmap {
     val drawable = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
         DrawableCompat.wrap(this).mutate()
     } else this

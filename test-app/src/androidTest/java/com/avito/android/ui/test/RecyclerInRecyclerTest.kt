@@ -13,7 +13,7 @@ class RecyclerInRecyclerTest {
     fun typedItemAtPosition_foundFirstValue() {
         rule.launchActivity(RecyclerInRecyclerActivity.intent(arrayListOf("0", "1", "2")))
 
-        Screen.recyclerInRecycler.horizontalList.cellAt(position = 0)
+        Screen.recyclerInRecycler.list.horizontalList.cellAt(position = 0)
             .title.checks.displayedWithText("0")
     }
 
@@ -21,7 +21,7 @@ class RecyclerInRecyclerTest {
     fun typedItemWithMatcher_foundFirstValue() {
         rule.launchActivity(RecyclerInRecyclerActivity.intent(arrayListOf("0", "1", "2")))
 
-        Screen.recyclerInRecycler.horizontalList.cellWithTitle("0")
+        Screen.recyclerInRecycler.list.horizontalList.cellWithTitle("0")
             .title.checks.displayedWithText("0")
     }
 
@@ -29,7 +29,7 @@ class RecyclerInRecyclerTest {
     fun typedItemAtPosition_foundThirdValue() {
         rule.launchActivity(RecyclerInRecyclerActivity.intent(arrayListOf("0", "1", "2")))
 
-        Screen.recyclerInRecycler.horizontalList.cellAt(position = 2)
+        Screen.recyclerInRecycler.list.horizontalList.cellAt(position = 2)
             .title.checks.displayedWithText("2")
     }
 
@@ -37,7 +37,7 @@ class RecyclerInRecyclerTest {
     fun typedItemWithMatcher_foundThirdValue() {
         rule.launchActivity(RecyclerInRecyclerActivity.intent(arrayListOf("0", "1", "2")))
 
-        Screen.recyclerInRecycler.horizontalList.cellWithTitle("2")
+        Screen.recyclerInRecycler.list.horizontalList.cellWithTitle("2")
             .title.checks.displayedWithText("2")
     }
 }

@@ -12,14 +12,16 @@ import com.avito.android.test.matcher.TextInputLayoutHintMatcher
 import com.avito.android.test.matcher.TextInputPasswordVisibilityMatcher
 import org.hamcrest.Matchers.`is`
 
-class TextInputElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+class TextInputElement(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext) {
 
     override val checks: TextInputChecks = TextInputChecks(interactionContext)
 }
 
-class TextInputChecks(private val interactionContext: InteractionContext) :
-    Checks by ChecksImpl(interactionContext),
+class TextInputChecks(
+    private val interactionContext: InteractionContext
+) : Checks by ChecksImpl(interactionContext),
     PasswordFieldChecks,
     TextFieldErrorChecks,
     TextFieldHintChecks {

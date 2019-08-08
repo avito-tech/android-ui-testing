@@ -5,7 +5,6 @@ import com.avito.android.test.page_object.PageObject
 import com.avito.android.test.page_object.ViewElement
 import com.avito.android.ui.R
 
-class VisibilityScreen : PageObject {
-
-    val label = ViewElement(ViewMatchers.withId(R.id.text))
+class VisibilityScreen : PageObject() {
+    val label: ViewElement = element(ViewMatchers.withId(R.id.text))
 }

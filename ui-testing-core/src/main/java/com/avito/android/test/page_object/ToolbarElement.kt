@@ -43,12 +43,10 @@ import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.TypeSafeMatcher
 
-open class ToolbarElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+open class ToolbarElement(interactionContext: InteractionContext) : ViewElement(interactionContext) {
 
-    constructor(matcher: Matcher<View> = isAssignableFrom(Toolbar::class.java)) : this(
-        SimpleInteractionContext(matcher)
-    )
+    constructor() : this(SimpleInteractionContext(isAssignableFrom(Toolbar::class.java)))
+    constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
     override val checks: ToolbarElementChecks = ToolbarElementChecksImpl(interactionContext)
 
@@ -215,7 +213,9 @@ interface ToolbarElementChecks : Checks {
     fun withSubtitle(@StringRes resId: Int)
 }
 
-class ToolbarElementChecksImpl(private val driver: ChecksDriver) : ToolbarElementChecks,
+class ToolbarElementChecksImpl(
+    private val driver: ChecksDriver
+) : ToolbarElementChecks,
     Checks by ChecksImpl(driver) {
 
     override fun withTitle(text: String) {

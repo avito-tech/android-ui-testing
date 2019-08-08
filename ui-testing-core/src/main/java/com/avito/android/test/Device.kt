@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso
+import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.runner.permission.PermissionRequester
 import android.support.test.uiautomator.By
@@ -31,16 +32,13 @@ object Device {
 
     private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-    private val rootElement: ViewElement
-        get() = ViewElement(ViewMatchers.isRoot())
-
     val keyboard = KeyboardElement()
 
     /**
      * Changes device orientation between portrait and landscape
      */
     fun rotate() {
-        rootElement.interaction.waitToPerform(OrientationChangeAction.toggle())
+        onView(ViewMatchers.isRoot()).perform(OrientationChangeAction.toggle())
     }
 
     /**
@@ -67,7 +65,7 @@ object Device {
      * todo consider remove
      */
     fun waitForIdle() {
-        rootElement.interaction.perform(EspressoActions.waitForIdle())
+        onView(ViewMatchers.isRoot()).perform(OrientationChangeAction.toggle())
     }
 
     fun getLauncherIntentForAppUnderTest(testContext: Context, appContext: Context): Intent {

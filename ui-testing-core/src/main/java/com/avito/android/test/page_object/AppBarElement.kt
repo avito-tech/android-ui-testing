@@ -12,8 +12,7 @@ import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
 import org.hamcrest.Matcher
 
-class AppBarElement(interactionContext: InteractionContext) :
-    ViewElement(interactionContext) {
+class AppBarElement(interactionContext: InteractionContext) : ViewElement(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 

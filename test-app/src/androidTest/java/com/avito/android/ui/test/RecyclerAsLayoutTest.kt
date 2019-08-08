@@ -21,7 +21,7 @@ class RecyclerAsLayoutTest {
             )
         )
 
-        Screen.recyclerAsLayout.label.checks.withText("label")
+        Screen.recyclerAsLayout.list.label.checks.withText("label")
     }
 
     @Test
@@ -36,7 +36,7 @@ class RecyclerAsLayoutTest {
             )
         )
 
-        Screen.recyclerAsLayout.editText.checks.withHintText("editText")
+        Screen.recyclerAsLayout.list.editText.checks.withHintText("editText")
     }
 
     @Test
@@ -51,6 +51,6 @@ class RecyclerAsLayoutTest {
             )
         )
 
-        Screen.recyclerAsLayout.inputField.checks.withHintText("input")
+        Screen.recyclerAsLayout.list.inputField.checks.withHintText("input")
     }
 }

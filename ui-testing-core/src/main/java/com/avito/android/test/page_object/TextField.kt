@@ -19,8 +19,9 @@ import com.avito.android.test.espresso.action.SafeTypeTextAction
 import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 import org.hamcrest.Matcher
 
-open class TextField(interactionContext: InteractionContext) :
-    ViewElement(interactionContext),
+open class TextField(
+    interactionContext: InteractionContext
+) : ViewElement(interactionContext),
     FieldActions by TextFieldActionImpl(interactionContext) {
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
@@ -31,8 +32,9 @@ open class TextField(interactionContext: InteractionContext) :
     var doNotUseReplace: Boolean = false
 }
 
-class TextFieldActionImpl(private val interactionContext: InteractionContext) :
-    FieldActions,
+class TextFieldActionImpl(
+    private val interactionContext: InteractionContext
+) : FieldActions,
     Actions by ActionsImpl(interactionContext) {
 
     override fun write(text: String) {
@@ -79,8 +81,9 @@ interface TextFieldChecks : Checks, TextFieldHintChecks {
     override fun withHintText(text: String)
 }
 
-class TextFieldChecksImpl(private val interactionContext: InteractionContext) :
-    TextFieldChecks,
+class TextFieldChecksImpl(
+    private val interactionContext: InteractionContext
+) : TextFieldChecks,
     Checks by ChecksImpl(interactionContext) {
 
     override fun withHintText(text: String) {

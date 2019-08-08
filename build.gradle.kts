@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.7.5-avito"
+version = "0.4.9-snapshot"
 
 val minSdk: String by project
 val targetSdk: String by project
@@ -117,7 +117,7 @@ subprojects {
             setContextUrl(System.getenv("ARTIFACTORY_URL"))
             publish(delegateClosureOf<PublisherConfig> {
                 repository(delegateClosureOf<GroovyObject> {
-                    setProperty("repoKey", "libs-release-local")
+                    setProperty("repoKey", System.getenv("ARTIFACTORY_REPO"))
                     setProperty("username", System.getenv("ARTIFACTORY_USER"))
                     setProperty("password", System.getenv("ARTIFACTORY_PASSWORD"))
                     setProperty("maven", true)

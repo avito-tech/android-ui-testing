@@ -1,5 +1,6 @@
 package com.avito.android.ui.test
 
+import android.support.test.espresso.action.SwipeDirections
 import com.avito.android.ui.ViewPagerActivity
 import org.junit.Rule
 import org.junit.Test
@@ -43,6 +44,47 @@ class ViewPagerTest {
             }
 
             Screen.viewPagerScreen.pager.toLeft()
+        }
+    }
+
+    @Test
+    fun viewPager_scrolledToRightAndLeftUsingManualSwiping() {
+        rule.launchActivity(null)
+
+        repeat(4) {
+
+            when (parityOfNumber(it)) {
+                Parity.EVEN -> {
+                    Screen.viewPagerScreen.pager.currentEvenPage.label.checks.isDisplayed()
+                    Screen.viewPagerScreen.pager.currentOddPage.checks.doesNotExist()
+
+                    Screen.viewPagerScreen.pager.currentEvenPage.swipe(SwipeDirections.RIGHT_TO_LEFT)
+                }
+                Parity.ODD -> {
+                    Screen.viewPagerScreen.pager.currentOddPage.label.checks.isDisplayed()
+                    Screen.viewPagerScreen.pager.currentEvenPage.checks.doesNotExist()
+
+                    Screen.viewPagerScreen.pager.currentOddPage.swipe(SwipeDirections.RIGHT_TO_LEFT)
+                }
+            }
+        }
+
+        repeat(4) {
+
+            when (parityOfNumber(it)) {
+                Parity.EVEN -> {
+                    Screen.viewPagerScreen.pager.currentEvenPage.label.checks.isDisplayed()
+                    Screen.viewPagerScreen.pager.currentOddPage.checks.doesNotExist()
+
+                    Screen.viewPagerScreen.pager.currentEvenPage.swipe(SwipeDirections.LEFT_TO_RIGHT)
+                }
+                Parity.ODD -> {
+                    Screen.viewPagerScreen.pager.currentOddPage.label.checks.isDisplayed()
+                    Screen.viewPagerScreen.pager.currentEvenPage.checks.doesNotExist()
+
+                    Screen.viewPagerScreen.pager.currentOddPage.swipe(SwipeDirections.LEFT_TO_RIGHT)
+                }
+            }
         }
     }
 

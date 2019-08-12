@@ -57,11 +57,8 @@ open class ViewPagerElement(
 }
 
 interface ViewPagerActions {
-
     fun toRight()
-
     fun toLeft()
-
     fun select(position: Int)
 }
 
@@ -81,9 +78,7 @@ class ViewPagerActionsImpl(private val actionsDriver: ActionsDriver) : ViewPager
 }
 
 interface ViewPagerChecks : Checks {
-
     fun withSelectedPosition(position: Int)
-
     fun withTabsCount(count: Int)
 }
 

@@ -1,6 +1,7 @@
 package com.avito.android.test.page_object
 
 import android.support.test.espresso.assertion.ViewAssertions
+import android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -13,8 +14,9 @@ import com.avito.android.test.espresso.action.ViewPagersSelectAction
 import com.avito.android.test.matcher.ViewPagersSelectMatcher
 import com.avito.android.test.matcher.ViewPagersTabsCountMatcher
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.allOf
 
-class ViewPagerElement(
+open class ViewPagerElement(
     interactionContext: InteractionContext
 ) : ViewElement(interactionContext),
     ViewPagerActions by ViewPagerActionsImpl(interactionContext) {
@@ -22,14 +24,41 @@ class ViewPagerElement(
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
 
     override val checks: ViewPagerChecks = ViewPagerChecksImpl(interactionContext)
+
+    protected inline fun <reified T : PageObjectElement> currentPageElement(matcher: Matcher<View>): T =
+        T::class.java.getConstructor(InteractionContext::class.java)
+            .newInstance(
+                interactionContext.provideChildContext(
+                    allOf(
+                        // current page is only one completely displayed element inside view pager
+                        isCompletelyDisplayed(),
+                        matcher
+                    )
+                )
+            )
+
+    /**
+     * Hide parent method [PageObject.element]
+     */
+    protected inline fun <reified T : PageObjectElement> element(matcher: Matcher<View>): T =
+        throw RuntimeException(
+            "Use currentPageElement(Matcher<View>) instead for getting page of view pager" +
+                    "and then use element(Matcher<View>) for getting child"
+        )
+
+    /**
+     * Hide parent method [PageObject.element]
+     */
+    protected inline fun <reified T : PageObjectElement> element(): T =
+        throw RuntimeException(
+            "Use currentPageElement(Matcher<View>) instead for getting page of view pager" +
+                    "and then use element(Matcher<View>) for getting child"
+        )
 }
 
 interface ViewPagerActions {
-
     fun toRight()
-
     fun toLeft()
-
     fun select(position: Int)
 }
 
@@ -49,9 +78,7 @@ class ViewPagerActionsImpl(private val actionsDriver: ActionsDriver) : ViewPager
 }
 
 interface ViewPagerChecks : Checks {
-
     fun withSelectedPosition(position: Int)
-
     fun withTabsCount(count: Int)
 }
 

@@ -28,5 +28,6 @@
         <activity android:name=".MovingButtonActivity" />
         <activity android:name=".RecyclerWithLongItemsActivity" />
         <activity android:name=".StatefulRecyclerViewAdapterActivity" />
+        <activity android:name=".ViewPagerActivity" />
     </application>
 </manifest>

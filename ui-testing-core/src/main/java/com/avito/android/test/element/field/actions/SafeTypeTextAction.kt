@@ -1,4 +1,4 @@
-package com.avito.android.test.espresso.action
+package com.avito.android.test.element.field.actions
 
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
@@ -9,16 +9,13 @@ import java.lang.Character.UnicodeBlock
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
-/**
- * Don't use directly, only via EspressoActions
- */
-class SafeTypeTextAction(
+internal class SafeTypeTextAction(
     private val stringToBeTyped: String,
     tapBeforeInput: Boolean = true,
     private var doNotUseReplace: Boolean = false
 ) : ViewAction {
 
-    private val typeAction by lazy { TypeTextAction(stringToBeTyped, tapBeforeInput) }
+    private val typeAction by lazy { TypeTextToFieldAction(stringToBeTyped, tapBeforeInput) }
     private val replaceAction by lazy { ReplaceTextAction(stringToBeTyped) }
 
     override fun getDescription(): String = typeAction.description
@@ -30,12 +27,13 @@ class SafeTypeTextAction(
      * (see AP-221), then fast [ReplaceTextAction] will be executed prior to [TypeTextAction]. Otherwise will be used
      * [TypeTextAction].
      */
-    override fun perform(uiController: UiController?, view: View?) {
+    override fun perform(uiController: UiController, view: View) {
         doNotUseReplace = doNotUseReplace ||
             // phone numbers will not work properly with replace in most cases
             stringToBeTyped.isPhoneNumber() ||
             // AP-221: cyrillic input will not work correctly with replace in most cases
             stringToBeTyped.isCyrillic()
+
         try {
             if (doNotUseReplace) {
                 typeAction.perform(uiController, view)

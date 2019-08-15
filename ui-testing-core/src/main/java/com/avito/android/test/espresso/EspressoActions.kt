@@ -13,8 +13,8 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.view.View
 import com.avito.android.test.UITestConfig
+import com.avito.android.test.element.field.actions.SafeTypeTextAction
 import com.avito.android.test.espresso.action.ActionOnEnabledElement
-import com.avito.android.test.espresso.action.SafeTypeTextAction
 import com.avito.android.test.espresso.action.WaitForIdleAction
 import com.avito.android.test.espresso.action.click.inProcessClickAction
 import com.avito.android.test.espresso.action.click.inProcessLongClickAction
@@ -32,25 +32,23 @@ object EspressoActions {
      * This way we can enable cyrillic natively on devices to make checks more "real",
      * but write cyrillic input tests without problems
      */
-    fun safeTypeText(stringToBeTyped: String, tapBeforeInput: Boolean = true): ViewAction {
-        return actionWithAssertions(SafeTypeTextAction(stringToBeTyped, tapBeforeInput))
-    }
+    fun safeTypeText(
+        stringToBeTyped: String,
+        tapBeforeInput: Boolean = true,
+        doNotUseReplace: Boolean = false
+    ): ViewAction = actionWithAssertions(SafeTypeTextAction(stringToBeTyped, tapBeforeInput, doNotUseReplace))
 
     /**
      * Enables scrolling to the given view.
      * Less strict version of ScrollToAction
      * If view not a descendant of a ScrollView - nothing happens
      */
-    fun scrollIfPossible(): ViewAction {
-        return actionWithAssertions(ScrollToIfPossibleAction())
-    }
+    fun scrollIfPossible(): ViewAction = actionWithAssertions(ScrollToIfPossibleAction())
 
     /**
      * Hack: waits for main thread to be idle
      */
-    fun waitForIdle(): ViewAction {
-        return actionWithAssertions(WaitForIdleAction())
-    }
+    fun waitForIdle(): ViewAction = actionWithAssertions(WaitForIdleAction())
 
     /**
      * Expose espresso API

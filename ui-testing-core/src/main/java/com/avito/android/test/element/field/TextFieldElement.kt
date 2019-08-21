@@ -11,9 +11,7 @@ open class TextFieldElement(
 ) : ViewElement(interactionContext),
     FieldActions {
 
-    open val doNotUseReplace: Boolean = false
-
-    override val actions: FieldActions by lazy { TextFieldAction(interactionContext, doNotUseReplace) }
+    override val actions: FieldActions = TextFieldAction(interactionContext)
     override val checks: TextFieldChecks = TextFieldChecksImpl(interactionContext)
 
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))

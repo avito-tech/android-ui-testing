@@ -13,4 +13,16 @@
         android:text="Test"
         tools:ignore="HardcodedText" />
 
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edit_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test2"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/phone_number_edit_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

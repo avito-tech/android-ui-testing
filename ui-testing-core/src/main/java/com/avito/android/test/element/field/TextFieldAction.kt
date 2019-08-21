@@ -7,6 +7,7 @@ import android.support.test.espresso.action.ViewActions.pressImeActionButton
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsImpl
+import com.avito.android.test.element.field.actions.TypeText
 import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 
@@ -26,8 +27,7 @@ interface FieldActions : Actions {
 
 
 internal class TextFieldAction(
-    private val interactionContext: InteractionContext,
-    private val doNotUseReplace: Boolean
+    private val interactionContext: InteractionContext
 ) : FieldActions,
     Actions by ActionsImpl(interactionContext) {
 
@@ -38,12 +38,26 @@ internal class TextFieldAction(
             ),
             clearText(),
             actionWithAssertions(
-                EspressoActions.safeTypeText(
-                    stringToBeTyped = text,
-                    tapBeforeInput = true,
-                    doNotUseReplace = doNotUseReplace
+                TypeText(
+                    stringToBeTyped = text
                 )
             )
+        )
+        Espresso.closeSoftKeyboard()
+    }
+
+    override fun writeAndPressImeAction(text: String) {
+        interactionContext.perform(
+            actionWithAssertions(
+                EspressoActions.scrollIfPossible()
+            ),
+            clearText(),
+            actionWithAssertions(
+                TypeText(
+                    stringToBeTyped = text
+                )
+            ),
+            pressImeActionButton()
         )
         Espresso.closeSoftKeyboard()
     }
@@ -54,22 +68,6 @@ internal class TextFieldAction(
                 EspressoActions.scrollIfPossible()
             ),
             clearText()
-        )
-    }
-
-    override fun writeAndPressImeAction(text: String) {
-        interactionContext.perform(
-            actionWithAssertions(
-                EspressoActions.scrollIfPossible()
-            ),
-            actionWithAssertions(
-                EspressoActions.safeTypeText(
-                    stringToBeTyped = text,
-                    tapBeforeInput = true,
-                    doNotUseReplace = doNotUseReplace
-                )
-            ),
-            pressImeActionButton()
         )
     }
 
@@ -86,10 +84,8 @@ internal class TextFieldAction(
                 EspressoActions.scrollIfPossible()
             ),
             actionWithAssertions(
-                EspressoActions.safeTypeText(
-                    stringToBeTyped = text,
-                    tapBeforeInput = true,
-                    doNotUseReplace = true
+                TypeText(
+                    stringToBeTyped = text
                 )
             )
         )

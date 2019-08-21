@@ -1,10 +1,7 @@
 package com.avito.android.ui.test
 
-import android.widget.EditText
 import com.avito.android.test.Device
 import com.avito.android.ui.EditTextActivity
-import com.avito.android.ui.R
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,11 +21,12 @@ class EditTextTest {
     fun writesLongText() = with(rule) {
         launchActivity(null)
 
-        rule.runOnUiThread {
-            activity.findViewById<EditText>(R.id.edit_text).setText("text")
-        }
-
         Screen.editTextScreen.editText.write("1000000000000000000000000")
+        Screen.editTextScreen.editText1.write("Кирилл и Мефодий не изобретали кириллицу")
+        Screen.editTextScreen.phoneNumberText.write("9261418698")
+
         Screen.editTextScreen.editText.checks.displayedWithText("1000000000000000000000000")
+        Screen.editTextScreen.editText1.checks.displayedWithText("Кирилл и Мефодий не изобретали кириллицу")
+        Screen.editTextScreen.phoneNumberText.checks.displayedWithText("(926) 141-8698")
     }
 }

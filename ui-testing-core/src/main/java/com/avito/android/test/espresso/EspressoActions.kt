@@ -13,7 +13,7 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.action.ViewActions.actionWithAssertions
 import android.view.View
 import com.avito.android.test.UITestConfig
-import com.avito.android.test.element.field.actions.SafeTypeTextAction
+import com.avito.android.test.element.field.actions.TypeText
 import com.avito.android.test.espresso.action.ActionOnEnabledElement
 import com.avito.android.test.espresso.action.WaitForIdleAction
 import com.avito.android.test.espresso.action.click.inProcessClickAction
@@ -32,11 +32,7 @@ object EspressoActions {
      * This way we can enable cyrillic natively on devices to make checks more "real",
      * but write cyrillic input tests without problems
      */
-    fun safeTypeText(
-        stringToBeTyped: String,
-        tapBeforeInput: Boolean = true,
-        doNotUseReplace: Boolean = false
-    ): ViewAction = actionWithAssertions(SafeTypeTextAction(stringToBeTyped, tapBeforeInput, doNotUseReplace))
+    fun typeText(stringToBeTyped: String): ViewAction = actionWithAssertions(TypeText(stringToBeTyped))
 
     /**
      * Enables scrolling to the given view.

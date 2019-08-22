@@ -24,14 +24,6 @@ import org.hamcrest.core.IsAnything
 
 object EspressoActions {
 
-    /**
-     * Devices support only latin symbols by default
-     * We could possibly enable cyrillic keyboard on all emulators / firebase devices /
-     * developer devices / emulators, but better approach is to fallback to replaceText method
-     * if IME does not support cyrillic input.
-     * This way we can enable cyrillic natively on devices to make checks more "real",
-     * but write cyrillic input tests without problems
-     */
     fun typeText(stringToBeTyped: String): ViewAction = actionWithAssertions(TypeText(stringToBeTyped))
 
     /**

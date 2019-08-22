@@ -40,16 +40,7 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
     override fun perform(uiController: UiController, view: View) {
         view as EditText
 
-        EspressoActions.click().perform(uiController, view)
-        uiController.loopMainThreadUntilIdle()
-
-        waitMainLoopFor(uiController) {
-            Assert.assertThat(
-                "View must have focus after tap before text typing",
-                view.hasFocus(),
-                Matchers.`is`(true)
-            )
-        }
+        tapForFocus(uiController = uiController, editText = view)
 
         val context = (
             InstrumentationRegistry
@@ -59,11 +50,24 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
             .getFieldByReflectionWithAnyField("mIInputContext")
 
         context.executeMethod("beginBatchEdit")
-        context.executeMethod("commitText", stringToBeTyped, 1)
         context.executeMethod("finishComposingText")
+        context.executeMethod("commitText", stringToBeTyped, 1)
         context.executeMethod("endBatchEdit")
 
         uiController.loopMainThreadUntilIdle()
+    }
+
+    private fun tapForFocus(uiController: UiController, editText: EditText) {
+        EspressoActions.click().perform(uiController, editText)
+        uiController.loopMainThreadUntilIdle()
+
+        waitMainLoopFor(uiController) {
+            Assert.assertThat(
+                "View must have focus after tap before text typing",
+                editText.hasFocus(),
+                Matchers.`is`(true)
+            )
+        }
     }
 
     private fun waitMainLoopFor(uiController: UiController, action: () -> Unit) = waitFor(

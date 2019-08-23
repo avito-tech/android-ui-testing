@@ -5,6 +5,8 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.UiController
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.matcher.ViewMatchers
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit
  *
  * Differences:
  *  - We wait for focus on field
+ *  - We wait for at least one text changed event
  *  - We use InputConnection API (for software keyboards) instead of injecting key events to
  *    (window or input managers)
  *
@@ -40,19 +43,12 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
     override fun perform(uiController: UiController, view: View) {
         view as EditText
 
+        if (stringToBeTyped.isEmpty()) {
+            return
+        }
+
         tapForFocus(uiController = uiController, editText = view)
-
-        val context = (
-            InstrumentationRegistry
-                .getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            )
-            .getFieldByReflectionWithAnyField("mIInputContext")
-
-        context.executeMethod("beginBatchEdit")
-        context.executeMethod("finishComposingText")
-        context.executeMethod("commitText", stringToBeTyped, 1)
-        context.executeMethod("endBatchEdit")
+        writeText(uiController = uiController, editText = view)
 
         uiController.loopMainThreadUntilIdle()
     }
@@ -70,9 +66,44 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
         }
     }
 
+    private fun writeText(uiController: UiController, editText: EditText) {
+        val context = (
+            InstrumentationRegistry
+                .getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            )
+            .getFieldByReflectionWithAnyField("mIInputContext")
+
+        var textChangedAtLeastOnce = false
+        editText.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                    textChangedAtLeastOnce = true
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+        )
+
+        context.executeMethod("beginBatchEdit")
+        context.executeMethod("finishComposingText")
+        context.executeMethod("commitText", stringToBeTyped, 1)
+        context.executeMethod("endBatchEdit")
+
+        waitMainLoopFor(uiController) {
+            Assert.assertThat(
+                "Failed to write text. Typing event has sent but hasn't handled",
+                textChangedAtLeastOnce,
+                Matchers.`is`(true)
+            )
+        }
+    }
+
     private fun waitMainLoopFor(uiController: UiController, action: () -> Unit) = waitFor(
         frequencyMs = 100,
-        timeoutMs = TimeUnit.SECONDS.toMillis(5),
+        timeoutMs = TimeUnit.SECONDS.toMillis(3),
         allowedExceptions = setOf(Throwable::class.java),
         sleepAction = { delay -> uiController.loopMainThreadForAtLeast(delay) },
         action = action

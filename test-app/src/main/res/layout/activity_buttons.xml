@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <Button
         android:id="@+id/button_enabled"
@@ -30,5 +32,24 @@
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="Disabled" />
+
+    <Button
+        android:id="@+id/button_non_clickable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Non clickable" />
+
+    <Button
+        android:id="@+id/button_non_long_clickable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Non long-clickable" />
+
+    <TextView
+        android:id="@+id/button_non_long_clickable_clicked_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clicked"
+        android:visibility="gone" />
 
 </LinearLayout>

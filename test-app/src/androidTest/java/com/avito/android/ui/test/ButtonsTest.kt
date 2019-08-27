@@ -35,4 +35,22 @@ class ButtonsTest {
     fun longClickOnDisabledButton_mustThrowsPerformException() {
         Screen.buttons.disabledButton.longClick()
     }
+
+    @Test(expected = PerformException::class)
+    fun clickOnNonClickableButton_mustThrowsPerformException() {
+        Screen.buttons.nonClickableButton.click()
+    }
+
+    @Test
+    fun clickOnNonLongClickableButton_performed() {
+        Screen.buttons.nonLongClickableButton.checks.isClickable()
+        Screen.buttons.nonLongClickableButton.click()
+
+        Screen.buttons.nonLongClickableButtonClickIndicatorView.checks.isDisplayed()
+    }
+
+    @Test(expected = PerformException::class)
+    fun longClickOnNonLongClickableButton_mustThrowsPerformException() {
+        Screen.buttons.nonLongClickableButton.longClick()
+    }
 }

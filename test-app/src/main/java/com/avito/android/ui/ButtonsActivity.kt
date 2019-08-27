@@ -13,39 +13,13 @@ class ButtonsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buttons)
 
-        val buttonEnabledClickedTextView = findViewById<TextView>(R.id.button_enabled_clicked_text_view)
-        val buttonEnabledLongClickedTextView = findViewById<TextView>(R.id.button_enabled_long_clicked_text_view)
+        setupEnabledButton()
+        setupDisabledButton()
+        setupNonClickableButton()
+        setupNonLongClickableButton()
+    }
 
-        findViewById<Button>(R.id.button_enabled).apply {
-            setOnClickListener {
-                buttonEnabledClickedTextView.toggleVisibility()
-
-                postDelayed(
-                    {
-                        runOnUiThread {
-                            buttonEnabledClickedTextView.toggleVisibility()
-                        }
-                    },
-                    TimeUnit.SECONDS.toMillis(3)
-                )
-            }
-
-            setOnLongClickListener {
-                buttonEnabledLongClickedTextView.toggleVisibility()
-
-                postDelayed(
-                    {
-                        runOnUiThread {
-                            buttonEnabledLongClickedTextView.toggleVisibility()
-                        }
-                    },
-                    TimeUnit.SECONDS.toMillis(3)
-                )
-
-                true
-            }
-        }
-
+    private fun setupDisabledButton() {
         findViewById<Button>(R.id.button_disabled).apply {
             setOnClickListener {
                 Toast.makeText(context, "Disabled clicked", Toast.LENGTH_LONG).show()
@@ -55,6 +29,57 @@ class ButtonsActivity : AppCompatActivity() {
                 Toast.makeText(context, "Disabled long clicked", Toast.LENGTH_LONG).show()
                 true
             }
+        }
+    }
+
+    private fun setupEnabledButton() {
+        val buttonEnabledClickedTextView = findViewById<View>(
+            R.id.button_enabled_clicked_text_view
+        )
+        val buttonEnabledLongClickedTextView = findViewById<View>(
+            R.id.button_enabled_long_clicked_text_view
+        )
+
+        findViewById<Button>(R.id.button_enabled).apply {
+            setOnClickListener {
+                buttonEnabledClickedTextView.visibility = View.VISIBLE
+            }
+
+            setOnLongClickListener {
+                buttonEnabledLongClickedTextView.visibility = View.VISIBLE
+                true
+            }
+        }
+    }
+
+    private fun setupNonClickableButton() {
+        findViewById<Button>(R.id.button_non_clickable).apply {
+            setOnClickListener {
+                Toast.makeText(context, "Non clickable clicked", Toast.LENGTH_LONG).show()
+            }
+
+            setOnLongClickListener {
+                Toast.makeText(context, "Non clickable long clicked", Toast.LENGTH_LONG).show()
+                true
+            }
+            isClickable = false
+        }
+    }
+
+    private fun setupNonLongClickableButton() {
+        val clickIndicatorView = findViewById<View>(
+            R.id.button_non_long_clickable_clicked_text_view
+        )
+        findViewById<Button>(R.id.button_non_long_clickable).apply {
+            setOnClickListener {
+                clickIndicatorView.visibility = View.VISIBLE
+            }
+
+            setOnLongClickListener {
+                Toast.makeText(context, "Non long-clickable long clicked", Toast.LENGTH_LONG).show()
+                true
+            }
+            isLongClickable = false
         }
     }
 }

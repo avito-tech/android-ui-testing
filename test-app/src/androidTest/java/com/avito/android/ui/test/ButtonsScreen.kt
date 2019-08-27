@@ -7,7 +7,16 @@ import com.avito.android.ui.R
 
 class ButtonsScreen : PageObject() {
     val enabledButton: ViewElement = element(withId(R.id.button_enabled))
-    val enabledButtonClickIndicatorView: ViewElement = element(withId(R.id.button_enabled_clicked_text_view))
-    val enabledButtonLongClickIndicatorView: ViewElement = element(withId(R.id.button_enabled_long_clicked_text_view))
+    val enabledButtonClickIndicatorView: ViewElement = element(
+        withId(R.id.button_enabled_clicked_text_view)
+    )
+    val enabledButtonLongClickIndicatorView: ViewElement = element(
+        withId(R.id.button_enabled_long_clicked_text_view)
+    )
     val disabledButton: ViewElement = element(withId(R.id.button_disabled))
+    val nonClickableButton: ViewElement = element(withId(R.id.button_non_clickable))
+    val nonLongClickableButton: ViewElement = element(withId(R.id.button_non_long_clickable))
+    val nonLongClickableButtonClickIndicatorView: ViewElement = element(
+        withId(R.id.button_non_long_clickable_clicked_text_view)
+    )
 }

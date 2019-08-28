@@ -7,3 +7,4 @@ local.properties
 !.idea/inspectionProfiles
 !.idea/dictionaries
 **/gen/*
+captures/*

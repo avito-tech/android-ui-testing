@@ -10,7 +10,9 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:text="Test"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"/>
 
 </LinearLayout>

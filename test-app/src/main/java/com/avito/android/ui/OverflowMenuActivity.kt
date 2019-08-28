@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.lang.RuntimeException
 
 class OverflowMenuActivity : AppCompatActivity() {
     lateinit var textView: TextView
@@ -26,6 +27,12 @@ class OverflowMenuActivity : AppCompatActivity() {
             setOnMenuItemClickListener {
                 textView.text = label
                 true
+            }
+        }
+        menu.add("do not click on me").apply {
+            setShowAsAction(showAsAction)
+            setOnMenuItemClickListener {
+                throw RuntimeException("Missed click!")
             }
         }
         return true

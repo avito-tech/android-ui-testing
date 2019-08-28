@@ -8,7 +8,7 @@ import androidx.test.espresso.ViewAssertion
 import org.hamcrest.Matcher
 
 /**
- * register your interceptors in [com.avito.android.test.UITestConfig]
+ * Register your interceptors in [com.avito.android.test.UITestConfig]
  * intercept() will be called before any action during tests
  */
 interface ActionInterceptor {

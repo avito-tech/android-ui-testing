@@ -20,7 +20,9 @@ import androidx.test.espresso.action.ViewActions.actionWithAssertions
 import androidx.test.espresso.action.CoordinatesProvider
 import com.avito.android.test.UITestConfig
 import com.avito.android.test.element.field.actions.TypeText
+import com.avito.android.test.espresso.action.ActionOnClickableElement
 import com.avito.android.test.espresso.action.ActionOnEnabledElement
+import com.avito.android.test.espresso.action.ActionOnLongClickableElement
 import com.avito.android.test.espresso.action.WaitForIdleAction
 import com.avito.android.test.espresso.action.click.inProcessClickAction
 import com.avito.android.test.espresso.action.click.inProcessLongClickAction
@@ -64,59 +66,76 @@ object EspressoActions {
         )
     }
 
-    fun click(type: UITestConfig.ClickType = UITestConfig.clicksType,
-              coordinatesProvider: CoordinatesProvider = GeneralLocation.VISIBLE_CENTER): ViewAction =
-        ActionOnEnabledElement(
-            when (type) {
-                is UITestConfig.ClickType.EspressoClick -> when (type.rollbackPolicy) {
+    fun click(
+        type: UITestConfig.ClickType = UITestConfig.clicksType,
+        coordinatesProvider: CoordinatesProvider = GeneralLocation.VISIBLE_CENTER
+    ): ViewAction {
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.DoNothing -> defaultEspressoClickAction(coordinatesProvider)
+        fun safeAction(action: ViewAction) = ActionOnEnabledElement(
+            ActionOnClickableElement(
+                action
+            )
+        )
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.TryOneMoreClick -> defaultEspressoClickAction(
-                            coordinatesProvider, ActionOnEnabledElement(defaultEspressoClickAction(coordinatesProvider))
-                    )
+        val clickAction = when (type) {
+            is UITestConfig.ClickType.EspressoClick -> when (type.rollbackPolicy) {
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.Fail -> defaultEspressoClickAction(
-                            coordinatesProvider, object : ViewAction {
-                            override fun getDescription(): String =
-                                "fake fail action after click interpreted as long click"
+                is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.DoNothing -> defaultEspressoClickAction(
+                    coordinatesProvider
+                )
 
-                            override fun getConstraints(): Matcher<View> = IsAnything()
-
-                            override fun perform(uiController: UiController?, view: View?) {
-                                throw PerformException.Builder()
-                                    .withActionDescription("click interpreted as long click")
-                                    .withViewDescription("view")
-                                    .build()
-                            }
-                        }
-                    )
+                is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.TryOneMoreClick -> {
+                    val rollbackAction = safeAction(defaultEspressoClickAction(coordinatesProvider))
+                    return defaultEspressoClickAction(coordinatesProvider, rollbackAction)
                 }
 
-                is UITestConfig.ClickType.InProcessClick -> inProcessClickAction(coordinatesProvider)
+                is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.Fail -> defaultEspressoClickAction(
+                    coordinatesProvider, object : ViewAction {
+                        override fun getDescription(): String =
+                            "fake fail action after click interpreted as long click"
+
+                        override fun getConstraints(): Matcher<View> = IsAnything()
+
+                        override fun perform(uiController: UiController?, view: View?) {
+                            throw PerformException.Builder()
+                                .withActionDescription("click interpreted as long click")
+                                .withViewDescription("view")
+                                .build()
+                        }
+                    }
+                )
             }
-        )
+
+            is UITestConfig.ClickType.InProcessClick -> inProcessClickAction(coordinatesProvider)
+        }
+        return safeAction(clickAction)
+    }
 
     fun longClick(type: UITestConfig.ClickType = UITestConfig.clicksType): ViewAction =
         ActionOnEnabledElement(
-            when (type) {
-                is UITestConfig.ClickType.EspressoClick -> ViewActions.longClick()
-                is UITestConfig.ClickType.InProcessClick -> inProcessLongClickAction()
-            }
+            ActionOnLongClickableElement(
+                when (type) {
+                    is UITestConfig.ClickType.EspressoClick -> ViewActions.longClick()
+                    is UITestConfig.ClickType.InProcessClick -> inProcessLongClickAction()
+                }
+            )
         )
 
     /**
      * Same as [ViewActions.click] but with usage of given coordinates provider
      */
-    private fun defaultEspressoClickAction(coordinatesProvider: CoordinatesProvider,
-                                           rollbackAction: ViewAction? = null): ViewAction =
-            actionWithAssertions(
-                    GeneralClickAction(
-                            Tap.SINGLE,
-                            coordinatesProvider,
-                            Press.FINGER,
-                            InputDevice.SOURCE_UNKNOWN,
-                            MotionEvent.BUTTON_PRIMARY,
-                            rollbackAction)
+    private fun defaultEspressoClickAction(
+        coordinatesProvider: CoordinatesProvider,
+        rollbackAction: ViewAction? = null
+    ): ViewAction =
+        actionWithAssertions(
+            GeneralClickAction(
+                Tap.SINGLE,
+                coordinatesProvider,
+                Press.FINGER,
+                InputDevice.SOURCE_UNKNOWN,
+                MotionEvent.BUTTON_PRIMARY,
+                rollbackAction
             )
+        )
 }

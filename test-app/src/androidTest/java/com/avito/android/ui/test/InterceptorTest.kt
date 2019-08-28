@@ -20,7 +20,7 @@ class InterceptorTest {
         UITestConfig.actionInterceptors += HumanReadableActionInterceptor { intercepted = it }
         Screen.visibility.label.click()
 
-        Assert.assertEquals("single click on enabled element on AppCompatTextView(id=text;text=Test)", intercepted)
+        Assert.assertEquals("single click on clickable element on enabled element on AppCompatTextView(id=text;text=Test)", intercepted)
     }
 
     @Test

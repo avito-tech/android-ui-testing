@@ -1,12 +1,13 @@
 package com.avito.android.test.element.field.actions
 
+import android.app.Application
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.test.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.matcher.ViewMatchers
@@ -68,8 +69,7 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
 
     private fun writeText(uiController: UiController, editText: EditText) {
         val context = (
-                InstrumentationRegistry
-                    .getContext()
+                ApplicationProvider.getApplicationContext<Application>()
                     .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 )
             .getFieldByReflectionWithAnyField("mIInputContext")

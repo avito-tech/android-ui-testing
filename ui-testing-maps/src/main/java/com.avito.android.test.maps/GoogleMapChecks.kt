@@ -1,6 +1,6 @@
 package com.avito.android.test.maps
 
-import android.support.test.internal.runner.junit4.statement.UiThreadStatement
+import androidx.test.internal.runner.junit4.statement.UiThreadStatement
 import com.avito.android.test.maps.provider.GoogleMapProvider
 import com.avito.android.test.waitFor
 import com.google.android.gms.maps.model.LatLng

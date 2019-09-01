@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import java.lang.Math.abs
+import kotlin.math.abs
 
 fun hasTheSameCoordinatesAs(expected: LatLng): Matcher<LatLng> = object : BaseMatcher<LatLng>() {
 

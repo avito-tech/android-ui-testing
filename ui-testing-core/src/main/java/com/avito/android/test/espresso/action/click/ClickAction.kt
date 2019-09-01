@@ -90,7 +90,7 @@ class ClickAction(
                 uiController.loopMainThreadForAtLeast(ViewConfiguration.getPressedStateDuration().toLong())
 
                 /**
-                 * according with [android.support.test.espresso.action.GeneralClickAction.perform]
+                 * according with [androidx.test.espresso.action.GeneralClickAction.perform]
                  */
                 if (view is WebView) {
                     uiController.loopMainThreadForAtLeast(ViewConfiguration.getDoubleTapTimeout().toLong())
@@ -131,7 +131,7 @@ class ClickAction(
                 uiController.loopMainThreadForAtLeast(ViewConfiguration.getPressedStateDuration().toLong())
 
                 /**
-                 * according with [android.support.test.espresso.action.GeneralClickAction.perform]
+                 * according with [androidx.test.espresso.action.GeneralClickAction.perform]
                  */
                 if (view is WebView) {
                     uiController.loopMainThreadForAtLeast(ViewConfiguration.getDoubleTapTimeout().toLong())

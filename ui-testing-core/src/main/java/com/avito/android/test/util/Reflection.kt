@@ -1,5 +1,6 @@
 package com.avito.android.test.util
 
+@Suppress("UNCHECKED_CAST")
 internal fun <T> Any.getFieldByReflection(fieldName: String): T =
     this::class.java.getDeclaredField(fieldName)
         .also { it.isAccessible = true }
@@ -11,11 +12,10 @@ internal fun Any.getFieldByReflectionWithAnyField(fieldName: String): Any =
         .get(this)
 
 internal fun Any.executeMethod(method: String, vararg arguments: Any?) =
-    javaClass.methods.find { it.name == method }!!
+    javaClass.methods
+        .find { it.name == method }!!
         .apply { isAccessible = true }
-        .let {
-            it.invoke(
-                this@executeMethod,
-                *arguments
-            )
-        }
+        .invoke(
+            this@executeMethod,
+            *arguments
+        )

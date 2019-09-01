@@ -1,10 +1,10 @@
 package com.avito.android.test.interceptor
 
-import androidx.test.espresso.assertion.describe
 import android.view.View
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.assertion.describe
 import com.avito.android.test.util.describe
 
 class HumanReadableActionInterceptor(private val consumer: (String) -> Unit) :

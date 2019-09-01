@@ -1,6 +1,5 @@
 package com.avito.android.test.espresso
 
-import androidx.test.espresso.action.SwipeDirection
 import android.view.View
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
@@ -9,6 +8,7 @@ import androidx.test.espresso.action.GeneralSwipeAction
 import androidx.test.espresso.action.PrecisionDescriber
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Swipe
+import androidx.test.espresso.action.SwipeDirection
 import androidx.test.espresso.action.Swiper
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.actionWithAssertions

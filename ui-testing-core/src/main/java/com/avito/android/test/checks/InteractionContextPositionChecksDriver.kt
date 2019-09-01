@@ -1,8 +1,8 @@
 package com.avito.android.test.checks
 
-import androidx.test.espresso.ViewAssertion
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.ViewAssertion
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.UITestConfig
 import com.avito.android.test.espresso.action.recycler.actionOnItemAtPosition

@@ -4,7 +4,6 @@ import com.avito.android.test.Device
 import com.avito.android.ui.EditTextActivity
 import org.junit.Rule
 import org.junit.Test
-import java.lang.StringBuilder
 
 class EditTextTest {
 

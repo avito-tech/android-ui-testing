@@ -13,6 +13,7 @@ import androidx.test.espresso.util.TreeIterables.breadthFirstViewTraversal
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.StringDescription
+import kotlin.math.abs
 
 object AvitoPositionAssertions {
 
@@ -60,7 +61,7 @@ object AvitoPositionAssertions {
 
         assertThat(
             failDescription.toString(),
-            Math.abs(location1.absoluteLocation - location2.absoluteLocation)
+            abs(location1.absoluteLocation - location2.absoluteLocation)
                     < PIXEL_COMPARISON_TOLERANCE,
             equalTo(true)
         )
@@ -77,7 +78,7 @@ object AvitoPositionAssertions {
     ) : ScreenLocation {
         constructor(viewMatcher: Matcher<View>, root: View?) : this(
             findView(viewMatcher, root),
-            "vertical center of " + viewMatcher.toString()
+            "vertical center of $viewMatcher"
         )
 
         override val absoluteLocation: Int
@@ -94,7 +95,7 @@ object AvitoPositionAssertions {
     ) : ScreenLocation {
         constructor(viewMatcher: Matcher<View>, root: View?) : this(
             findView(viewMatcher, root),
-            "bottom of " + viewMatcher.toString()
+            "bottom of $viewMatcher"
         )
 
         override val absoluteLocation: Int

@@ -1,9 +1,9 @@
 package com.avito.android.test.page_object
 
-import androidx.test.espresso.action.SwipeDirections
 import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.SwipeDirections
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import com.avito.android.test.InteractionContext

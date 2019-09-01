@@ -1,9 +1,9 @@
 package com.avito.android.test.action
 
+import android.view.View
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
-import android.view.View
 import com.avito.android.test.UITestConfig
 import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.waitToPerform

@@ -72,20 +72,12 @@ interface Checks : LabelChecks {
     /**
      * Asserts that view displayed is completely left of
      * the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if there is more than 1 pixel of horizontal overlap.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isLeftOf(matcher: Matcher<View>)
 
     /**
      * Asserts that view displayed is completely right of
      * the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if there is more than 1 pixel of horizontal overlap.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isRightOf(matcher: Matcher<View>)
 
@@ -95,10 +87,6 @@ interface Checks : LabelChecks {
      *
      * <p>The left 'x' coordinate of the view displayed must equal the left 'x'
      * coordinate of the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if the views are not aligned to the left.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isLeftAlignedWith(matcher: Matcher<View>)
 
@@ -108,30 +96,18 @@ interface Checks : LabelChecks {
      *
      * <p>The right 'x' coordinate of the view displayed must equal the right 'x'
      * coordinate of the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if the views are not aligned to the right.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isRightAlignedWith(matcher: Matcher<View>)
 
     /**
      * Asserts that view displayed is completely above
      * the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if there is more than 1 pixel of vertical overlap.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isAbove(matcher: Matcher<View>)
 
     /**
      * Asserts that view displayed is completely
      * below the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if there is more than 1 pixel of vertical overlap.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isBelow(matcher: Matcher<View>)
 
@@ -141,10 +117,6 @@ interface Checks : LabelChecks {
      *
      * The bottom 'y' coordinate of the view displayed must equal the bottom 'y'
      * coordinate of the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if the views are not aligned bottom.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isBottomAlignedWith(matcher: Matcher<View>)
 
@@ -154,10 +126,6 @@ interface Checks : LabelChecks {
      *
      * The top 'y' coordinate of the view displayed must equal the top 'y'
      * coordinate of the view matching the given matcher.
-     *
-     * @throws AssertionFailedError if the views are not aligned top.
-     * @throws AmbiguousViewMatcherException if more than one view matches the given matcher.
-     * @throws NoMatchingViewException if no views match the given matcher.
      */
     fun isTopAlignedWith(matcher: Matcher<View>)
 

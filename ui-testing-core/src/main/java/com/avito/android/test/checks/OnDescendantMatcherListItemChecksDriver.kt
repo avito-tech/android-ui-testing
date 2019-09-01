@@ -1,10 +1,10 @@
 package com.avito.android.test.checks
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.ViewInteraction
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.ViewInteraction
 import com.avito.android.test.UITestConfig
 import com.avito.android.test.espresso.action.recycler.actionOnItem
 import com.avito.android.test.interceptor.AssertionInterceptor

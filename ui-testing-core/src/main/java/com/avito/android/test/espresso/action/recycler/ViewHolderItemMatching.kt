@@ -1,13 +1,13 @@
 package com.avito.android.test.espresso.action.recycler
 
-import android.support.test.espresso.util.HumanReadables
-import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.View
-import java.util.ArrayList
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.util.HumanReadables
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
+import java.util.ArrayList
 
 /**
  * Finds positions of items in [RecyclerView] which is matching given viewHolderMatcher.

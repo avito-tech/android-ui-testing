@@ -2,9 +2,9 @@ package com.avito.android.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class OverflowMenuActivity : AppCompatActivity() {
     lateinit var textView: TextView

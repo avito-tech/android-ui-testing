@@ -1,13 +1,12 @@
 package com.avito.android.test.page_object
 
-import android.support.design.widget.TabLayout
-import android.support.test.espresso.PerformException
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.util.HumanReadables
 import android.view.View
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.util.HumanReadables
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.ActionsDriver
@@ -16,6 +15,7 @@ import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
 import com.avito.android.test.matcher.TabLayoutSelectMatcher
 import com.avito.android.test.matcher.TabLayoutTabsCountMatcher
+import com.google.android.material.tabs.TabLayout
 import org.hamcrest.Matcher
 
 class TabLayoutElement(

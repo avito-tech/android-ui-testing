@@ -1,6 +1,6 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksImpl

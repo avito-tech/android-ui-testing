@@ -1,6 +1,6 @@
 package com.avito.android.test.matcher
 
-import android.support.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.BoundedMatcher
 import android.view.View
 import android.widget.TextView
 import org.hamcrest.Description

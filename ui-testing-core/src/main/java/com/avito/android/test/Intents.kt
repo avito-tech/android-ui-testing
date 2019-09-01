@@ -3,10 +3,10 @@ package com.avito.android.test
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
-import android.support.test.espresso.intent.Intents
-import android.support.test.espresso.intent.OngoingStubbing
-import android.support.test.espresso.intent.matcher.IntentMatchers
-import android.support.test.espresso.intent.matcher.UriMatchers
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.OngoingStubbing
+import androidx.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.intent.matcher.UriMatchers
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 

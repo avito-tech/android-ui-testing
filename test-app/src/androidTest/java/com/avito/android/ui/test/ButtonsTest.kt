@@ -1,6 +1,6 @@
 package com.avito.android.ui.test
 
-import android.support.test.espresso.PerformException
+import androidx.test.espresso.PerformException
 import com.avito.android.ui.ButtonsActivity
 import org.junit.Rule
 import org.junit.Test

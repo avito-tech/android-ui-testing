@@ -1,9 +1,9 @@
 package com.avito.android.test.espresso.assertion
 
-import android.support.test.espresso.NoMatchingViewException
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.matcher.ViewMatchers.assertThat
 import android.view.View
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import org.hamcrest.Matchers.`is`
 
 class ViewExistsAssertion : ViewAssertion {

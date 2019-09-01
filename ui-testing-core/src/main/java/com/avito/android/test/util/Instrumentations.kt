@@ -1,14 +1,10 @@
 package com.avito.android.test.util
 
 import android.app.Activity
-import android.app.Instrumentation
 import android.os.Looper
-import android.support.test.InstrumentationRegistry
-import android.support.test.internal.runner.junit4.statement.UiThreadStatement
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
-import android.support.test.runner.lifecycle.Stage
-import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
 
 fun getCurrentActivity(): Activity {
     var currentActivity: Activity? = null

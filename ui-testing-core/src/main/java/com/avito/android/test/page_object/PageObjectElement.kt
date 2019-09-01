@@ -1,6 +1,6 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import android.view.View
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext

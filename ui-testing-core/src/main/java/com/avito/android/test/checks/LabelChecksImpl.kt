@@ -1,13 +1,13 @@
 package com.avito.android.test.checks
 
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.LayoutMatchers
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withTagValue
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.LayoutMatchers
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withTagValue
 import com.avito.android.test.matcher.CompoundDrawableMatcher
 import com.avito.android.test.matcher.TextViewLinesMatcher
 import com.avito.android.test.matcher.WithHintEndingMatcher

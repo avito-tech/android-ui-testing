@@ -1,7 +1,7 @@
 package com.avito.android.ui.test
 
 import android.app.Activity
-import android.support.test.rule.ActivityTestRule
+import androidx.test.rule.ActivityTestRule
 import org.junit.rules.RuleChain
 
 inline fun <reified T : Activity> screenRule(launchActivity: Boolean = false): GodRuleChain<T> =

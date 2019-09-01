@@ -1,9 +1,9 @@
 package com.avito.android.test.matcher
 
-import android.support.design.widget.TextInputLayout
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 

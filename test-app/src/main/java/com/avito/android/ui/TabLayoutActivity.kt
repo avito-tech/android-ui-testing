@@ -1,8 +1,8 @@
 package com.avito.android.ui
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
 
 class TabLayoutActivity : AppCompatActivity() {
 

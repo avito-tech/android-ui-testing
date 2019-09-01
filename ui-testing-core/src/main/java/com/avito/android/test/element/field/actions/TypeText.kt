@@ -1,15 +1,15 @@
 package com.avito.android.test.element.field.actions
 
 import android.content.Context
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.test.InstrumentationRegistry
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.util.executeMethod
 import com.avito.android.test.util.getFieldByReflectionWithAnyField
@@ -68,10 +68,10 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
 
     private fun writeText(uiController: UiController, editText: EditText) {
         val context = (
-            InstrumentationRegistry
-                .getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            )
+                InstrumentationRegistry
+                    .getContext()
+                    .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                )
             .getFieldByReflectionWithAnyField("mIInputContext")
 
         var textChangedAtLeastOnce = false
@@ -79,7 +79,12 @@ internal class TypeText(private val stringToBeTyped: String) : ViewAction {
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {}
 
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                     textChangedAtLeastOnce = true
                 }
 

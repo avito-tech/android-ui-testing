@@ -16,28 +16,16 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.4.11-snapshot"
+version = "0.5.0-snapshot"
 
 val minSdk: String by project
 val targetSdk: String by project
 val androidStudioPath: String? by project
-val supportVersion: String by project
 
 allprojects {
     repositories {
         google()
         jcenter()
-    }
-}
-
-subprojects {
-    configurations.all {
-        resolutionStrategy {
-            force("com.android.support:support-v4:$supportVersion")
-            force("com.android.support:appcompat-v7:$supportVersion")
-            force("com.android.support:recyclerview-v7:$supportVersion")
-            force("com.android.support:design:$supportVersion")
-        }
     }
 }
 
@@ -131,7 +119,7 @@ subprojects {
 }
 
 tasks.withType<Wrapper> {
-    gradleVersion = "5.5.1"
+    gradleVersion = "5.6.1"
     distributionType = Wrapper.DistributionType.BIN
 }
 

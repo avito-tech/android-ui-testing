@@ -1,6 +1,6 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.ViewAssertion
+import androidx.test.espresso.ViewAssertion
 import android.view.View
 import android.widget.ProgressBar
 import com.avito.android.test.InteractionContext

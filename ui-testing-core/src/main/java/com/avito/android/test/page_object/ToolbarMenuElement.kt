@@ -1,10 +1,10 @@
 package com.avito.android.test.page_object
 
 import android.annotation.SuppressLint
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.v7.view.menu.MenuView
 import android.view.View
+import androidx.appcompat.view.menu.MenuView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.BoundedMatcher
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.checks.Checks

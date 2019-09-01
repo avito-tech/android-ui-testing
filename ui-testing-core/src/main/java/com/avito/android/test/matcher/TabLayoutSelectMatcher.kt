@@ -1,8 +1,8 @@
 package com.avito.android.test.matcher
 
-import android.support.design.widget.TabLayout
-import android.support.test.espresso.matcher.BoundedMatcher
 import android.view.View
+import androidx.test.espresso.matcher.BoundedMatcher
+import com.google.android.material.tabs.TabLayout
 import org.hamcrest.Description
 
 internal class TabLayoutSelectMatcher(private val position: Int) :

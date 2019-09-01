@@ -1,13 +1,13 @@
 package com.avito.android.test
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.ViewInteraction
-import android.support.test.espresso.assertion.isDoesntExistAssertion
-import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import android.support.v7.widget.RecyclerView
+import androidx.test.espresso.assertion.isDoesntExistAssertion
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.espresso.action.GroupedViewAction
@@ -19,7 +19,6 @@ import com.forkingcode.espresso.contrib.DescendantViewActions.checkDescendantVie
 import com.forkingcode.espresso.contrib.DescendantViewActions.performDescendantAction
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-import java.lang.RuntimeException
 
 interface InteractionContext : ActionsDriver, ChecksDriver {
 

@@ -1,25 +1,21 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.CoordinatesProvider
-import android.support.test.espresso.action.GeneralLocation.BOTTOM_CENTER
-import android.support.test.espresso.action.GeneralLocation.CENTER
-import android.support.test.espresso.action.GeneralLocation.CENTER_LEFT
-import android.support.test.espresso.action.GeneralLocation.CENTER_RIGHT
-import android.support.test.espresso.action.GeneralLocation.TOP_CENTER
-import android.support.test.espresso.action.PrecisionDescriber
-import android.support.test.espresso.action.Press
-import android.support.test.espresso.action.Swipe
-import android.support.test.espresso.action.SwipeDirection
-import android.support.test.espresso.action.SwipeDirections.BOTTOM_TO_TOP
-import android.support.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
-import android.support.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
-import android.support.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
-import android.support.test.espresso.action.Swiper
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
-import android.support.v7.widget.RecyclerView
+import androidx.test.espresso.action.SwipeDirection
+import androidx.test.espresso.action.SwipeDirections.BOTTOM_TO_TOP
+import androidx.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
+import androidx.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
+import androidx.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.CoordinatesProvider
+import androidx.test.espresso.action.GeneralLocation
+import androidx.test.espresso.action.PrecisionDescriber
+import androidx.test.espresso.action.Press
+import androidx.test.espresso.action.Swipe
+import androidx.test.espresso.action.Swiper
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.RecyclerViewInteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -276,7 +272,7 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
          */
         fun pullToRefresh() = actions.swipe(object : SwipeDirection {
             override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
-                return CENTER to BOTTOM_CENTER
+                return GeneralLocation.CENTER to GeneralLocation.BOTTOM_CENTER
             }
         }, Swipe.SLOW, Press.FINGER)
 
@@ -287,12 +283,12 @@ open class ListElement(interactionContext: InteractionContext) : ViewElement(int
         ) {
             actions.swipe(object : SwipeDirection {
                 override fun toCoordinateProvider():
-                    Pair<CoordinatesProvider, CoordinatesProvider> {
+                        Pair<CoordinatesProvider, CoordinatesProvider> {
                     return when (direction) {
-                        TOP_TO_BOTTOM -> CENTER to BOTTOM_CENTER
-                        BOTTOM_TO_TOP -> CENTER to TOP_CENTER
-                        LEFT_TO_RIGHT -> CENTER to CENTER_RIGHT
-                        RIGHT_TO_LEFT -> CENTER to CENTER_LEFT
+                        TOP_TO_BOTTOM -> GeneralLocation.CENTER to GeneralLocation.BOTTOM_CENTER
+                        BOTTOM_TO_TOP -> GeneralLocation.CENTER to GeneralLocation.TOP_CENTER
+                        LEFT_TO_RIGHT -> GeneralLocation.CENTER to GeneralLocation.CENTER_RIGHT
+                        RIGHT_TO_LEFT -> GeneralLocation.CENTER to GeneralLocation.CENTER_LEFT
                         else -> throw IllegalArgumentException(
                             "Can't do \"swipe\". Argument $direction is not supported"
                         )

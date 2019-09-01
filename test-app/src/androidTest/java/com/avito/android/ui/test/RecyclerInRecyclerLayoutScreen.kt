@@ -1,20 +1,15 @@
 package com.avito.android.ui.test
 
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.view.View
 import android.widget.FrameLayout
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.avito.android.test.InteractionContext
-import com.avito.android.test.action.Actions
-import com.avito.android.test.checks.Checks
 import com.avito.android.test.page_object.ListElement
 import com.avito.android.test.page_object.PageObject
-import com.avito.android.test.page_object.PageObjectElement
 import com.avito.android.test.page_object.ViewElement
 import com.avito.android.ui.R
-import org.hamcrest.Matcher
 
 class RecyclerInRecyclerLayoutScreen : PageObject() {
 

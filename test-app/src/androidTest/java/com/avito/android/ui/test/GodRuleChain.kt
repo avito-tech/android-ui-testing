@@ -3,7 +3,7 @@ package com.avito.android.ui.test
 import android.app.Activity
 import android.app.Instrumentation
 import android.content.Intent
-import android.support.test.rule.ActivityTestRule
+import androidx.test.rule.ActivityTestRule
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.Description

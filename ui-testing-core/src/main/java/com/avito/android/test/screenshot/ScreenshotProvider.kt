@@ -1,7 +1,7 @@
 package com.avito.android.test.screenshot
 
 import android.graphics.Bitmap
-import android.support.test.runner.screenshot.Screenshot
+import androidx.test.runner.screenshot.Screenshot
 
 interface ScreenshotProvider {
 

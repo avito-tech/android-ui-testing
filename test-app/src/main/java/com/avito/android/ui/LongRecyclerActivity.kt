@@ -2,13 +2,13 @@ package com.avito.android.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class LongRecyclerActivity : AppCompatActivity() {
 
@@ -26,11 +26,11 @@ class LongRecyclerActivity : AppCompatActivity() {
         private const val EXTRA_LIST = "RECYCLER_LIST"
 
         fun intent(list: ArrayList<String>): (Intent) -> Intent =
-                { it.putStringArrayListExtra(EXTRA_LIST, list) }
+            { it.putStringArrayListExtra(EXTRA_LIST, list) }
     }
 
     private class Adapter(private val hints: List<String>) :
-            RecyclerView.Adapter<LabelHolder>() {
+        RecyclerView.Adapter<LabelHolder>() {
 
         override fun onBindViewHolder(holder: LabelHolder, position: Int) {
             holder.title.text = hints[position]
@@ -38,7 +38,7 @@ class LongRecyclerActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LabelHolder {
             val inflate: (layoutId: Int) -> View =
-                    { LayoutInflater.from(parent.context).inflate(it, parent, false) }
+                { LayoutInflater.from(parent.context).inflate(it, parent, false) }
             return LabelHolder(inflate(R.layout.long_recycler))
         }
 

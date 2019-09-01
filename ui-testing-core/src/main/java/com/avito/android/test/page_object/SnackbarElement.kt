@@ -1,9 +1,10 @@
 package com.avito.android.test.page_object
 
-import android.support.design.widget.Snackbar
-import android.support.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
-import android.support.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
+import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.espresso.EspressoActions
+import com.avito.android.test.ui.R
+import com.google.android.material.snackbar.Snackbar
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
@@ -29,14 +30,14 @@ class SnackbarElement(textMatcher: Matcher<String>? = null) : ViewElement(
 
     val message = ViewElement(
         Matchers.allOf(
-            ViewMatchers.withId(android.support.design.R.id.snackbar_text),
+            ViewMatchers.withId(R.id.snackbar_text),
             ViewMatchers.isDescendantOfA(matcher)
         )
     )
 
     val button = ViewElement(
         Matchers.allOf(
-            ViewMatchers.withId(android.support.design.R.id.snackbar_action),
+            ViewMatchers.withId(R.id.snackbar_action),
             ViewMatchers.isDescendantOfA(matcher)
         )
     )

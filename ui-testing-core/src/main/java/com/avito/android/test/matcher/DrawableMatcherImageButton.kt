@@ -1,8 +1,8 @@
 package com.avito.android.test.matcher
 
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 
 class DrawableMatcherImageButton(
     @DrawableRes private val src: Int? = null,

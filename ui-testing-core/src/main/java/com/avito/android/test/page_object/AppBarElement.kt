@@ -1,15 +1,15 @@
 package com.avito.android.test.page_object
 
-import android.support.design.widget.AppBarLayout
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.action.ActionsImpl
+import com.google.android.material.appbar.AppBarLayout
 import org.hamcrest.Matcher
 
 class AppBarElement(interactionContext: InteractionContext) : ViewElement(interactionContext) {

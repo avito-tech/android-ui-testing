@@ -1,6 +1,6 @@
 package com.avito.android.ui.test
 
-import android.support.test.espresso.action.SwipeDirections
+import androidx.test.espresso.action.SwipeDirections
 import com.avito.android.ui.ButtonsOverRecyclerActivity
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan

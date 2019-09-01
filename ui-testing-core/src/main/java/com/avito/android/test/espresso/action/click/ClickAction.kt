@@ -1,17 +1,17 @@
 package com.avito.android.test.espresso.action.click
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.CoordinatesProvider
-import android.support.test.espresso.action.GeneralLocation
-import android.support.test.espresso.action.PrecisionDescriber
-import android.support.test.espresso.action.Press
-import android.support.test.espresso.action.ViewActions.actionWithAssertions
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.webkit.WebView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.CoordinatesProvider
+import androidx.test.espresso.action.GeneralLocation
+import androidx.test.espresso.action.PrecisionDescriber
+import androidx.test.espresso.action.Press
+import androidx.test.espresso.action.ViewActions.actionWithAssertions
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import org.hamcrest.Matcher
 
 class ClickAction(

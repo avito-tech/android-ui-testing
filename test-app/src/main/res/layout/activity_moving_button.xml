@@ -24,4 +24,5 @@
         android:text="Clicked"
         android:textColor="@color/green"
         android:visibility="gone" />
+
 </FrameLayout>

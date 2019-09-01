@@ -1,9 +1,9 @@
 package com.avito.android.test.page_object
 
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
-import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.checks.Checks

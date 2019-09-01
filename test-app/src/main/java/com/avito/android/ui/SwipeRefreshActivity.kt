@@ -1,8 +1,8 @@
 package com.avito.android.ui
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class SwipeRefreshActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -13,7 +13,7 @@ class SwipeRefreshActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swipe_refresh)
 
-        recycler = findViewById<SwipeRefreshLayout>(R.id.swipe_refresh) as SwipeRefreshLayout
+        recycler = findViewById(R.id.swipe_refresh)
         recycler.setOnRefreshListener(this)
     }
 

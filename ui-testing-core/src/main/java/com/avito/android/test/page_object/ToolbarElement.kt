@@ -1,20 +1,20 @@
 package com.avito.android.test.page_object
 
-import android.support.annotation.StringRes
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withClassName
-import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageButton
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withClassName
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.avito.android.test.Device
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
@@ -43,7 +43,8 @@ import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.TypeSafeMatcher
 
-open class ToolbarElement(interactionContext: InteractionContext) : ViewElement(interactionContext) {
+open class ToolbarElement(interactionContext: InteractionContext) :
+    ViewElement(interactionContext) {
 
     constructor() : this(SimpleInteractionContext(isAssignableFrom(Toolbar::class.java)))
     constructor(matcher: Matcher<View>) : this(SimpleInteractionContext(matcher))
@@ -141,7 +142,7 @@ open class ToolbarElement(interactionContext: InteractionContext) : ViewElement(
         override fun describeTo(description: Description) {
             description.appendText(
                 "Use element.actions.<action> syntax. " +
-                    "Direct access restricted for MenuItems"
+                        "Direct access restricted for MenuItems"
             )
         }
 

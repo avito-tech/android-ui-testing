@@ -1,12 +1,12 @@
 package com.avito.android.test
 
-import androidx.test.espresso.assertion.isDoesntExistAssertion
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.assertion.isDoesntExistAssertion
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import com.avito.android.test.action.ActionsDriver
 import com.avito.android.test.checks.ChecksDriver

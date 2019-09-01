@@ -1,10 +1,10 @@
 package com.avito.android.ui.test
 
+import android.widget.FrameLayout
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import android.widget.FrameLayout
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.page_object.ListElement
 import com.avito.android.test.page_object.PageObject

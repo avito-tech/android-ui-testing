@@ -1,8 +1,8 @@
 package com.avito.android.test.matcher
 
-import androidx.test.espresso.matcher.BoundedMatcher
 import android.view.View
 import android.widget.ImageView
+import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 
 class ImageShownMatcher :

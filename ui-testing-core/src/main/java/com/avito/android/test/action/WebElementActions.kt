@@ -1,7 +1,7 @@
 package com.avito.android.test.action
 
-import androidx.test.espresso.action.SwipeDirection
 import androidx.test.espresso.action.PrecisionDescriber
+import androidx.test.espresso.action.SwipeDirection
 import androidx.test.espresso.action.Swiper
 import androidx.test.espresso.web.sugar.Web
 import androidx.test.espresso.web.webdriver.DriverAtoms

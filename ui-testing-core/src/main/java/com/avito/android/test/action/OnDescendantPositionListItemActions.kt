@@ -1,11 +1,11 @@
 package com.avito.android.test.action
 
-import androidx.test.espresso.action.SwipeDirection
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.PrecisionDescriber
+import androidx.test.espresso.action.SwipeDirection
 import androidx.test.espresso.action.Swiper
 import com.avito.android.test.espresso.EspressoActions
 import com.avito.android.test.espresso.action.TextViewReadAction

@@ -1,11 +1,11 @@
 package com.avito.android.test.matcher
 
 import android.content.res.Resources
+import android.view.View
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.test.espresso.matcher.BoundedMatcher
-import android.view.View
-import android.widget.TextView
 import com.avito.android.test.util.getResourceName
 import com.avito.android.test.util.matchDrawable
 import org.hamcrest.Description
@@ -30,17 +30,17 @@ class CompoundDrawableMatcher(
         this.description = getDescription(context.resources)
 
         return left.matchDrawable(context, compoundDrawables[LEFT], tint) &&
-            right.matchDrawable(context, compoundDrawables[RIGHT], tint) &&
-            top.matchDrawable(context, compoundDrawables[TOP], tint) &&
-            bottom.matchDrawable(context, compoundDrawables[BOTTOM], tint)
+                right.matchDrawable(context, compoundDrawables[RIGHT], tint) &&
+                top.matchDrawable(context, compoundDrawables[TOP], tint) &&
+                bottom.matchDrawable(context, compoundDrawables[BOTTOM], tint)
     }
 
     private fun getDescription(resources: Resources): String {
         return "left=${left.getResourceName(resources)}, " +
-            "top=${top.getResourceName(resources)}, " +
-            "right=${right.getResourceName(resources)}, " +
-            "bottom=${bottom.getResourceName(resources)}," +
-            "with tint=${tint?.toString(16) ?: "not applied"}"
+                "top=${top.getResourceName(resources)}, " +
+                "right=${right.getResourceName(resources)}, " +
+                "bottom=${bottom.getResourceName(resources)}," +
+                "with tint=${tint?.toString(16) ?: "not applied"}"
     }
 }
 

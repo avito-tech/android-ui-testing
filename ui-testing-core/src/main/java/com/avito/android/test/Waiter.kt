@@ -44,29 +44,33 @@ fun <T> waitFor(
  * Use this extension instead of ViewInteraction.check() all over the place
  * if you have problems with IdlingResources configuration
  */
-fun ViewInteraction.waitForCheck(assertion: ViewAssertion) = waitFor { check(assertion) }
+fun ViewInteraction.waitForCheck(assertion: ViewAssertion): ViewInteraction =
+    waitFor { check(assertion) }
 
 /**
  * Use this extension instead of ViewInteraction.perform() all over the place
  * if you have problems with IdlingResources configuration
  */
-fun ViewInteraction.waitToPerform(vararg action: ViewAction) = waitFor { perform(*action) }
+fun ViewInteraction.waitToPerform(vararg action: ViewAction): ViewInteraction =
+    waitFor { perform(*action) }
 
 /**
  * Use this extension instead of ViewInteraction.perform() all over the place
  * if you have problems with IdlingResources configuration
  */
-fun ViewInteraction.waitToPerform(actions: List<ViewAction>) =
+fun ViewInteraction.waitToPerform(actions: List<ViewAction>): ViewInteraction =
     waitFor { perform(*actions.toTypedArray()) }
 
 /**
  * Use this extension instead of DataInteraction.check() all over the place
  * if you have problems with IdlingResources configuration
  */
-fun DataInteraction.waitForCheck(assertion: ViewAssertion) = waitFor { check(assertion) }
+fun DataInteraction.waitForCheck(assertion: ViewAssertion): ViewInteraction =
+    waitFor { check(assertion) }
 
 /**
  * Use this extension instead of DataInteraction.perform() all over the place
  * if you have problems with IdlingResources configuration
  */
-fun DataInteraction.waitToPerform(vararg action: ViewAction) = waitFor { perform(*action) }
+fun DataInteraction.waitToPerform(vararg action: ViewAction): ViewInteraction =
+    waitFor { perform(*action) }

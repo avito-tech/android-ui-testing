@@ -20,7 +20,7 @@ import org.junit.Assert
 import java.util.concurrent.TimeUnit
 
 /**
- * Type text action that is used for typing instead of [android.support.test.espresso.action.TypeTextAction]
+ * Type text action that is used for typing instead of [androidx.test.espresso.action.TypeTextAction]
  *
  * Differences:
  *  - We wait for focus on field

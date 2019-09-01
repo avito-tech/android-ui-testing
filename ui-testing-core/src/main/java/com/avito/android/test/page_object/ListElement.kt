@@ -1,10 +1,5 @@
 package com.avito.android.test.page_object
 
-import androidx.test.espresso.action.SwipeDirection
-import androidx.test.espresso.action.SwipeDirections.BOTTOM_TO_TOP
-import androidx.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
-import androidx.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
-import androidx.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.ViewAction
@@ -13,6 +8,11 @@ import androidx.test.espresso.action.GeneralLocation
 import androidx.test.espresso.action.PrecisionDescriber
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Swipe
+import androidx.test.espresso.action.SwipeDirection
+import androidx.test.espresso.action.SwipeDirections.BOTTOM_TO_TOP
+import androidx.test.espresso.action.SwipeDirections.LEFT_TO_RIGHT
+import androidx.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
+import androidx.test.espresso.action.SwipeDirections.TOP_TO_BOTTOM
 import androidx.test.espresso.action.Swiper
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant

@@ -2,10 +2,9 @@ package com.avito.android.test.internal
 
 import android.content.Context
 import com.avito.android.test.waitFor
-import java.io.File
-import java.util.Arrays
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert
+import java.io.File
 
 internal class Cache(private val appContext: Context) {
 
@@ -23,7 +22,7 @@ internal class Cache(private val appContext: Context) {
     }
 
     private fun deleteRecursive(directory: File, vararg excludes: String): Boolean {
-        if (excludes.isNotEmpty() && Arrays.asList(*excludes).contains(directory.name)) {
+        if (excludes.isNotEmpty() && listOf(*excludes).contains(directory.name)) {
             return true
         }
 

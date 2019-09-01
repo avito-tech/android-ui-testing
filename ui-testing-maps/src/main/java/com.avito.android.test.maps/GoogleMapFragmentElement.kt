@@ -1,6 +1,6 @@
 package com.avito.android.test.maps
 
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import com.avito.android.test.maps.provider.FragmentGoogleMapProvider
 import com.avito.android.test.maps.provider.GoogleMapProvider
 import com.avito.android.test.page_object.PageObject

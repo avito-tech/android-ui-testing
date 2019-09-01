@@ -1,11 +1,13 @@
 package com.avito.android.test
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
-import androidx.test.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.permission.PermissionRequester
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
@@ -110,7 +112,7 @@ object Device {
     /**
      * WARNING: Currently not working correctly while app is running. Use only on app with no processes alive
      */
-    fun clearApplicationData(appContext: Context = InstrumentationRegistry.getTargetContext()) {
+    fun clearApplicationData(appContext: Context = ApplicationProvider.getApplicationContext()) {
         Cache(appContext).clear()
         SQLiteDB(appContext).clearAll()
         SharedPreferences(appContext).clear()
@@ -154,7 +156,7 @@ object Device {
 
         class Notification {
             var intent: String = "com.google.android.c2dm.intent.RECEIVE"
-            var packageName: String = InstrumentationRegistry.getTargetContext().packageName
+            var packageName: String = ApplicationProvider.getApplicationContext<Application>().packageName
             var receiverName = "com.google.android.gms.gcm.GcmReceiver"
             var uri: String = ""
             var messageBody: String = ""

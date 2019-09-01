@@ -1,8 +1,8 @@
 package com.avito.android.test.maps.provider
 
-import android.support.annotation.IdRes
-import android.support.test.internal.runner.junit4.statement.UiThreadStatement
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.test.internal.runner.junit4.statement.UiThreadStatement
 import com.avito.android.test.maps.GoogleMapWaitingException
 import com.avito.android.test.util.getCurrentActivity
 import com.avito.android.test.waitFor

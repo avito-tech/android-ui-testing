@@ -1,11 +1,10 @@
 package com.avito.android.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import java.lang.RuntimeException
+import androidx.appcompat.app.AppCompatActivity
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 import kotlin.math.cos
@@ -19,7 +18,8 @@ class MovingButtonActivity : AppCompatActivity() {
 
         val deathZone = findViewById<View>(R.id.death_zone)
         val movingButton = findViewById<Button>(R.id.moving_button)
-        val movingButtonClickedIndicator = findViewById<TextView>(R.id.moving_button_clicked_text_view)
+        val movingButtonClickedIndicator =
+            findViewById<TextView>(R.id.moving_button_clicked_text_view)
 
         deathZone.setOnClickListener { throw RuntimeException("Clicked on a death zone") }
 
@@ -31,8 +31,10 @@ class MovingButtonActivity : AppCompatActivity() {
             (0..iterationsCount)
                 .forEach { iterationNumber ->
                     runOnUiThread {
-                        val newX = (movingButton.x + cos(iterationNumber.toDouble()) * radius).toFloat()
-                        val newY = (movingButton.y + sin(iterationNumber.toDouble()) * radius).toFloat()
+                        val newX =
+                            (movingButton.x + cos(iterationNumber.toDouble()) * radius).toFloat()
+                        val newY =
+                            (movingButton.y + sin(iterationNumber.toDouble()) * radius).toFloat()
 
                         movingButton.x = newX
                         movingButton.y = newY

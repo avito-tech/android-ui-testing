@@ -1,6 +1,6 @@
 package com.avito.android.test.action
 
-import android.support.test.espresso.ViewAction
+import androidx.test.espresso.ViewAction
 
 interface ActionsDriver {
 

@@ -1,9 +1,9 @@
 package com.avito.android.test.matcher
 
 import android.annotation.SuppressLint
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
-import android.support.v7.view.menu.ActionMenuItemView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.view.menu.ActionMenuItemView
 
 @SuppressLint("RestrictedApi")
 class DrawableMatcherActionIcon(

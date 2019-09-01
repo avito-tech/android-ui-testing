@@ -2,11 +2,11 @@ package com.avito.android.test.matcher
 
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.v4.content.ContextCompat
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.test.espresso.matcher.BoundedMatcher
 import com.avito.android.test.util.getResourceName
 import com.avito.android.test.util.matchDrawable
 import org.hamcrest.Description

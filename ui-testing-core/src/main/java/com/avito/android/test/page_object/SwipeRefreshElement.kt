@@ -1,11 +1,11 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.action.SwipeDirections
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
+import androidx.test.espresso.action.SwipeDirections
 import android.view.View
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.Actions
@@ -75,7 +75,7 @@ class SwipeRefreshTolerantAction : ViewAction {
 
     override fun getDescription() =
         "SwipeRefreshLayout performing ViewAction: ${action.description} " +
-            "with tolerance $VIEW_DISPLAY_PERCENTAGE"
+                "with tolerance $VIEW_DISPLAY_PERCENTAGE"
 
     override fun getConstraints(): Matcher<View> = isDisplayingAtLeast(VIEW_DISPLAY_PERCENTAGE)
 

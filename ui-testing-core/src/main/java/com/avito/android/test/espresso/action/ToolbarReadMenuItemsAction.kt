@@ -1,13 +1,13 @@
 package com.avito.android.test.espresso.action
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.v7.widget.Toolbar
 import android.view.View
+import androidx.appcompat.widget.Toolbar
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import com.avito.android.test.util.getFieldByReflection
-import java.util.ArrayList
 import org.hamcrest.Matcher
+import java.util.ArrayList
 
 class ToolbarReadMenuItemsAction : ViewAction {
 

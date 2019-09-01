@@ -1,12 +1,12 @@
 package com.avito.android.test.checks
 
-import android.support.test.espresso.assertion.PositionAssertions
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.Visibility
-import android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import android.view.View
+import androidx.test.espresso.assertion.PositionAssertions
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.Visibility
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import com.avito.android.test.espresso.assertion.ViewExistsAssertion
 import com.avito.android.test.matcher.AvitoPositionAssertions
 import com.avito.android.test.matcher.DrawableBackgroundMatcher

@@ -1,7 +1,7 @@
 package com.avito.android.test.matcher
 
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.v7.widget.Toolbar
+import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import org.hamcrest.Description
 import org.hamcrest.Matcher

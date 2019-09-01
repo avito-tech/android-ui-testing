@@ -1,10 +1,6 @@
-package android.support.test.espresso.action
+package androidx.test.espresso.action
 
-import android.support.test.espresso.action.GeneralLocation.BOTTOM_CENTER
-import android.support.test.espresso.action.GeneralLocation.CENTER_LEFT
-import android.support.test.espresso.action.GeneralLocation.CENTER_RIGHT
-import android.support.test.espresso.action.GeneralLocation.TOP_CENTER
-import android.support.test.espresso.action.GeneralLocation.translate
+import androidx.test.espresso.action.GeneralLocation.translate
 
 interface SwipeDirection {
     fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider>
@@ -13,22 +9,38 @@ interface SwipeDirection {
 enum class SwipeDirections : SwipeDirection {
     LEFT_TO_RIGHT {
         override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
-            return translate(CENTER_LEFT, EDGE_FUZZ_FACTOR, 0f) to CENTER_RIGHT
+            return translate(
+                GeneralLocation.CENTER_LEFT,
+                EDGE_FUZZ_FACTOR,
+                0f
+            ) to GeneralLocation.CENTER_RIGHT
         }
     },
     RIGHT_TO_LEFT {
         override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
-            return translate(CENTER_RIGHT, -EDGE_FUZZ_FACTOR, 0f) to CENTER_LEFT
+            return translate(
+                GeneralLocation.CENTER_RIGHT,
+                -EDGE_FUZZ_FACTOR,
+                0f
+            ) to GeneralLocation.CENTER_LEFT
         }
     },
     BOTTOM_TO_TOP {
         override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
-            return translate(BOTTOM_CENTER, 0f, -EDGE_FUZZ_FACTOR) to TOP_CENTER
+            return translate(
+                GeneralLocation.BOTTOM_CENTER,
+                0f,
+                -EDGE_FUZZ_FACTOR
+            ) to GeneralLocation.TOP_CENTER
         }
     },
     TOP_TO_BOTTOM {
         override fun toCoordinateProvider(): Pair<CoordinatesProvider, CoordinatesProvider> {
-            return translate(TOP_CENTER, 0f, EDGE_FUZZ_FACTOR) to BOTTOM_CENTER
+            return translate(
+                GeneralLocation.TOP_CENTER,
+                0f,
+                EDGE_FUZZ_FACTOR
+            ) to GeneralLocation.BOTTOM_CENTER
         }
     }
 }

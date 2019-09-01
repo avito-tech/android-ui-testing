@@ -1,9 +1,9 @@
 package com.avito.android.test.matcher
 
 import android.content.res.Resources
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.test.espresso.matcher.BoundedMatcher
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.test.espresso.matcher.BoundedMatcher
 import android.view.View
 import android.widget.TextView
 import com.avito.android.test.util.getResourceName

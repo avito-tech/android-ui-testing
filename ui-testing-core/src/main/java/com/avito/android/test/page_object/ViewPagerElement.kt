@@ -1,8 +1,8 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import android.view.View
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.ActionsDriver

@@ -1,8 +1,8 @@
 package com.avito.android.test.checks
 
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import org.hamcrest.Matcher
 
 interface LabelChecks {

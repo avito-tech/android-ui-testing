@@ -1,10 +1,10 @@
 package com.avito.android.test.espresso.action
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import org.hamcrest.Matcher
 
 class RecyclerViewHorizontalOffsetAction : ViewAction {

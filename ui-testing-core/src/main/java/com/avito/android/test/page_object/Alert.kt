@@ -1,8 +1,8 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.v7.widget.DialogTitle
+import androidx.appcompat.widget.DialogTitle
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
 
 class Alert : PageObject() {
     val messageElement: ViewElement = element(withId(android.R.id.message))

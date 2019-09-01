@@ -1,13 +1,13 @@
 package com.avito.android.test.espresso.action.recycler
 
-import android.support.test.espresso.PerformException
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.intent.Checks
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.util.HumanReadables
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.intent.Checks
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.util.HumanReadables
 import com.avito.android.test.espresso.action.scroll.collapseAllAppBarsInParent
 import com.avito.android.test.espresso.action.scroll.scrollToScrollableParentCenterPosition
 import org.hamcrest.Matcher

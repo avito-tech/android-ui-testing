@@ -2,21 +2,19 @@ package com.avito.android.test
 
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.runner.permission.PermissionRequester
-import android.support.test.uiautomator.By
-import android.support.test.uiautomator.UiDevice
-import android.support.test.uiautomator.Until
-import com.avito.android.test.espresso.EspressoActions
+import androidx.test.InstrumentationRegistry
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.runner.permission.PermissionRequester
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
 import com.avito.android.test.espresso.action.OrientationChangeAction
 import com.avito.android.test.internal.Cache
 import com.avito.android.test.internal.SQLiteDB
 import com.avito.android.test.internal.SharedPreferences
 import com.avito.android.test.page_object.KeyboardElement
-import com.avito.android.test.page_object.ViewElement
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.hamcrest.CoreMatchers
@@ -87,7 +85,10 @@ object Device {
         }
     }
 
-    fun waitForAppLaunchAndReady(appContext: Context, timeout: Long = UITestConfig.activityLaunchTimeoutMilliseconds) {
+    fun waitForAppLaunchAndReady(
+        appContext: Context,
+        timeout: Long = UITestConfig.activityLaunchTimeoutMilliseconds
+    ) {
         with(uiDevice) {
             assertTrue(
                 "Waiting for application launching was exceeded timeout: $timeout milliseconds",
@@ -117,7 +118,10 @@ object Device {
 
     object Push {
 
-        fun openNotification(expectedTitle: String, timeoutMillis: Long = UITestConfig.openNotificationTimeoutMilliseconds) {
+        fun openNotification(
+            expectedTitle: String,
+            timeoutMillis: Long = UITestConfig.openNotificationTimeoutMilliseconds
+        ) {
             val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
             device.openNotification()
             assertTrue(
@@ -139,11 +143,11 @@ object Device {
             val notification = Notification()
             notification.init()
             val command = "am broadcast" +
-                " -a ${notification.intent}" +
-                " -n ${notification.packageName}/${notification.receiverName}" +
-                " --es uri ${notification.uri}" +
-                (notification.phash?.let { " --es phash $it" } ?: "") +
-                " --es notification {\"body\":\"${notification.messageBody}\"}"
+                    " -a ${notification.intent}" +
+                    " -n ${notification.packageName}/${notification.receiverName}" +
+                    " --es uri ${notification.uri}" +
+                    (notification.phash?.let { " --es phash $it" } ?: "") +
+                    " --es notification {\"body\":\"${notification.messageBody}\"}"
             UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
                 .executeShellCommand(command)
         }

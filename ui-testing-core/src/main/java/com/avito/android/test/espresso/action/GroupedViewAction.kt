@@ -1,7 +1,7 @@
 package com.avito.android.test.espresso.action
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import android.view.View
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers

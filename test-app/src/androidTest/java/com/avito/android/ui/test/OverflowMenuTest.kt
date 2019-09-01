@@ -1,7 +1,7 @@
 package com.avito.android.ui.test
 
-import android.support.test.espresso.NoMatchingViewException
 import android.view.MenuItem
+import androidx.test.espresso.NoMatchingViewException
 import com.avito.android.ui.OverflowMenuActivity
 import org.junit.Rule
 import org.junit.Test

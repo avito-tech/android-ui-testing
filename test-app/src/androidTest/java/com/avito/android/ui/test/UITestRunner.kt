@@ -1,7 +1,7 @@
 package com.avito.android.ui.test
 
 import android.content.Intent
-import android.support.test.runner.AndroidJUnitRunner
+import androidx.test.runner.AndroidJUnitRunner
 
 class UITestRunner : AndroidJUnitRunner() {
 

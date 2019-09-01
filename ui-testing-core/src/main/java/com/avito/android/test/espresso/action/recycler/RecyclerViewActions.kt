@@ -1,15 +1,15 @@
 package com.avito.android.test.espresso.action.recycler
 
-import android.support.test.espresso.PerformException
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.intent.Checks.checkArgument
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.util.HumanReadables
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.intent.Checks.checkArgument
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.util.HumanReadables
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
@@ -83,7 +83,7 @@ private class ViewDoesNotExistsInRecyclerCheckHack<VH : RecyclerView.ViewHolder>
 
                 assertThat(
                     "View is present in the hierarchy: " +
-                        HumanReadables.describe(viewAtPosition), true, `is`(false)
+                            HumanReadables.describe(viewAtPosition), true, `is`(false)
                 )
             }
             uiController.loopMainThreadUntilIdle()
@@ -128,7 +128,7 @@ private class ActionOnItemAtPositionViewAction<VH : RecyclerView.ViewHolder>(
 
     override fun getDescription(): String =
         ("actionOnItemAtPosition performing ViewAction: " + viewAction.description +
-            " on item at position: " + position)
+                " on item at position: " + position)
 
     override fun perform(uiController: UiController, view: View) {
         val recyclerView = view as RecyclerView

@@ -1,15 +1,15 @@
 package com.avito.android.test.matcher
 
-import android.support.test.espresso.AmbiguousViewMatcherException
-import android.support.test.espresso.NoMatchingViewException
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.core.internal.deps.guava.base.Predicate
-import android.support.test.espresso.core.internal.deps.guava.collect.Iterables
-import android.support.test.espresso.matcher.ViewMatchers.assertThat
-import android.support.test.espresso.util.TreeIterables.breadthFirstViewTraversal
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
+import androidx.test.espresso.AmbiguousViewMatcherException
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.core.internal.deps.guava.base.Predicate
+import androidx.test.espresso.core.internal.deps.guava.collect.Iterables
+import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.espresso.util.TreeIterables.breadthFirstViewTraversal
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.StringDescription
@@ -61,7 +61,7 @@ object AvitoPositionAssertions {
         assertThat(
             failDescription.toString(),
             Math.abs(location1.absoluteLocation - location2.absoluteLocation)
-                < PIXEL_COMPARISON_TOLERANCE,
+                    < PIXEL_COMPARISON_TOLERANCE,
             equalTo(true)
         )
     }

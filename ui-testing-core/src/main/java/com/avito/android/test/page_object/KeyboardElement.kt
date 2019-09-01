@@ -2,10 +2,10 @@ package com.avito.android.test.page_object
 
 import android.app.Activity
 import android.graphics.Rect
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.action.ViewActions
 import android.view.View
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions
+import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert
 
@@ -70,7 +70,7 @@ class KeyboardElement : PageObject() {
                     if (get(content) == null) {
                         throw RuntimeException(
                             "Can't check keyboard position. Because View::mAttachInfo is null." +
-                                " Did you rotate screen in test before this check?"
+                                    " Did you rotate screen in test before this check?"
                         )
                     }
                 }
@@ -107,7 +107,7 @@ class KeyboardElement : PageObject() {
                     }
                     val sizes =
                         " actualEffectiveHeight: $activityEffectiveHeight " +
-                            "thresholdEffectiveHeight: $threshold"
+                                "thresholdEffectiveHeight: $threshold"
 
                     "(keyboard $status on the screen.${if (withSizes) sizes else ""})"
                 }
@@ -116,7 +116,7 @@ class KeyboardElement : PageObject() {
             val expected = "Expected:"
 
             return "${getStatusMessage(!displayed, true)} $doesNotMatch" +
-                " $expected ${getStatusMessage(displayed, false)}"
+                    " $expected ${getStatusMessage(displayed, false)}"
         }
     }
 }

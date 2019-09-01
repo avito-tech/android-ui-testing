@@ -1,10 +1,10 @@
 package com.avito.android.test.matcher
 
 import android.annotation.SuppressLint
-import android.support.v7.view.menu.ActionMenuItemView
 import android.view.MenuItem
 import android.view.View
 import android.widget.Checkable
+import androidx.appcompat.view.menu.ActionMenuItemView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher

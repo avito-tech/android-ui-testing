@@ -1,9 +1,9 @@
 package com.avito.android.test.element.field
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.action.ViewActions.actionWithAssertions
-import android.support.test.espresso.action.ViewActions.clearText
-import android.support.test.espresso.action.ViewActions.pressImeActionButton
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions.actionWithAssertions
+import androidx.test.espresso.action.ViewActions.clearText
+import androidx.test.espresso.action.ViewActions.pressImeActionButton
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.action.Actions
 import com.avito.android.test.action.ActionsImpl

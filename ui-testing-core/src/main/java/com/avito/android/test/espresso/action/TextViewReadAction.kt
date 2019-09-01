@@ -1,10 +1,10 @@
 package com.avito.android.test.espresso.action
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers
 import android.view.View
 import android.widget.TextView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.waitFor
 import org.hamcrest.Matcher
 import org.junit.Assert.assertFalse
@@ -27,7 +27,7 @@ class TextViewReadAction : ViewAction {
                     perform(action)
                     assertFalse(
                         "read() waited, but view.text still has empty string value; " +
-                            "use read(allowBlank=true) if you really need it",
+                                "use read(allowBlank=true) if you really need it",
                         action.result.isNullOrBlank()
                     )
                 }

@@ -1,13 +1,13 @@
 package com.avito.android.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
 
@@ -54,14 +54,21 @@ class StatefulRecyclerViewAdapterActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cell_with_multiple_text_views, parent, false))
+            ViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.cell_with_multiple_text_views,
+                    parent,
+                    false
+                )
+            )
 
         override fun getItemCount() = items.size
 
         /**
          * See method itemsMatching inside RecyclerViewActions.kt for understanding what happens here
          */
-        private fun RecyclerView.ViewHolder.isFakeHolderForTests(): Boolean = itemView.getTag(Integer.MAX_VALUE - 228) != null
+        private fun RecyclerView.ViewHolder.isFakeHolderForTests(): Boolean =
+            itemView.getTag(Integer.MAX_VALUE - 228) != null
     }
 
     private class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

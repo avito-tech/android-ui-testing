@@ -1,10 +1,10 @@
 package com.avito.android.test.page_object
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.v7.widget.SwitchCompat
 import android.view.View
+import androidx.appcompat.widget.SwitchCompat
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.InteractionContext
 import com.avito.android.test.SimpleInteractionContext
 import com.avito.android.test.action.ActionsDriver

@@ -1,8 +1,8 @@
 package com.avito.android.test.matcher
 
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.test.espresso.matcher.BoundedMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 

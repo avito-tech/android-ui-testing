@@ -1,8 +1,11 @@
-val kotlinVersion: String by project
-val playServicesVersion: String by project
 val targetSdk: String by project
 val minSdk: String by project
-val supportVersion: String by project
+
+val kotlinVersion: String by project
+val playServicesVersion: String by project
+val appcompatVersion: String by project
+val recyclerViewVersion: String by project
+val materialVersion: String by project
 
 plugins {
     id("com.android.application")
@@ -38,9 +41,10 @@ android {
 dependencies {
     implementation(kotlin("stdlib", kotlinVersion))
     implementation("com.google.android.gms:play-services-maps:$playServicesVersion")
-    implementation("com.android.support:appcompat-v7:$supportVersion")
-    implementation("com.android.support:recyclerview-v7:$supportVersion")
-    implementation("com.android.support:design:$supportVersion")
+
+    api("androidx.appcompat:appcompat:$appcompatVersion")
+    api("androidx.recyclerview:recyclerview:$recyclerViewVersion")
+    api("com.google.android.material:material:$materialVersion")
 
     androidTestImplementation(project(":ui-testing-core"))
 }

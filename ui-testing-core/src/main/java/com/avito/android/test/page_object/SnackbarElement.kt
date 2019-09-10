@@ -3,7 +3,7 @@ package com.avito.android.test.page_object
 import androidx.test.espresso.action.SwipeDirections.RIGHT_TO_LEFT
 import androidx.test.espresso.matcher.ViewMatchers
 import com.avito.android.test.espresso.EspressoActions
-import com.avito.android.test.ui.R
+import com.google.android.material.R
 import com.google.android.material.snackbar.Snackbar
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers

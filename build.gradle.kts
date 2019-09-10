@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "com.avito.ui-testing"
-version = "0.5.0-snapshot"
+version = "0.6.0-snapshot"
 
 val minSdk: String by project
 val targetSdk: String by project

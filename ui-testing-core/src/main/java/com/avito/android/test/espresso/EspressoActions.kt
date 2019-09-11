@@ -30,6 +30,7 @@ import com.avito.android.test.espresso.action.scroll.ScrollToIfPossibleAction
 import org.hamcrest.Matcher
 import org.hamcrest.core.IsAnything
 
+// TODO: make internal
 object EspressoActions {
 
     fun typeText(stringToBeTyped: String): ViewAction =
@@ -68,15 +69,21 @@ object EspressoActions {
 
     fun click(
         type: UITestConfig.ClickType = UITestConfig.clicksType,
+<<<<<<< HEAD
         coordinatesProvider: CoordinatesProvider = GeneralLocation.VISIBLE_CENTER
     ): ViewAction {
 
         fun safeAction(action: ViewAction) = ActionOnEnabledElement(
             ActionOnClickableElement(
                 action
+=======
+        wrapper: (ViewAction) -> ViewAction = {
+            ActionOnEnabledElement(
+                ActionOnClickableElement(it)
+>>>>>>> Remove clickable checks for toolbar menu items
             )
-        )
-
+        }
+    ): ViewAction {
         val clickAction = when (type) {
             is UITestConfig.ClickType.EspressoClick -> when (type.rollbackPolicy) {
 
@@ -85,8 +92,13 @@ object EspressoActions {
                 )
 
                 is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.TryOneMoreClick -> {
+<<<<<<< HEAD
                     val rollbackAction = safeAction(defaultEspressoClickAction(coordinatesProvider))
                     return defaultEspressoClickAction(coordinatesProvider, rollbackAction)
+=======
+                    val rollbackAction = wrapper(ViewActions.click())
+                    ViewActions.click(rollbackAction)
+>>>>>>> Remove clickable checks for toolbar menu items
                 }
 
                 is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.Fail -> defaultEspressoClickAction(
@@ -108,18 +120,24 @@ object EspressoActions {
 
             is UITestConfig.ClickType.InProcessClick -> inProcessClickAction(coordinatesProvider)
         }
-        return safeAction(clickAction)
+        return wrapper(clickAction)
     }
 
-    fun longClick(type: UITestConfig.ClickType = UITestConfig.clicksType): ViewAction =
-        ActionOnEnabledElement(
-            ActionOnLongClickableElement(
-                when (type) {
-                    is UITestConfig.ClickType.EspressoClick -> ViewActions.longClick()
-                    is UITestConfig.ClickType.InProcessClick -> inProcessLongClickAction()
-                }
+    fun longClick(
+        type: UITestConfig.ClickType = UITestConfig.clicksType,
+        wrapper: (ViewAction) -> ViewAction = {
+            ActionOnEnabledElement(
+                ActionOnLongClickableElement(it)
             )
+        }
+    ): ViewAction {
+        return wrapper(
+            when (type) {
+                is UITestConfig.ClickType.EspressoClick -> ViewActions.longClick()
+                is UITestConfig.ClickType.InProcessClick -> inProcessLongClickAction()
+            }
         )
+<<<<<<< HEAD
 
     /**
      * Same as [ViewActions.click] but with usage of given coordinates provider
@@ -138,4 +156,7 @@ object EspressoActions {
                 rollbackAction
             )
         )
+=======
+    }
+>>>>>>> Remove clickable checks for toolbar menu items
 }

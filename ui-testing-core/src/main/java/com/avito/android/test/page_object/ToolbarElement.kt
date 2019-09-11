@@ -25,6 +25,8 @@ import com.avito.android.test.action.ActionsImpl
 import com.avito.android.test.checks.Checks
 import com.avito.android.test.checks.ChecksDriver
 import com.avito.android.test.checks.ChecksImpl
+import com.avito.android.test.espresso.EspressoActions
+import com.avito.android.test.espresso.action.ActionOnEnabledElement
 import com.avito.android.test.espresso.action.ToolbarReadMenuItemsAction
 import com.avito.android.test.interceptor.ActionInterceptor
 import com.avito.android.test.matcher.ToolbarSubTitleResMatcher
@@ -91,13 +93,15 @@ open class ToolbarElement(interactionContext: InteractionContext) :
     ) : ViewElement(RestrictedDirectAccessMatcher()) {
 
         override val actions: Actions
-            get() = ActionsImpl(
-                OverflowMenuDriver(
+            get() {
+                val menuDriver = OverflowMenuDriver(
                     toolbarMatcher,
                     titleMatcher,
                     overflowMenuButton
                 )
-            )
+                val defaultActions = ActionsImpl(menuDriver)
+                return ToolbarActions(menuDriver, defaultActions)
+            }
 
         override val checks
             get() = OverflowMenuChecksImpl(
@@ -108,6 +112,30 @@ open class ToolbarElement(interactionContext: InteractionContext) :
         fun disableOverflowMenuAutoOpen(): MenuItem {
             overflowMenuButton = null
             return this
+        }
+    }
+
+    private class ToolbarActions(
+        private val driver: ActionsDriver,
+        default: Actions
+    ) : Actions by default {
+
+        override fun click() {
+            driver.perform(
+                EspressoActions.scrollIfPossible(),
+                EspressoActions.click(type = UITestConfig.clicksType, wrapper = ::menuItemCheck)
+            )
+        }
+
+        override fun longClick() {
+            driver.perform(
+                EspressoActions.scrollIfPossible(),
+                EspressoActions.longClick(type = UITestConfig.clicksType, wrapper = ::menuItemCheck)
+            )
+        }
+
+        private fun menuItemCheck(action: ViewAction): ViewAction {
+            return ActionOnEnabledElement(action)
         }
     }
 

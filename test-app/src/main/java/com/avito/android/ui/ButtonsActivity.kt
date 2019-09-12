@@ -3,6 +3,7 @@ package com.avito.android.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -14,8 +15,12 @@ class ButtonsActivity : AppCompatActivity() {
 
         setupEnabledButton()
         setupDisabledButton()
+
         setupNonClickableButton()
+        setupNonClickableButtonInsideClickableContainer()
+
         setupNonLongClickableButton()
+        setupNonLongClickableButtonInsideLongClickableContainer()
     }
 
     private fun setupDisabledButton() {
@@ -79,6 +84,23 @@ class ButtonsActivity : AppCompatActivity() {
                 true
             }
             isLongClickable = false
+        }
+    }
+
+    private fun setupNonClickableButtonInsideClickableContainer() {
+        val indicatorView = findViewById<TextView>(R.id.clickable_container_indicator)
+
+        findViewById<View>(R.id.clickable_container).setOnClickListener {
+            indicatorView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupNonLongClickableButtonInsideLongClickableContainer() {
+        val indicatorView = findViewById<TextView>(R.id.long_clickable_container_indicator)
+
+        findViewById<View>(R.id.long_clickable_container).setOnLongClickListener {
+            indicatorView.visibility = View.VISIBLE
+            true
         }
     }
 }

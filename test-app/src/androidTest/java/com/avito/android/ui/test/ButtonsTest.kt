@@ -42,15 +42,30 @@ class ButtonsTest {
     }
 
     @Test
+    fun clickInsideClickableContainer_performs() {
+        Screen.buttons.clickableContainerInnerButton.checks.isNotClickable()
+        Screen.buttons.clickableContainerInnerButton.click()
+
+        Screen.buttons.clickableContainerIndicator.checks.isVisible()
+    }
+
+    @Test
     fun clickOnNonLongClickableButton_performed() {
         Screen.buttons.nonLongClickableButton.checks.isClickable()
         Screen.buttons.nonLongClickableButton.click()
 
-        Screen.buttons.nonLongClickableButtonClickIndicatorView.checks.isDisplayed()
+        Screen.buttons.nonLongClickableButtonIndicator.checks.isDisplayed()
     }
 
     @Test(expected = PerformException::class)
     fun longClickOnNonLongClickableButton_mustThrowsPerformException() {
         Screen.buttons.nonLongClickableButton.longClick()
+    }
+
+    @Test
+    fun longClickInsideLongClickableContainer_performs() {
+        Screen.buttons.longClickableContainerInnerButton.longClick()
+
+        Screen.buttons.longClickableContainerIndicator.checks.isVisible()
     }
 }

@@ -3,7 +3,7 @@ package com.avito.android.test.espresso.action
 import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.matcher.ViewMatchers
+import com.avito.android.test.matcher.CanBeClickedMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 
@@ -14,7 +14,7 @@ class ActionOnClickableElement(
     override fun getDescription(): String = "${action.description} on clickable element"
 
     override fun getConstraints(): Matcher<View> = Matchers.allOf(
-        ViewMatchers.isClickable(),
+        CanBeClickedMatcher(),
         action.constraints
     )
 

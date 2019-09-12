@@ -16,7 +16,7 @@ Not now. Work in progress.
 ## Configure
 
 ```groovy
-def uiTestingVersion = '0.5.1'
+def uiTestingVersion = '0.6.0'
 
 repositories {
     jcenter()

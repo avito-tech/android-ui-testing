@@ -105,6 +105,9 @@ object EspressoActions {
             }
         )
 
+    /**
+     * Same as [ViewActions.click] but with usage of given coordinates provider
+     */
     private fun defaultEspressoClickAction(coordinatesProvider: CoordinatesProvider,
                                            rollbackAction: ViewAction? = null): ViewAction =
             actionWithAssertions(

@@ -32,7 +32,9 @@ object UITestConfig {
 
     var openNotificationTimeoutMilliseconds: Long = TimeUnit.SECONDS.toMillis(30)
 
-    var clicksType: ClickType = ClickType.InProcessClick
+    val defaultClicksType : ClickType = ClickType.InProcessClick
+
+    var clicksType: ClickType = defaultClicksType
 
     /**
      * Exceptions to be waited for; any unregistered exceptions will be propagated

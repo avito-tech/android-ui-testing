@@ -22,7 +22,7 @@ class ClicksTypeRule(private val clickType: UITestConfig.ClickType) : TestRule {
                         base.evaluate()
                     } finally {
                         if (enabled) {
-                            UITestConfig.clicksType = UITestConfig.ClickType.InProcessClick
+                            UITestConfig.clicksType = UITestConfig.defaultClicksType
                         }
                     }
                 }

@@ -141,9 +141,9 @@ class ClickAction(
     }
 }
 
-internal fun inProcessClickAction(): ViewAction = actionWithAssertions(
+internal fun inProcessClickAction(coordinatesProvider: CoordinatesProvider): ViewAction = actionWithAssertions(
     ClickAction(
-        coordinatesProvider = GeneralLocation.VISIBLE_CENTER,
+        coordinatesProvider = coordinatesProvider,
         precisionDescriber = Press.FINGER,
         event = ClickAction.Event.ClickEvent
     )

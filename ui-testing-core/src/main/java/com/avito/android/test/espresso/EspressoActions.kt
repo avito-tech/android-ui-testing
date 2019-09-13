@@ -1,17 +1,23 @@
 package com.avito.android.test.espresso
 
+import android.view.InputDevice
+import android.view.MotionEvent
 import android.view.View
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.GeneralClickAction
+import androidx.test.espresso.action.GeneralLocation
 import androidx.test.espresso.action.GeneralSwipeAction
 import androidx.test.espresso.action.PrecisionDescriber
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Swipe
 import androidx.test.espresso.action.SwipeDirection
 import androidx.test.espresso.action.Swiper
+import androidx.test.espresso.action.Tap
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.actionWithAssertions
+import androidx.test.espresso.action.CoordinatesProvider
 import com.avito.android.test.UITestConfig
 import com.avito.android.test.element.field.actions.TypeText
 import com.avito.android.test.espresso.action.ActionOnEnabledElement
@@ -58,19 +64,20 @@ object EspressoActions {
         )
     }
 
-    fun click(type: UITestConfig.ClickType = UITestConfig.clicksType): ViewAction =
+    fun click(type: UITestConfig.ClickType = UITestConfig.clicksType,
+              coordinatesProvider: CoordinatesProvider = GeneralLocation.VISIBLE_CENTER): ViewAction =
         ActionOnEnabledElement(
             when (type) {
                 is UITestConfig.ClickType.EspressoClick -> when (type.rollbackPolicy) {
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.DoNothing -> ViewActions.click()
+                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.DoNothing -> defaultEspressoClickAction(coordinatesProvider)
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.TryOneMoreClick -> ViewActions.click(
-                        ActionOnEnabledElement(ViewActions.click())
+                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.TryOneMoreClick -> defaultEspressoClickAction(
+                            coordinatesProvider, ActionOnEnabledElement(defaultEspressoClickAction(coordinatesProvider))
                     )
 
-                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.Fail -> ViewActions.click(
-                        object : ViewAction {
+                    is UITestConfig.ClickType.EspressoClick.ClickRollbackPolicy.Fail -> defaultEspressoClickAction(
+                            coordinatesProvider, object : ViewAction {
                             override fun getDescription(): String =
                                 "fake fail action after click interpreted as long click"
 
@@ -86,7 +93,7 @@ object EspressoActions {
                     )
                 }
 
-                is UITestConfig.ClickType.InProcessClick -> inProcessClickAction()
+                is UITestConfig.ClickType.InProcessClick -> inProcessClickAction(coordinatesProvider)
             }
         )
 
@@ -97,4 +104,19 @@ object EspressoActions {
                 is UITestConfig.ClickType.InProcessClick -> inProcessLongClickAction()
             }
         )
+
+    /**
+     * Same as [ViewActions.click] but with usage of given coordinates provider
+     */
+    private fun defaultEspressoClickAction(coordinatesProvider: CoordinatesProvider,
+                                           rollbackAction: ViewAction? = null): ViewAction =
+            actionWithAssertions(
+                    GeneralClickAction(
+                            Tap.SINGLE,
+                            coordinatesProvider,
+                            Press.FINGER,
+                            InputDevice.SOURCE_UNKNOWN,
+                            MotionEvent.BUTTON_PRIMARY,
+                            rollbackAction)
+            )
 }

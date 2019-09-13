@@ -26,13 +26,11 @@ class TextElement(interactionContext: InteractionContext) : ViewElement(interact
 
     fun clickOnText(textToClick: String) = actions.clickOnText(textToClick)
     fun clickOnLink() = actions.clickOnLink()
-    fun clickOnLink(position: Int) = actions.clickOnLink(position)
 }
 
 interface TextElementActions : Actions {
     fun clickOnText(textToClick: String)
     fun clickOnLink()
-    fun clickOnLink(position: Int)
 }
 
 class TextElementActionsImpl(private val driver: ActionsDriver) : TextElementActions,
@@ -43,11 +41,7 @@ class TextElementActionsImpl(private val driver: ActionsDriver) : TextElementAct
     }
 
     override fun clickOnLink() {
-        driver.perform(ClickOnSpannableAction(index = 0, maxCount = 1))
-    }
-
-    override fun clickOnLink(position: Int) {
-        driver.perform(ClickOnSpannableAction(position))
+        driver.perform(ClickOnSpannableAction())
     }
 }
 
@@ -77,7 +71,7 @@ class ClickOnTextAction(private val textToClick: String) : ViewAction {
     }
 }
 
-class ClickOnSpannableAction(private val index: Int = 0, private val maxCount: Int = Integer.MAX_VALUE) : ViewAction {
+class ClickOnSpannableAction: ViewAction {
 
     override fun getConstraints(): Matcher<View> = Matchers.instanceOf(TextView::class.java)
 
@@ -89,21 +83,14 @@ class ClickOnSpannableAction(private val index: Int = 0, private val maxCount: I
         val spans = text.getSpans(0, text.length, ClickableSpan::class.java)
 
         val count = spans.size
-        if (count == 0 || count > maxCount) {
+        if (count != 1) {
             throw throw PerformException.Builder().withActionDescription(this.toString())
                     .withViewDescription(HumanReadables.describe(view))
                     .withCause(IllegalStateException("TextView doesn't contain clickableSpans"))
                     .build()
         }
 
-        if (count > maxCount) {
-            throw throw PerformException.Builder().withActionDescription(this.toString())
-                    .withViewDescription(HumanReadables.describe(view))
-                    .withCause(IllegalStateException("Too many clickable spans. Please specify link to click"))
-                    .build()
-        }
-
-        val textToClick = spans[index]
+        val textToClick = spans.first()
         val start = text.getSpanStart(textToClick)
         val end = text.getSpanEnd(textToClick)
 

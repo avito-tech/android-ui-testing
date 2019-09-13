@@ -37,9 +37,9 @@ class TextElementsTest {
     @ChangeClickType
     fun clicksOnSeveralLinks_espressoClicks() {
         rule.launchActivity(null)
-        Screen.textsElements.textViewLong.clickOnLink(0)
-        Screen.textsElements.textViewLong.clickOnLink(1)
-        Screen.textsElements.textViewLong.clickOnLink(2)
+        Screen.textsElements.textViewLong.clickOnText("link 1")
+        Screen.textsElements.textViewLong.clickOnText("link 2")
+        Screen.textsElements.textViewLong.clickOnText("long link which can have\nmultiple lines")
         MatcherAssert.assertThat(rule.activity.count, CoreMatchers.equalTo(3))
     }
 
@@ -60,9 +60,9 @@ class TextElementsTest {
     @Test
     fun clicksOnSeveralLinks() {
         rule.launchActivity(null)
-        Screen.textsElements.textViewLong.clickOnLink(0)
-        Screen.textsElements.textViewLong.clickOnLink(1)
-        Screen.textsElements.textViewLong.clickOnLink(2)
+        Screen.textsElements.textViewLong.clickOnText("link 1")
+        Screen.textsElements.textViewLong.clickOnText("link 2")
+        Screen.textsElements.textViewLong.clickOnText("long link which can have\nmultiple lines")
         MatcherAssert.assertThat(rule.activity.count, CoreMatchers.equalTo(3))
     }
 }
